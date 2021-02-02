@@ -23,12 +23,31 @@ function Navigation({ isLoaded }){
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-    </ul>
+    <div className='nav-section'>
+      <div className='nav-bar'>
+            <NavLink className='logo' exact to="/">NO-IDEA</NavLink>
+        <ul>
+          <li>
+            {isLoaded && sessionLinks}
+          </li>
+        </ul>
+      </div>
+      <div className='side-bar' style={{paddingTop:'30px'}}>
+        <div>
+          <ul>
+            <li className='side-link'>My Profile</li>
+            <li className='side-link'>Properties</li>
+            <li className='side-link'>Tenants</li>
+            <li>Units</li>
+          </ul>
+        </div>
+        <div>
+          <ul>
+            <li>Logout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }
 

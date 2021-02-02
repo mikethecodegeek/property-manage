@@ -1,3 +1,67 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
 .profile-dropdown {
   position: absolute;
+}
+
+.nav-bar {
+  height: 50px;
+  background-color: #0183BD;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px 0px 10px;
+}
+
+.nav-bar>.logo {
+  font-size: 2rem;
+  color: white;
+  text-decoration: none;
+  cursor: hover;
+  position: relative;
+  top:5px;
+  font-family:'Courier New', Courier, monospace
+}
+
+.nav-bar >ul >li {
+  color: white;
+  text-decoration: none;
+  list-style: none;
+}
+
+.nav-bar >ul>li> a {
+  text-decoration: none;
+} 
+.nav-bar >ul >li>a:visited {
+  color:white;
+  text-decoration: none;
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  background-color: #ECECEC;
+  width: 200px;
+  height: calc(100vh - 85px);
+  justify-content: space-between;
+  align-content: center;
+  text-align: center;
+}
+
+.side-bar>div>ul {
+  padding-left: 0px;
+}
+
+.side-bar>div>ul>li {
+  list-style: none;
+  /* margin-top: 20px; */
+  cursor: pointer;
+}
+
+.side-link {
+  margin-bottom: 25px;
 }
