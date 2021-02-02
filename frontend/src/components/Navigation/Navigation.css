@@ -50,6 +50,7 @@ body {
   justify-content: space-between;
   align-content: center;
   text-align: center;
+  position: absolute;
 }
 
 .side-bar>div>ul {
@@ -64,4 +65,12 @@ body {
 
 .side-link {
   margin-bottom: 25px;
+}
+
+.content {
+  display: flex;
+}
+
+.display-content {
+  margin-left: 225px;
 }

@@ -5,7 +5,7 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded, content }){
   const sessionUser = useSelector(state => state.session.user);
 
   let sessionLinks;
@@ -16,8 +16,9 @@ function Navigation({ isLoaded }){
   } else {
     sessionLinks = (
       <>
-        <LoginFormModal />
+        {/* <LoginFormModal /> */}
         <NavLink to="/signup">Sign Up</NavLink>
+        <NavLink to="/login">Login</NavLink>
       </>
     );
   }
@@ -32,20 +33,24 @@ function Navigation({ isLoaded }){
           </li>
         </ul>
       </div>
-      <div className='side-bar' style={{paddingTop:'30px'}}>
-        <div>
-          <ul>
-            <li className='side-link'>My Profile</li>
-            <li className='side-link'>Properties</li>
-            <li className='side-link'>Tenants</li>
-            <li>Units</li>
-          </ul>
-        </div>
-        <div>
-          <ul>
-            <li>Logout</li>
-          </ul>
-        </div>
+      <div className='content'>
+          <div className='side-bar' style={{paddingTop:'30px'}}>
+            <div>
+              <ul>
+                <li className='side-link'>My Profile</li>
+                <li className='side-link'>Properties</li>
+                <li className='side-link'>Tenants</li>
+                <li>Units</li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li>Logout</li>
+              </ul>
+            </div>
+          </div>
+
+         {content}
       </div>
     </div>
   );
