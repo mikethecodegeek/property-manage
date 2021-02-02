@@ -54,12 +54,11 @@ function Navigation({ isLoaded, content }){
               <ul>
                 {sessionUser &&
                 <li onClick={logout}>Logout</li>
-                }
+              }
               </ul>
             </div>
           </div>
-
-         {content}
+     
       </div>
     </div>
   );

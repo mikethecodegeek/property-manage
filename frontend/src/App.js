@@ -7,6 +7,7 @@ import ProfilePage from "./components/Profile/ProfilePage";
 import PropertiesPage from "./components/Properties/PropertiesPage";
 import TenantsPage from "./components/Tenants/TenantsPage";
 import UnitsPage from "./components/Units/UnitsPage";
+import HomePage from "./components/HomePage/HomePage"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path="/units">
             <UnitsPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
           </Route>
         </Switch>
         </div>
