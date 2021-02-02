@@ -4,14 +4,16 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
+import { useDispatch } from 'react-redux';
+import * as sessionActions from '../../store/session';
 
 function Navigation({ isLoaded, content }){
   const sessionUser = useSelector(state => state.session.user);
-
+  const dispatch = useDispatch();
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <ProfileButton user={sessionUser} />
+     '' // <ProfileButton user={sessionUser} />
     );
   } else {
     sessionLinks = (
@@ -22,6 +24,11 @@ function Navigation({ isLoaded, content }){
       </>
     );
   }
+
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logout());
+  };
 
   return (
     <div className='nav-section'>
@@ -37,15 +44,17 @@ function Navigation({ isLoaded, content }){
           <div className='side-bar' style={{paddingTop:'30px'}}>
             <div>
               <ul>
-                <li className='side-link'>My Profile</li>
-                <li className='side-link'>Properties</li>
-                <li className='side-link'>Tenants</li>
-                <li>Units</li>
+                <li className='side-link'><NavLink to="/profile">My Profile</NavLink></li>
+                <li className='side-link'><NavLink to="/properties">Properties</NavLink></li>
+                <li className='side-link'><NavLink to="/tenants">Tenants</NavLink></li>
+                <li className='link-no-decorate'><NavLink to="/units">Units</NavLink></li>
               </ul>
             </div>
             <div>
               <ul>
-                <li>Logout</li>
+                {sessionUser &&
+                <li onClick={logout}>Logout</li>
+                }
               </ul>
             </div>
           </div>

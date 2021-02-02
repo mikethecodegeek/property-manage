@@ -67,6 +67,13 @@ body {
   margin-bottom: 25px;
 }
 
+.side-link>a, .link-no-decorate>a {
+  text-decoration: none;
+}
+
+.side-link>a:visited, .link-no-decorate>a {
+  color: black
+}
 .content {
   display: flex;
 }
