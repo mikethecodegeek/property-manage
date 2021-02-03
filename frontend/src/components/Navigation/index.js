@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect , useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -10,6 +10,7 @@ import * as sessionActions from '../../store/session';
 function Navigation({ isLoaded, content }){
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const history = useHistory()
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -28,6 +29,9 @@ function Navigation({ isLoaded, content }){
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    history.push('/')
+  
+ 
   };
 
   return (
