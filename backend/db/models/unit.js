@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
     sqft: DataTypes.INTEGER,
     isVacant: DataTypes.BOOLEAN,
     rentalPrice: DataTypes.INTEGER,
-    tenantId: DataTypes.INTEGER,
     numOccupants: DataTypes.INTEGER,
     numBeds: DataTypes.INTEGER,
     numBaths: DataTypes.INTEGER,
@@ -14,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Unit.associate = function(models) {
     // associations can be defined here
+    Unit.belongsTo(models.Property, {foreignKey: 'propertyId'})
+    Unit.hasMany(models.Lease, {foreignKey:'unitId'})
   };
   return Unit;
 };

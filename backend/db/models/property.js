@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Property.associate = function(models) {
     // associations can be defined here
+    Property.hasMany(models.Unit, {foreignKey: 'propertyId'})
   };
   return Property;
 };
