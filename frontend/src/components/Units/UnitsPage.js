@@ -69,7 +69,7 @@ const findCurrentUnit = (id) => {
   return (
     <>
       <h1>Units Page</h1>
-      <div>
+      <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
     {sessionProperties.properties &&
     <div>
 
@@ -82,7 +82,7 @@ const findCurrentUnit = (id) => {
   }
     {propertyUnits &&
     <div>
-      <h3>Select a Unit</h3>
+      <h2>Select a Unit</h2>
        <select onChange={(e)=>findCurrentUnit(e.target.value)}>
        <option value='0'>Please select a unit</option>
        {propertyUnits.map(unit => <option value={unit.id}>{unit.unitNumber}</option>)}

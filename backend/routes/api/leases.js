@@ -21,19 +21,16 @@ router.get(
             isVacant: false
         },
     })
- 
-    const leases = await units.map(async unit => {
-        const currentLease = await Lease.findAll({
+    
+    const leases = await Promise.all(units.map((unit) => {
+        return Lease.findAll({
             where: {
             propertyId: propertyId,
             unitId: unit.id
             }
          })
-         console.log(await currentLease)
-         return await currentLease
-    })
-   
-    // console.log(leases)
+    }))
+      
     return res.json({
        leases
     });

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   PropertyFeature.associate = function(models) {
     // associations can be defined here
+    PropertyFeature.belongsTo(models.Property, {foreignKey: 'propertyId'})
   };
   return PropertyFeature;
 };

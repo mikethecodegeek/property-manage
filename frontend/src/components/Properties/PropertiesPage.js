@@ -43,12 +43,16 @@ useEffect(()=>{
 },[propData])
 
 const findCurrentProp = (id) => {
-  console.log('anything')
-  let current =sessionProperties.properties.find(prop => prop.id==id)
-  setCurrentProp(current)
-  setPropertyUnits(current.Units)
-  setVacantUnits(current.Units.filter(unit=> unit.isVacant))
-  console.log(current.Units)
+  if (id !== '0') {
+    console.log('anything')
+    let current =sessionProperties.properties.find(prop => prop.id==id)
+    setCurrentProp(current)
+    setPropertyUnits(current.Units)
+    setVacantUnits(current.Units.filter(unit=> unit.isVacant))
+    console.log(current.Units)
+  } else {
+    setCurrentProp(null)
+  }
 }
 
   return (
@@ -57,29 +61,48 @@ const findCurrentProp = (id) => {
     {sessionProperties.properties &&
     
       <select onChange={(e)=>findCurrentProp(e.target.value)}>
-        <option>Please select a property</option>
+        <option value='0'>Please select a property</option>
         {sessionProperties.properties.map(prop => <option value={prop.id}>{prop.propertyName}</option>)}
       </select>
     }
 
       {currentProp && propertyUnits &&
-    <div className='property-page-details'>
+      <div>
       <h2>Property Details</h2>
-      <img src={currentProp.photo}></img>
-      <div>
-        <p>{currentProp.propertyName}</p>
-        <p>{currentProp.propertyType}</p>
+    <div className='property-page-details' style={{display:'flex',justifyContent:'space-between',width:'90%'}}>
+        <img src={currentProp.photo}></img>
+        <div style={{display:'flex', flexDirection:'column'}}>
+          <p>{currentProp.propertyName}</p>
+          <p>{currentProp.propertyType}</p>
+        </div>
+        <div style={{display:'flex', flexDirection:'column'}}>
+          <p>{currentProp.address}</p>
+          <p>{currentProp.city} {currentProp.state} {currentProp.zipCode}</p>
+        </div>
       </div>
       <div>
-        <p>{currentProp.address}</p>
-        <p>{currentProp.city} {currentProp.state} {currentProp.zipCode}</p>
+        <div style={{display:'flex',justifyContent:'space-between',width:'90%'}}>
+          <h3>Total Units: {currentProp.numUnits} </h3>
+          <h3>Rented Units: {currentProp.numUnits - vacantUnits.length} </h3>
+          <h3>Vacant Units: {vacantUnits.length} </h3>
+          {/* <h3>Units Rented: {currentProp.Units.filter(unit => unit.isVacant)} </h3> */}
+        </div>
       </div>
-      <div>
-        <h3>Total Units: {currentProp.numUnits} </h3>
-        <h3>Rented Units: {currentProp.numUnits - vacantUnits.length} </h3>
-        <h3>Vacant Units: {vacantUnits.length} </h3>
-        {/* <h3>Units Rented: {currentProp.Units.filter(unit => unit.isVacant)} </h3> */}
-      </div>
+         <h2>Property Features</h2>
+       <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
+         <div>
+           <p>Lot size: {currentProp.PropertyFeature.size} acres</p>
+           <p>Gym: {currentProp.PropertyFeature.gym ? 'Yes':'No'}</p>
+           <p>Pool: {currentProp.PropertyFeature.pool ? 'Yes':'No'}</p>
+           <p>WIFI: {currentProp.PropertyFeature.wifi ? 'Yes':'No'}</p>
+         </div>
+         <div>
+           <p>Clubhouse: {currentProp.PropertyFeature.clubhouse ? 'Yes':'No'}</p>
+           <p>Pets: {currentProp.PropertyFeature.petsAllowed ? 'Yes':'No'}</p>
+           <p>Covered Parking: {currentProp.PropertyFeature.overheadParking ? 'Yes':'No'}</p>
+           <p>Parking: {currentProp.PropertyFeature.numParkingSpots} spot (per unit)</p>
+         </div>
+       </div>
     </div>
       }
 
