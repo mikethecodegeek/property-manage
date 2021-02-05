@@ -107,7 +107,7 @@ function PropertiesForm() {
             required
           />
         </label>
-        <button type="submit">Add Form</button>
+        <button type="submit">Add Property</button>
       </form>
     </>
   );

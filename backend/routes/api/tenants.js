@@ -6,6 +6,30 @@ const unit = require('../../db/models/unit');
 const router = express.Router();
 
 
+router.post(
+    '/new',
+    asyncHandler(async (req, res) => {
+      const { 
+        firstName,
+        lastName,
+        phoneNumber,
+        userId
+        } = req.body;
+       
+      const tenant = await Tenant.create({
+        firstName,
+        lastName,
+        phoneNumber,
+        userId
+      });
+      
+  
+      return res.json({
+        tenant
+      });
+    })
+  );
+
 router.get(
   '/:userId/all',
   asyncHandler(async (req, res) => {

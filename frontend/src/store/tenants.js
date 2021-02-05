@@ -7,6 +7,11 @@ const showTenants = (tenants) => ({
   payload: tenants
 });
 
+const newTenant = (tenant) => ({
+    type: GET_TENANTS,
+    payload: tenant
+  });
+
 
 export const getAllTenants = (userId) => async (dispatch) => {
   let tenants = await fetch(`/api/tenants/${userId}/all`)
@@ -14,6 +19,23 @@ export const getAllTenants = (userId) => async (dispatch) => {
   dispatch(showTenants(tenants.data));
   return tenants;
 };
+
+export const createTenant = (tenant, userId) => async (dispatch) => {
+    const { firstName,lastName,phoneNumber } = tenant;
+ 
+    const response = await fetch('/api/tenants/new', {
+      method: 'POST',
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        phoneNumber,
+        userId
+      })
+    });
+  
+    dispatch(newTenant(response.data.tenant));
+    return response;
+  };
 
 const initialState = { tenants: [] };
 

@@ -23,8 +23,7 @@ router.post(
         numUnits,
         ownerId 
         } = req.body;
-        console.log(req.body)
-    //   const property = await User.signup({ email, username, password });
+       
       const property = await Property.create({
         city,
         state,

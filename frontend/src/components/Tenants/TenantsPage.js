@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {getAllTenants} from '../../store/tenants'
 import * as sessionActions from "../../store/session";
+import TenantsForm from './TenantsForm'
 // import './SignupForm.css';
 
 function TenantsPage() {
@@ -43,6 +44,7 @@ function TenantsPage() {
   return (
     <>
     <div>
+      <TenantsForm />
       <h1>Tenants</h1>
       {sessionTenants.tenants &&
       <select onChange={(e)=>findCurrentTenant(e.target.value)}>
@@ -56,6 +58,7 @@ function TenantsPage() {
       <p>First Name: {tenant.firstName}</p>
       <p>Last Name: {tenant.lastName}</p>
       <p>Phone: {tenant.phoneNumber}</p>
+      <p>Status: {tenant.status}</p>
      </div>
     }
     </div>
