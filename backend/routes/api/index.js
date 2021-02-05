@@ -4,6 +4,7 @@ const usersRouter = require('./users.js');
 const propertiesRouter = require('./properties.js');
 const leasesRouter = require('./leases.js');
 const unitsRouter = require('./units.js');
+const tenantsRouter = require('./tenants.js');
 
 
 // GET /api/set-token-cookie
@@ -49,5 +50,6 @@ router.use('/users', usersRouter);
 router.use('/properties', propertiesRouter);
 router.use('/leases', leasesRouter);
 router.use('/units', unitsRouter);
+router.use('/tenants', tenantsRouter);
 
 module.exports = router;

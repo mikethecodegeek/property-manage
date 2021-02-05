@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session'
 import propertiesReducer from './properties'
 import unitsReducer from './units'
+import tenantsReducer from './tenants'
 
 const rootReducer = combineReducers({
   session,
   userProperties: propertiesReducer,
-  propertyUnits: unitsReducer
+  propertyUnits: unitsReducer,
+  tenants: tenantsReducer,
 });
 
 let enhancer;
