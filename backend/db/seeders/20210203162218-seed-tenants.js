@@ -19,12 +19,14 @@ module.exports = {
           firstName: "Joe",
           lastName: "Shmoe",
           phoneNumber: "555-555-5555",
+          userId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           firstName: "Jane",
           lastName: "Shmoe",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -32,6 +34,7 @@ module.exports = {
         {
           firstName: "Bill",
           lastName: "Beebop",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -39,6 +42,7 @@ module.exports = {
         {
           firstName: "Betty",
           lastName: "Beebop",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -46,6 +50,7 @@ module.exports = {
         {
           firstName: "Daniel",
           lastName: "Larusso",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -53,6 +58,7 @@ module.exports = {
         {
           firstName: "Johnny",
           lastName: "Lawrence",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -60,6 +66,7 @@ module.exports = {
         {
           firstName: "Eric",
           lastName: "Cartman",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -67,6 +74,7 @@ module.exports = {
         {
           firstName: "Sandy",
           lastName: "Soup",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -74,6 +82,7 @@ module.exports = {
         {
           firstName: "Peter",
           lastName: "Parker",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -81,6 +90,7 @@ module.exports = {
         {
           firstName: "Willy",
           lastName: "Wonka",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -88,6 +98,7 @@ module.exports = {
         {
           firstName: "Charlie",
           lastName: "Cheeto",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -95,6 +106,7 @@ module.exports = {
         {
           firstName: "Oscar",
           lastName: "The Grouch",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -102,6 +114,7 @@ module.exports = {
         {
           firstName: "Jimmy",
           lastName: "James",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -109,6 +122,7 @@ module.exports = {
         {
           firstName: "Geralt",
           lastName: "Of Rivia",
+          userId: 1,
           phoneNumber: "555-555-5555",
           createdAt: new Date(),
           updatedAt: new Date(),
