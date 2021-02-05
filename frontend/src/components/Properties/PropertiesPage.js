@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {getAllProperties} from '../../store/properties'
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
-// import './SignupForm.css';
+import PropertiesForm from "./PropertiesForm";
+
 
 function PropertiesPage() {
 //   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ const findCurrentProp = (id) => {
   return (
     <>
       <h1>Properties</h1>
+      {/* <PropertiesForm /> */}
     {sessionProperties.properties &&
     
       <select onChange={(e)=>findCurrentProp(e.target.value)}>

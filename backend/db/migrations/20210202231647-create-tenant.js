@@ -25,6 +25,28 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'Waiting List',
+      },
+      propertyId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: null,
+        references: {model:'Properties'}
+      },
+      unitId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: null,
+        references: {model:'Units'}
+      },
+      unitNumber: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: null,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

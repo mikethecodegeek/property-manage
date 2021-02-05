@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Property.associate = function(models) {
     // associations can be defined here
     Property.hasMany(models.Unit, {foreignKey: 'propertyId'})
+    Property.hasMany(models.Tenant, {foreignKey: 'propertyId'})
     Property.hasOne(models.PropertyFeature, {foreignKey: 'propertyId'})
   };
   return Property;

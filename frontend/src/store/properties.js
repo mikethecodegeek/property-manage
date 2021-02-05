@@ -1,11 +1,18 @@
 import { fetch } from './csrf.js';
 
 const GET_PROPERTIES = 'session/getProperties';
+// const NEW_PROPERTY =  'session/newProperty'
 
 const showProperties = (properties) => ({
   type: GET_PROPERTIES,
   payload: properties
 });
+
+const newProperty = (property) => ({
+    type: GET_PROPERTIES,
+    payload: property
+  });
+  
 
 
 export const getAllProperties = (id) => async (dispatch) => {
@@ -13,6 +20,28 @@ export const getAllProperties = (id) => async (dispatch) => {
   dispatch(showProperties(properties.data));
   return properties;
 };
+
+export const createProperty = (property,ownerId) => async (dispatch) => {
+    const { city,state,address,zipCode,monthlyPayment,propertyName,propertyType,numUnits } = property;
+    console.log(property)
+    const response = await fetch('/api/properties/new', {
+      method: 'POST',
+      body: JSON.stringify({
+        city,
+        state,
+        address,
+        zipCode,
+        monthlyPayment,
+        propertyName,
+        propertyType,
+        numUnits,
+        ownerId
+      })
+    });
+  
+    dispatch(newProperty(response.data.property));
+    return response;
+  };
 
 const initialState = { properties: [] };
 

@@ -23,11 +23,13 @@ router.get(
     })
     
     const leases = await Promise.all(units.map((unit) => {
+        console.log(unit.unitNumber)
         return Lease.findAll({
             where: {
             propertyId: propertyId,
-            unitId: unit.id
-            }
+            unitId: unit.unitNumber
+            },
+            include: Unit
          })
     }))
       

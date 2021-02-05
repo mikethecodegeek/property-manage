@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Lease = sequelize.define('Lease', {
-    unitId: DataTypes.INTEGER,
+    unitNumber: DataTypes.INTEGER,
     propertyId: DataTypes.INTEGER,
     tenantId: DataTypes.INTEGER,
     startDate: DataTypes.INTEGER,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Lease.associate = function(models) {
     // associations can be defined here
-    Lease.belongsTo(models.Unit, {foreignKey:'unitId'})
+    Lease.belongsTo(models.Unit, {foreignKey:'unitNumber'})
     Lease.belongsTo(models.Property, {foreignKey:'propertyId'})
   };
   return Lease;

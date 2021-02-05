@@ -8,10 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      unitId: {
+      unitNumber: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Units'}
+      },
+      unitId: {
+        allowNull:false,
+        type: Sequelize.INTEGER,
+        references: {model: 'Units'},
       },
       propertyId: {
         allowNull: false,

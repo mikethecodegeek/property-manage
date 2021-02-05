@@ -5,10 +5,16 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     phoneNumber: DataTypes.STRING,
     userId: DataTypes.INTEGER,
+    propertyId: DataTypes.INTEGER,
+    unitNumber: DataTypes.INTEGER,
+    unitId: DataTypes.INTEGER,
+    status: DataTypes.STRING,
   }, {});
   Tenant.associate = function(models) {
     // associations can be defined here
     Tenant.belongsTo(models.User, {foreignKey: 'userId'})
+    Tenant.belongsTo(models.Property, {foreignKey: 'propertyId'})
+    Tenant.belongsTo(models.Unit, {foreignKey: 'unitId'})
   };
   return Tenant;
 };

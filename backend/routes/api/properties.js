@@ -9,6 +9,41 @@ const { User,Property,Tenant, Unit, PropertyFeature } = require('../../db/models
 const router = express.Router();
 
 
+router.post(
+    '/new',
+    asyncHandler(async (req, res) => {
+      const { 
+        city,
+        state,
+        address,
+        zipCode,
+        monthlyPayment,
+        propertyName,
+        propertyType,
+        numUnits,
+        ownerId 
+        } = req.body;
+        console.log(req.body)
+    //   const property = await User.signup({ email, username, password });
+      const property = await Property.create({
+        city,
+        state,
+        address,
+        zipCode,
+        monthlyPayment,
+        propertyName,
+        propertyType,
+        numUnits:parseInt(numUnits),
+        ownerId 
+      });
+      
+  
+      return res.json({
+        property
+      });
+    })
+  );
+
 router.get(
   '/:id/all',
   asyncHandler(async (req, res) => {

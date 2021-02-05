@@ -45,7 +45,7 @@ module.exports = {
       },
       unitNumber: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       unitType: {
         allowNull: false,

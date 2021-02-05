@@ -18,6 +18,7 @@ module.exports = {
         {
           unitId: 1,
           propertyId: 1,
+          unitNumber: 1,
           tenantId: 1,
           startDate: new Date(),
           endDate: new Date,
@@ -26,6 +27,7 @@ module.exports = {
         },
         {
           unitId: 1,
+          unitNumber: 1,
           propertyId: 1,
           tenantId: 2,
           startDate: new Date(),
@@ -35,6 +37,7 @@ module.exports = {
         },
         {
           unitId: 2,
+          unitNumber: 2,
           propertyId: 1,
           tenantId: 3,
           startDate: new Date(),
@@ -44,6 +47,7 @@ module.exports = {
         },
         {
           unitId: 2,
+          unitNumber: 2,
           propertyId: 1,
           tenantId: 4,
           startDate: new Date(),
@@ -53,6 +57,7 @@ module.exports = {
         },
         {
           unitId: 3,
+          unitNumber: 3,
           propertyId: 1,
           tenantId: 5,
           startDate: new Date(),
@@ -62,6 +67,7 @@ module.exports = {
         },
         {
           unitId: 4,
+          unitNumber: 4,
           propertyId: 1,
           tenantId: 5,
           startDate: new Date(),
@@ -71,6 +77,7 @@ module.exports = {
         },
         {
           unitId: 1,
+          unitNumber: 1,
           propertyId: 2,
           tenantId: 6,
           startDate: new Date(),
@@ -80,6 +87,7 @@ module.exports = {
         },
         {
           unitId: 2,
+          unitNumber: 2,
           propertyId: 2,
           tenantId: 7,
           startDate: new Date(),
