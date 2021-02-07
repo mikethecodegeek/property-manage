@@ -17,7 +17,11 @@ function LeaseForm() {
   const [depositAmnt, setDepositAmnt] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [propData, setPropData] = useState([])
   const [errors, setErrors] = useState([]);
+  const [currentProp,setCurrentProp] = useState({})
+  const [currentUnit,setCurrentUnit] = useState({})
+  const [lastName,setLastName] = useState({})
   const [propertyUnits,setPropertyUnits] = useState([])
   const [tenants, setTenants] = useState()
   const [tenant, setCurrentTenant] = useState()
