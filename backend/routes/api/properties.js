@@ -43,6 +43,42 @@ router.post(
     })
   );
 
+router.post(
+    '/:propertyId/features/new',
+    asyncHandler(async (req, res) => {
+    //   const propertyId = req.params  
+      const { 
+        size,
+        gym,
+        pool,
+        wifi,
+        clubhouse,
+        petsAllowed,
+        numParkingSpots,
+        overheadParking
+        } = req.body;
+
+      const {propertyId} = req.params 
+      console.log(req.body)
+      const propertyFeature = await PropertyFeature.create({
+        size,
+        gym,
+        pool,
+        wifi,
+        clubhouse,
+        petsAllowed,
+        numParkingSpots,
+        overheadParking,
+        propertyId
+      });
+      
+      const properties = await Property.findAll({where:{ownerId:1}})
+      return res.json({
+        properties
+      });
+    })
+  );
+
 router.get(
   '/:id/all',
   asyncHandler(async (req, res) => {

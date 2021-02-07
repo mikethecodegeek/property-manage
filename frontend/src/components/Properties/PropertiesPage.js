@@ -4,6 +4,7 @@ import {getAllProperties} from '../../store/properties'
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import PropertiesForm from "./PropertiesForm";
+import PropertyFeaturesForm from "./PropertyFeaturesForm";
 
 
 function PropertiesPage() {
@@ -20,6 +21,7 @@ const [numUnits,setNumUnits] = useState(0)
 const [currentProp,setCurrentProp] = useState({})
 const [propertyUnits,setPropertyUnits] = useState()
 const [vacantUnits, setVacantUnits] = useState([])
+const [rentedUnits, setRentedUnits] = useState([])
 
 useEffect(()=>{
   const getProperties = async(id)=>{
@@ -50,7 +52,8 @@ const findCurrentProp = (id) => {
     setCurrentProp(current)
     setPropertyUnits(current.Units)
     setVacantUnits(current.Units.filter(unit=> unit.isVacant))
-    console.log(current.Units)
+    setRentedUnits(current.Units.filter(unit=> !unit.isVacant))
+    console.log(current.id)
   } else {
     setCurrentProp(null)
   }
@@ -84,13 +87,15 @@ const findCurrentProp = (id) => {
       </div>
       <div>
         <div style={{display:'flex',justifyContent:'space-between',width:'90%'}}>
+          {/* {rentedUnits.length + vacantUnits.length == currentProp.numUnits ? currentProp.numUnits : 'More unit data needed'} */}
           <h3>Total Units: {currentProp.numUnits} </h3>
-          <h3>Rented Units: {currentProp.numUnits - vacantUnits.length} </h3>
+          <h3>Rented Units: {rentedUnits.length} </h3>
           <h3>Vacant Units: {vacantUnits.length} </h3>
           {/* <h3>Units Rented: {currentProp.Units.filter(unit => unit.isVacant)} </h3> */}
         </div>
       </div>
          <h2>Property Features</h2>
+         {currentProp.PropertyFeature &&
        <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
          <div>
            <p>Lot size: {currentProp.PropertyFeature.size} acres</p>
@@ -105,6 +110,14 @@ const findCurrentProp = (id) => {
            <p>Parking: {currentProp.PropertyFeature.numParkingSpots} spot (per unit)</p>
          </div>
        </div>
+        }
+        {!currentProp.PropertyFeature && 
+        <div>
+          <h2>Please add some features to this property</h2>
+          <PropertyFeaturesForm propertyId={currentProp.id} />
+          </div>
+        }
+
     </div>
       }
 

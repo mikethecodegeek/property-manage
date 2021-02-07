@@ -12,6 +12,11 @@ const newProperty = (property) => ({
     type: GET_PROPERTIES,
     payload: property
   });
+
+const setPropertyFeatures = (property) => ({
+    type: GET_PROPERTIES,
+    payload: property
+  });
   
 
 
@@ -20,6 +25,27 @@ export const getAllProperties = (id) => async (dispatch) => {
   dispatch(showProperties(properties.data));
   return properties;
 };
+
+export const createPropertyFeatures = (property, propertyId) => async (dispatch) => {
+    const { size,gym,pool,wifi,clubhouse,petsAllowed,numParkingSpots,overheadParking } = property;
+    console.log(property)
+    const response = await fetch(`/api/properties/${propertyId}/features/new`, {
+      method: 'POST',
+      body: JSON.stringify({
+        size,
+        gym,
+        pool,
+        wifi,
+        clubhouse,
+        petsAllowed,
+        numParkingSpots,
+        overheadParking
+      })
+    });
+  
+    dispatch(setPropertyFeatures(response.data.property));
+    return response;
+  };
 
 export const createProperty = (property,ownerId) => async (dispatch) => {
     const { city,state,address,zipCode,monthlyPayment,propertyName,propertyType,numUnits } = property;

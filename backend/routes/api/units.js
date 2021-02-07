@@ -10,6 +10,44 @@ const unit = require('../../db/models/unit');
 const router = express.Router();
 
 
+
+router.post(
+    '/new',
+    asyncHandler(async (req, res) => {
+    //   const propertyId = req.params  
+      const { 
+        propertyId,
+        sqft,
+        isVacant,
+        rentalPrice,
+        numOccupants,
+        numBaths,
+        numBeds,
+        unitNumber,
+        unitType
+        } = req.body;
+
+    //   const {propertyId} = req.params 
+    //   console.log(req.body)
+      const unit = await Unit.create({
+        propertyId,
+        sqft,
+        isVacant,
+        rentalPrice,
+        numOccupants,
+        numBaths,
+        numBeds,
+        unitNumber,
+        unitType
+      });
+      
+    //   const properties = await Property.findAll({where:{ownerId:1}})
+      return res.json({
+        unit
+      });
+    })
+  );
+
 router.get(
   '/:propertyId/all',
   asyncHandler(async (req, res) => {

@@ -4,6 +4,7 @@ import {getAllProperties} from '../../store/properties'
 import {getAllUnits} from '../../store/units'
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import UnitsForm from "./UnitsForm";
 // import './SignupForm.css';
 
 function UnitsPage() {
@@ -80,6 +81,7 @@ const findCurrentUnit = (id) => {
       </select>
     </div>
   }
+   {/* <UnitsForm /> */}
     {propertyUnits &&
     <div>
       <h2>Select a Unit</h2>

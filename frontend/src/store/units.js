@@ -7,6 +7,34 @@ const showUnits = (units) => ({
   payload: units
 });
 
+const newUnit = (unit) => ({
+  type: GET_UNITS,
+  payload: unit
+});
+
+
+
+export const createUnit = (unit) => async (dispatch) => {
+    const { propertyId,sqft,isVacant,rentalPrice,numOccupants,numBaths,numBeds,unitNumber,unitType } = unit;
+    // console.log(property)
+    const response = await fetch('/api/units/new', {
+      method: 'POST',
+      body: JSON.stringify({
+        propertyId,
+        sqft,
+        isVacant,
+        rentalPrice,
+        numOccupants,
+        numBaths,
+        numBeds,
+        unitNumber,
+        unitType
+      })
+    });
+  
+    dispatch(newUnit(response.data.unit));
+    return response;
+  };
 
 export const getAllUnits = (propertyId) => async (dispatch) => {
   let units = await fetch(`/api/units/${propertyId}/all`)
