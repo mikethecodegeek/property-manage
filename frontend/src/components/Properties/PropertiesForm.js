@@ -30,11 +30,15 @@ function PropertiesForm() {
 
   return (
     <>
-      <h1>Add Property</h1>
-      <form onSubmit={handleSubmit}>
+      <h3>Add Property</h3>
+      <form className='basic-form' style={{width:'300px'}} onSubmit={handleSubmit}>
+          {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
+        }
+        <div className='flex-between'>
+        <div>
         <label>
           Address
           <input
@@ -43,7 +47,7 @@ function PropertiesForm() {
             onChange={(e) => setAddress(e.target.value)}
             required
           />
-        </label>
+        </label> <br/>
         <label>
           City
           <input
@@ -52,7 +56,7 @@ function PropertiesForm() {
             onChange={(e) => setCity(e.target.value)}
             required
           />
-        </label>
+        </label><br />
         <label>
           State
           <input
@@ -61,7 +65,7 @@ function PropertiesForm() {
             onChange={(e) => setState(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
         <label>
           Zip Code
           <input
@@ -70,7 +74,9 @@ function PropertiesForm() {
             onChange={(e) => setZip(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
+        </div>
+        <div>
         <label>
           Monthly Payment
           <input
@@ -79,7 +85,7 @@ function PropertiesForm() {
             onChange={(e) => setPayment(e.target.value)}
             required
           />
-        </label>
+        </label> <br/>
         <label>
           Property Name
           <input
@@ -88,7 +94,7 @@ function PropertiesForm() {
             onChange={(e) => setPropName(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
         <label>
           Property Type
           <input
@@ -97,7 +103,7 @@ function PropertiesForm() {
             onChange={(e) => setPropType(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
         <label>
           Number of Units
           <input
@@ -107,7 +113,9 @@ function PropertiesForm() {
             required
           />
         </label>
-        <button type="submit">Add Property</button>
+        </div>
+        </div>
+        <button className='form-button submit-button' type="submit">Add Property</button>
       </form>
     </>
   );

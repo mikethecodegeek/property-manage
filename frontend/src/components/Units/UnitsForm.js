@@ -31,11 +31,15 @@ function UnitsForm() {
 
   return (
     <>
-      <h1>Add Property</h1>
-      <form onSubmit={handleSubmit}>
+      <h3>Add Unit Property</h3>
+      <form className='basic-form' style={{width:'300px'}} onSubmit={handleSubmit}>
+        {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
+        }
+        <div className='flex-between'>
+        <div>
         <label>
           Property
           <input
@@ -44,7 +48,7 @@ function UnitsForm() {
             onChange={(e) => setPropertyId(e.target.value)}
             required
           />
-        </label>
+        </label> <br/>
         <label>
           Square Feet
           <input
@@ -53,7 +57,7 @@ function UnitsForm() {
             onChange={(e) => setSqft(e.target.value)}
             required
           />
-        </label>
+        </label> <br/>
         <label>
           Rental Price
           <input
@@ -62,7 +66,7 @@ function UnitsForm() {
             onChange={(e) => setRentalPrice(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
         <label>
           Max Occupants
           <input
@@ -71,7 +75,9 @@ function UnitsForm() {
             onChange={(e) => setNumOccupants(e.target.value)}
             required
           />
-        </label>
+        </label> <br/>
+        </div>
+        <div>
         <label>
           Number of Beds
           <input
@@ -80,7 +86,7 @@ function UnitsForm() {
             onChange={(e) => setNumBeds(e.target.value)}
             required
           />
-        </label>
+        </label> <br/>
         <label>
           Number of Baths
           <input
@@ -89,7 +95,7 @@ function UnitsForm() {
             onChange={(e) => setNumBaths(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
         <label>
           Unit Number
           <input
@@ -98,7 +104,7 @@ function UnitsForm() {
             onChange={(e) => setUnitNumber(e.target.value)}
             required
           />
-        </label>
+        </label><br/>
         <label>
           Unit Type
           <input
@@ -107,8 +113,10 @@ function UnitsForm() {
             onChange={(e) => setUnitType(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">Add Unit</button>
+        </label><br/>
+        </div>
+        </div>
+        <button className='form-button submit-button'  type="submit">Add Unit</button>
       </form>
     </>
   );

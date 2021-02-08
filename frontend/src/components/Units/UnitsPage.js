@@ -18,6 +18,7 @@ function UnitsPage() {
   const [currentUnit,setCurrentUnit] = useState()
   const [propertyUnits,setPropertyUnits] = useState([])
   const [vacantUnits, setVacantUnits] = useState([])
+  const [newUnit, setNewUnit] = useState(false)
 
 //   if (!sessionUser) return <Redirect to="/" />;
 
@@ -67,9 +68,21 @@ const findCurrentUnit = (id) => {
   }
 }
 
+const showUnitForm = () => {
+  setNewUnit(!newUnit)
+}
+
   return (
     <>
-      <h1>Units Page</h1>
+      <div className='flex-between'>
+        <h1>Units Page</h1>
+        <button className='form-button' onClick={showUnitForm}>New Unit</button>
+      </div>
+      {newUnit &&
+        <UnitsForm />
+      }
+     {!newUnit &&
+      <div>
       <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
     {sessionProperties.properties &&
     <div>
@@ -109,6 +122,8 @@ const findCurrentUnit = (id) => {
         <p>Max Occupancy: {currentUnit.numOccupants}</p>
       </div>
       </div>
+    </div>
+    }
     </div>
     }
     </>

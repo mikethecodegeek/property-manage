@@ -12,6 +12,7 @@ function TenantsPage() {
   const sessionTenants = useSelector(state => state.tenants.tenants)
   const [tenants, setTenants] = useState()
   const [tenant, setCurrentTenant] = useState()
+  const [newApplicant,setNewApplicant] = useState(false)
 
 //   if (!sessionUser) return <Redirect to="/" />;
   
@@ -26,6 +27,7 @@ function TenantsPage() {
     if (sessionUser) {
       getTenants(sessionUser.id)
     }
+    
   },[])
 
   const findCurrentTenant = tennant => {
@@ -41,13 +43,30 @@ function TenantsPage() {
     }
   }
 
+  const showApplicantForm = () => {
+    setNewApplicant(!newApplicant)
+    console.log(newApplicant)
+  }
+
   return (
     <>
     <div>
-      <TenantsForm />
-      <h1>Tenants</h1>
-      {sessionTenants.tenants &&
+      <div className='flex-between'>
+
+        <h1>Applicants and Tenants</h1>
+        <button className='form-button' onClick={showApplicantForm}>New Applicant</button>
+      </div>
+      {newApplicant &&
+      
+      <div>
+          <TenantsForm cancelTenant={()=>setNewApplicant(false)}/>
+        </div>
+      }
+      {!newApplicant &&
+      <div>
+      {sessionTenants.tenants && !newApplicant &&
       <select onChange={(e)=>findCurrentTenant(e.target.value)}>
+        
         <option value='0'>Please select a tenant</option>
         {sessionTenants.tenants.map(prop => <option value={prop.id}>{prop.firstName} {prop.lastName}</option>)}
       </select>
@@ -61,6 +80,8 @@ function TenantsPage() {
       <p>Status: {tenant.status}</p>
      </div>
     }
+    </div>
+}
     </div>
     </>
   );

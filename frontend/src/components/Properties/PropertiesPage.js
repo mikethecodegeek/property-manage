@@ -22,6 +22,7 @@ const [currentProp,setCurrentProp] = useState({})
 const [propertyUnits,setPropertyUnits] = useState()
 const [vacantUnits, setVacantUnits] = useState([])
 const [rentedUnits, setRentedUnits] = useState([])
+const [newProperty,setNewProperty] = useState(false)
 
 useEffect(()=>{
   const getProperties = async(id)=>{
@@ -59,10 +60,25 @@ const findCurrentProp = (id) => {
   }
 }
 
+const showPropertiesForm = () => {
+  setNewProperty(!newProperty)
+}
+
   return (
     <>
-      <h1>Properties</h1>
-      {/* <PropertiesForm /> */}
+      <div className='flex-between'>
+        <h1>Properties</h1>
+        <button className='form-button' onClick={showPropertiesForm}>New Property</button>
+      </div>
+      {newProperty &&
+      <div>
+        <PropertiesForm />
+      </div>
+  }
+    {!newProperty &&
+    <div>
+
+   
     {sessionProperties.properties &&
     
       <select onChange={(e)=>findCurrentProp(e.target.value)}>
@@ -120,7 +136,9 @@ const findCurrentProp = (id) => {
 
     </div>
       }
-
+    
+    </div>
+}
     </>
   );
 }

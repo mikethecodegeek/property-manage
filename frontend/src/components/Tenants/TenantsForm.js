@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import {createTenant} from '../../store/tenants'
 // import './SignupForm.css';
 
-function TenantsForm() {
+function TenantsForm({cancelTenant}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [firstName, setFirstName] = useState("");
@@ -25,11 +25,13 @@ function TenantsForm() {
 
   return (
     <>
-      <h1>Tenant Application</h1>
-      <form onSubmit={handleSubmit}>
+      <h3>Tenant Application</h3>
+      <form className='basic-form' onSubmit={handleSubmit}>
+          {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
+            }
         <label>
           First Name
           <input
@@ -57,8 +59,10 @@ function TenantsForm() {
             required
           />
         </label>
-      
-        <button type="submit">Add Applicant</button>
+        <div className='flex-buttons'>
+            <button className='form-button submit-button' type="submit">Add Applicant</button>
+            <button className='form-button submit-button cancel' onClick={cancelTenant}>Cancel</button>
+        </div>
       </form>
     </>
   );
