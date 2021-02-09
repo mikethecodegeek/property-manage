@@ -23,25 +23,25 @@ router.post(
         depositAmnt,
         unitNumber
         } = req.body;
-        console.log(req.body)
+ 
 
-    //   const {propertyId} = req.params 
-    //   console.log(req.body)
       const lease = await Lease.create({
-        propertyId,
-        unitId,
-        tenantId,
+        propertyId:parseInt(propertyId),
+        unitId:parseInt(unitId),
+        tenantId:parseInt(tenantId),
         startDate,
         endDate,
         depositAmnt,
+        unitNumber:parseInt(unitNumber)
        
       });
 
       const currentUnit = await Unit.findOne({where: {
-          unitId:unitId,
+          unitNumber:unitNumber,
           propertyId:propertyId
       }})
 
+      console.log(currentUnit)
       currentUnit.set({isVacant:false})
       currentUnit.save()
 

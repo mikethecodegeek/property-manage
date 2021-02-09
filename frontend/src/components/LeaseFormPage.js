@@ -36,7 +36,8 @@ function LeaseForm() {
   const handleSubmit = (e) => {
         e.preventDefault();
         // return dispatch(sessionActions.signup({ email, username, password }))
-        return dispatch(createLease({propertyId,unitId,tenantId,startDate,endDate,depositAmnt,unitNumber}, sessionUser.id))
+        dispatch(createLease({propertyId,unitId,tenantId,startDate,endDate,depositAmnt,unitNumber}, sessionUser.id))
+        
         console.log('Form Submitted')
     }
 
@@ -82,6 +83,7 @@ function LeaseForm() {
         setUnitId(unitId);
         console.log(unitId)
         console.log(unitNum)
+        console.log('somestuff')
         setUnitNumber(parseInt(unitNum))
     }  
 
@@ -107,7 +109,7 @@ function LeaseForm() {
         <label>
           Unit
           {propertyUnits &&
-          <select onChange={(e)=>handleUnit(e.target.value,e.target.selectedIndex.text)}>
+          <select onChange={(e)=>handleUnit(e.target.value,e.target[e.target.selectedIndex].text)}>
             <option value='0'>Select a Unit</option>
                 {propertyUnits.map(prop => <option value={prop.id}>{prop.unitNumber}</option>)}
             </select>
