@@ -25,10 +25,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      status: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'Waiting List',
+      active: {
+        type: Sequelize.BOOLEAN,
+        // allowNull: false,
+        defaultValue: false,
       },
       propertyId: {
         type: Sequelize.INTEGER,

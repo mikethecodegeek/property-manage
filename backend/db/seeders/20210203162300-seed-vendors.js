@@ -17,6 +17,7 @@ module.exports = {
       [
         {
           vendorName: "Bills Electric",
+          userId: 1,
           phone: "555-555-5555",
           vendorDescription:'Local Electrician',
           vendorType: 1,
@@ -31,6 +32,7 @@ module.exports = {
         },
         {
           vendorName: "John's Plumbing",
+          userId: 1,
           phone: "555-555-7777",
           vendorDescription:'Local Plumber',
           vendorType: 1,
@@ -45,6 +47,7 @@ module.exports = {
         },
         {
           vendorName: "Larry The Landscaper",
+          userId: 1,
           phone: "555-555-1111",
           vendorDescription:'Local Landscaper',
           vendorType: 1,
@@ -59,6 +62,7 @@ module.exports = {
         },
         {
           vendorName: "Home Depot",
+          userId: 1,
           phone: "555-555-9999",
           vendorDescription:'Retail store for supplies',
           vendorType: 2,

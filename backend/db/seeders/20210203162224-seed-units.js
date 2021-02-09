@@ -16,6 +16,7 @@ module.exports = {
       "Units",
       [
         {
+          userId: 1,
           propertyId: 1,
           sqft: 900,
           rentalPrice: 2000,
@@ -27,6 +28,7 @@ module.exports = {
         },
         {
           propertyId: 1,
+          userId: 1,
           sqft: 900,
           rentalPrice: 2000,
           unitNumber:2,
@@ -37,6 +39,7 @@ module.exports = {
         },
         {
           propertyId: 1,
+          userId: 1,
           sqft: 900,
           rentalPrice: 2000,
           unitNumber:3,
@@ -47,6 +50,7 @@ module.exports = {
         },
         {
           propertyId: 1,
+          userId: 1,
           sqft: 1200,
           rentalPrice: 2500,
           unitNumber:4,
@@ -57,6 +61,7 @@ module.exports = {
         },
         {
           propertyId: 1,
+          userId: 1,
           sqft: 1200,
           rentalPrice: 2500,
           unitNumber:5,
@@ -67,6 +72,7 @@ module.exports = {
         },
         {
           propertyId: 1,
+          userId: 1,
           sqft: 1200,
           rentalPrice: 2500,
           isVacant: false,
@@ -77,6 +83,7 @@ module.exports = {
         },
         {
           propertyId: 2,
+          userId: 1,
           sqft: 900,
           rentalPrice: 2000,
           unitNumber:1,
@@ -87,6 +94,7 @@ module.exports = {
         },
         {
           propertyId: 2,
+          userId: 1,
           sqft: 900,
           rentalPrice: 2000,
           unitNumber:2,
@@ -97,6 +105,7 @@ module.exports = {
         },
         {
           propertyId: 2,
+          userId: 1,
           sqft: 900,
           rentalPrice: 2000,
           unitNumber:3,
@@ -107,6 +116,7 @@ module.exports = {
         },
         {
           propertyId: 2,
+          userId: 1,
           sqft: 1200,
           rentalPrice: 2500,
           unitNumber:4,

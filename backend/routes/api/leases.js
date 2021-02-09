@@ -21,7 +21,8 @@ router.post(
         startDate,
         endDate,
         depositAmnt,
-        unitNumber
+        unitNumber,
+        userId
         } = req.body;
  
 
@@ -29,6 +30,7 @@ router.post(
         propertyId:parseInt(propertyId),
         unitId:parseInt(unitId),
         tenantId:parseInt(tenantId),
+        userId:parseInt(userId),
         startDate,
         endDate,
         depositAmnt,
@@ -41,12 +43,12 @@ router.post(
           propertyId:propertyId
       }})
 
-      console.log(currentUnit)
+    //   console.log(currentUnit)
       currentUnit.set({isVacant:false})
       currentUnit.save()
 
       currentTenant = await Tenant.findOne({where:{id:tenantId}})
-      currentTenant.set({status:'Active Tenant',propertyId:propertyId,unitId:unitId,unitNumber:unitNumber})
+      currentTenant.set({active:true,propertyId:propertyId,unitId:unitId,unitNumber:unitNumber})
       currentTenant.save()
       
     //   const properties = await Property.findAll({where:{ownerId:1}})
@@ -58,19 +60,20 @@ router.post(
 
 
 router.get(
-  '/:propertyId/all',
+  '/:userId/:propertyId/all',
   asyncHandler(async (req, res) => {
     const {userId,propertyId} = req.params 
     const property = await Property.findOne({where:{id:propertyId}});
     const units = await Unit.findAll({
         where:{
+            userId: userId,
             propertyId:property.id,
             isVacant: false
         },
     })
     
     const leases = await Promise.all(units.map((unit) => {
-        console.log(unit.unitNumber)
+        // console.log(unit.unitNumber)
         return Lease.findAll({
             where: {
             propertyId: propertyId,

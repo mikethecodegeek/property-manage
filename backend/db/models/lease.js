@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Lease = sequelize.define('Lease', {
     unitNumber: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     unitId: DataTypes.INTEGER,
     propertyId: DataTypes.INTEGER,
     tenantId: DataTypes.INTEGER,

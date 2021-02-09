@@ -35,7 +35,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const {userId} = req.params 
     const tenants = await Tenant.findAll({where:{userId:userId}});
-    console.log(tenants)
+    // console.log(tenants)
     // const units = await Unit.findAll({
     //     where:{
     //         propertyId:property.id,

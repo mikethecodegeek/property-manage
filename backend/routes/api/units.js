@@ -24,7 +24,8 @@ router.post(
         numBaths,
         numBeds,
         unitNumber,
-        unitType
+        unitType,
+        userId
         } = req.body;
 
     //   const {propertyId} = req.params 
@@ -38,7 +39,8 @@ router.post(
         numBaths,
         numBeds,
         unitNumber,
-        unitType
+        unitType,
+        userId
       });
       
     //   const properties = await Property.findAll({where:{ownerId:1}})
@@ -49,12 +51,13 @@ router.post(
   );
 
 router.get(
-  '/:propertyId/all',
+  ':userId/:propertyId/all',
   asyncHandler(async (req, res) => {
-    const {propertyId} = req.params 
+    const {userId,propertyId} = req.params 
     const property = await Property.findOne({where:{id:propertyId}});
     const units = await Unit.findAll({
         where:{
+            userId:userId,
             propertyId:property.id,
         },
     })
@@ -64,6 +67,23 @@ router.get(
     });
   })
 );
+
+router.get(
+    '/:userId/all',
+    asyncHandler(async (req, res) => {
+      const {userId} = req.params 
+      const units = await Unit.findAll({
+          where:{
+              userId:userId,
+          },
+      })
+      console.log('HIIIIIIIIIIIIIITTTTTT')
+      
+      return res.json({
+         units
+      });
+    })
+  );
 
 router.get(
     '/:propertyId/vacant',

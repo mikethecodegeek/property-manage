@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     propertyId: DataTypes.INTEGER,
     unitNumber: DataTypes.INTEGER,
     unitId: DataTypes.INTEGER,
-    status: DataTypes.STRING,
+    active: DataTypes.BOOLEAN,
   }, {});
   Tenant.associate = function(models) {
     // associations can be defined here

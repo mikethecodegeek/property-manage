@@ -2,6 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Unit = sequelize.define('Unit', {
     propertyId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
     sqft: DataTypes.INTEGER,
     isVacant: DataTypes.BOOLEAN,
     rentalPrice: DataTypes.INTEGER,

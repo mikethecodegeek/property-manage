@@ -14,7 +14,7 @@ const newUnit = (unit) => ({
 
 
 
-export const createUnit = (unit) => async (dispatch) => {
+export const createUnit = (unit,userId) => async (dispatch) => {
     const { propertyId,sqft,isVacant,rentalPrice,numOccupants,numBaths,numBeds,unitNumber,unitType } = unit;
     // console.log(property)
     const response = await fetch('/api/units/new', {
@@ -28,7 +28,8 @@ export const createUnit = (unit) => async (dispatch) => {
         numBaths,
         numBeds,
         unitNumber,
-        unitType
+        unitType,
+        userId
       })
     });
   
@@ -36,11 +37,19 @@ export const createUnit = (unit) => async (dispatch) => {
     return response;
   };
 
-export const getAllUnits = (propertyId) => async (dispatch) => {
-  let units = await fetch(`/api/units/${propertyId}/all`)
+export const getAllUnits = (propertyId,userId) => async (dispatch) => {
+  let units = await fetch(`/api/units/${userId}/${propertyId}/all`)
   dispatch(showUnits(units.data));
   return units;
 };
+
+export const getUserUnits = (userId) => async (dispatch) => {
+    console.log('units hits')
+  let units = await fetch(`/api/units/${userId}/all`)
+  dispatch(showUnits(units.data));
+  return units;
+};
+
 
 const initialState = { units: [] };
 

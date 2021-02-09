@@ -17,6 +17,7 @@ module.exports = {
       [
         {
           unitId: 1,
+          userId: 1,
           propertyId: 1,
           unitNumber: 1,
           tenantId: 1,
@@ -27,6 +28,7 @@ module.exports = {
         },
         {
           unitId: 1,
+          userId: 1,
           unitNumber: 1,
           propertyId: 1,
           tenantId: 2,
@@ -37,6 +39,7 @@ module.exports = {
         },
         {
           unitId: 2,
+          userId: 1,
           unitNumber: 2,
           propertyId: 1,
           tenantId: 3,
@@ -47,6 +50,7 @@ module.exports = {
         },
         {
           unitId: 2,
+          userId: 1,
           unitNumber: 2,
           propertyId: 1,
           tenantId: 4,
@@ -57,6 +61,7 @@ module.exports = {
         },
         {
           unitId: 3,
+          userId: 1,
           unitNumber: 3,
           propertyId: 1,
           tenantId: 5,
@@ -66,17 +71,8 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          unitId: 4,
-          unitNumber: 4,
-          propertyId: 1,
-          tenantId: 5,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
           unitId: 1,
+          userId: 1,
           unitNumber: 1,
           propertyId: 2,
           tenantId: 6,
@@ -87,6 +83,7 @@ module.exports = {
         },
         {
           unitId: 2,
+          userId: 1,
           unitNumber: 2,
           propertyId: 2,
           tenantId: 7,

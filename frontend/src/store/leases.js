@@ -21,7 +21,7 @@ const newLease = (lease) => ({
 //   return tenants;
 // };
 
-export const createLease = (lease) => async (dispatch) => {
+export const createLease = (lease,userId) => async (dispatch) => {
     const { propertyId,unitId,tenantId,startDate,endDate,depositAmnt,unitNumber } = lease;
     console.log(lease)
     const response = await fetch('/api/leases/new', {
@@ -33,7 +33,8 @@ export const createLease = (lease) => async (dispatch) => {
         startDate,
         endDate,
         depositAmnt,
-        unitNumber
+        unitNumber,
+        userId,
       })
     });
   
