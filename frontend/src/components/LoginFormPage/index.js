@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import './LoginForm.css';
 
 function LoginFormPage() {
@@ -24,13 +24,21 @@ function LoginFormPage() {
 
   return (
     <>
+      <div className='flex-between'>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <div className='account'>
+        <h3>Don't have an account yet?</h3>       
+        <h3><NavLink to="/signup">Sign Up</NavLink></h3> 
+      </div>
+      </div>
+      <form className='basic-form' onSubmit={handleSubmit}>
+        {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
-          ))}
+            ))}
         </ul>
+          }
         <label>
           Username or Email
           <input
@@ -49,8 +57,9 @@ function LoginFormPage() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button class='submit-button form-button' type="submit">Log In</button>
       </form>
+     
     </>
   );
 }

@@ -21,6 +21,7 @@ function UnitsPage() {
   const [newUnit, setNewUnit] = useState(false)
 
 //   if (!sessionUser) return <Redirect to="/" />;
+// const sessionProperties = useSelector((state) => state.userProperties.properties);
 
 useEffect(()=>{
   const getProperties = async(id)=>{

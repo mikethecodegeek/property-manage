@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {createUnit} from '../../store/units'
+import {getAllProperties} from '../../store/properties'
 // import './SignupForm.css';
 
 function UnitsForm() {
@@ -16,8 +17,11 @@ function UnitsForm() {
   const [numBaths, setNumBaths] = useState("");
   const [unitNumber, setUnitNumber] = useState("");
   const [unitType, setUnitType] = useState("");
-
+  
+//   const [propList, setPropList] = useState([])
   const [errors, setErrors] = useState([]);
+
+  const sessionProperties = useSelector((state) => state.userProperties.properties);
 
 //   if (sessionUser) return <Redirect to="/" />;
 
@@ -28,7 +32,15 @@ function UnitsForm() {
         console.log('Form Submitted')
     }
 
+  useEffect(()=>{
+    //   const getTheProperties = async () => {
+         dispatch(getAllProperties(sessionUser.id))
+    //       setPropList(properties)
+    //   }
+    //   getTheProperties()
+  },[])  
 
+    // let currentProps = 
   return (
     <>
       <h3>Add Unit Property</h3>
@@ -42,12 +54,18 @@ function UnitsForm() {
         <div>
         <label>
           Property
-          <input
+          {sessionProperties &&
+             <select onChange={(e)=>setPropertyId(e.target.value)}>
+             <option value='0'>Please select a property</option>
+               {sessionProperties.properties.map(prop => <option value={prop.id}>{prop.propertyName}</option>)}
+             </select>
+          }
+          {/* <input
             type="text"
             value={propertyId}
             onChange={(e) => setPropertyId(e.target.value)}
             required
-          />
+          /> */}
         </label> <br/>
         <label>
           Square Feet

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect,NavLink } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
 
@@ -29,11 +29,19 @@ function SignupFormPage() {
 
   return (
     <>
+    <div className='flex-between'>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <div className='account'>
+        <h3>Already have an account?</h3>       
+        <h3><NavLink to="/login">Login</NavLink></h3> 
+      </div>
+    </div>
+      <form className='basic-form' style={{width:'200px'}} onSubmit={handleSubmit}>
+        {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
+        }
         <label>
           Email
           <input
@@ -41,7 +49,7 @@ function SignupFormPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-          />
+          /> <br/>
         </label>
         <label>
           Username
@@ -52,6 +60,7 @@ function SignupFormPage() {
             required
           />
         </label>
+      
         <label>
           Password
           <input
@@ -59,7 +68,7 @@ function SignupFormPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-          />
+          /> <br/>
         </label>
         <label>
           Confirm Password
@@ -69,9 +78,11 @@ function SignupFormPage() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">Sign Up</button>
+        </label> <br/>
+      
+        <button className='form-button submit-button' type="submit">Sign Up</button>
       </form>
+     
     </>
   );
 }

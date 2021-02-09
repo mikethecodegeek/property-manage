@@ -10,6 +10,7 @@ import UnitsPage from "./components/Units/UnitsPage";
 import HomePage from "./components/HomePage/HomePage"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import LeaseForm from "./components/LeaseFormPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route path="/tenants">
             <TenantsPage />
+          </Route>
+          <Route path="/leases">
+            <LeaseForm />
           </Route>
           <Route path="/units">
             <UnitsPage />

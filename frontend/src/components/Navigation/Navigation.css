@@ -102,7 +102,7 @@ body {
   width: 80%;
 }
 
-.basic-form  input[type='text'],input[type='number'] {
+.basic-form  input[type='text'],input[type='number'],input[type='date'],input[type='password'],select {
   padding: 5px;
   margin: 10px 5px;
 }
@@ -120,4 +120,17 @@ body {
 
 .cancel {
   margin-left: 10px;
+}
+
+
+.account {
+  text-align: center;
+}
+.account > h3 {
+  margin-bottom: 0px;
+}
+
+
+.account h3:last-child {
+  margin-top: 0px;
 }

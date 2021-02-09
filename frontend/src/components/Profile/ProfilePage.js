@@ -12,13 +12,14 @@ function ProfilePage() {
   const sessionProperties = useSelector((state) => state.userProperties.properties);
   const [propData, setPropData] = useState([])
   const [numUnits,setNumUnits] = useState(0)
+  const [numVacant,setNumVacant] = useState(0)
 
   useEffect(()=>{
     const getProperties = async(id)=>{
       let properties = await dispatch(getAllProperties(id))
       // let propresp = await properties.json()
       setPropData(properties.data)
-      console.log(properties.data)
+      // console.log(properties.data)
      
     } 
     if(sessionUser) {
@@ -30,11 +31,17 @@ function ProfilePage() {
     if (propData.properties) {
       let totUnits = 0
       propData.properties.forEach(prop => totUnits+=prop.numUnits)
-      console.log(totUnits)
+      // console.log(totUnits)
       setNumUnits(totUnits)
-      console.log(numUnits)
+      // console.log(numUnits)
     }
   },[propData])
+
+  // useEffect(()=>{
+  //   const asyncStuff = async () =>{
+       
+  //   }
+  // },[])
 
   // if (!sessionUser) return <Redirect to="/" />;
 
@@ -46,11 +53,17 @@ function ProfilePage() {
       <div className='profile-quickview'>
         <h2>Quick View</h2>
           <p>{sessionProperties.properties.length} properties</p>
-          <p>{sessionProperties.properties.reduce((acc,val) => acc.numUnits+val.numUnits)} units </p>
+          <p>{sessionProperties.properties.reduce((acc,val) => {
+            console.log(acc.numUnits,acc.propertyName)
+            console.log(val.numUnits,val.propertyName)
+            
+           return acc.numUnits==undefined || val.numUnits==undefined? acc+ 0: parseInt(acc.numUnits)+parseInt(val.numUnits)
+           
+           })} units </p>
           {/* <p>{sessionProperties.properties.reduce((acc,val) => acc.numUnits+val.numUnits)} units </p>
           <p>{sessionProperties.properties.filter(prop => prop.Units.filter(unit => unit.isVacant))} vacant units </p> */}
 
-          <LeaseForm />
+          {/* <LeaseForm /> */}
       </div>
         }
     </>

@@ -10,6 +10,53 @@ const unit = require('../../db/models/unit');
 const router = express.Router();
 
 
+router.post(
+    '/new',
+    asyncHandler(async (req, res) => {
+    //   const propertyId = req.params  
+      const { 
+        propertyId,
+        unitId,
+        tenantId,
+        startDate,
+        endDate,
+        depositAmnt,
+        unitNumber
+        } = req.body;
+        console.log(req.body)
+
+    //   const {propertyId} = req.params 
+    //   console.log(req.body)
+      const lease = await Lease.create({
+        propertyId,
+        unitId,
+        tenantId,
+        startDate,
+        endDate,
+        depositAmnt,
+       
+      });
+
+      const currentUnit = await Unit.findOne({where: {
+          unitId:unitId,
+          propertyId:propertyId
+      }})
+
+      currentUnit.set({isVacant:false})
+      currentUnit.save()
+
+      currentTenant = await Tenant.findOne({where:{id:tenantId}})
+      currentTenant.set({status:'Active Tenant',propertyId:propertyId,unitId:unitId,unitNumber:unitNumber})
+      currentTenant.save()
+      
+    //   const properties = await Property.findAll({where:{ownerId:1}})
+      return res.json({
+        lease
+      });
+    })
+  );
+
+
 router.get(
   '/:propertyId/all',
   asyncHandler(async (req, res) => {

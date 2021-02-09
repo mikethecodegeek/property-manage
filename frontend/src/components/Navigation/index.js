@@ -20,8 +20,8 @@ function Navigation({ isLoaded, content }){
     sessionLinks = (
       <>
         {/* <LoginFormModal /> */}
-        <NavLink to="/signup">Sign Up</NavLink>
-        <NavLink to="/login">Login</NavLink>
+        {/* <NavLink to="/signup">Sign Up</NavLink>
+        <NavLink to="/login">Login</NavLink> */}
       </>
     );
   }
@@ -51,6 +51,7 @@ function Navigation({ isLoaded, content }){
                 <li className='side-link'><NavLink to="/profile">My Profile</NavLink></li>
                 <li className='side-link'><NavLink to="/properties">Properties</NavLink></li>
                 <li className='side-link'><NavLink to="/tenants">Tenants</NavLink></li>
+                <li className='side-link'><NavLink to="/leases">Leases</NavLink></li>
                 <li className='link-no-decorate'><NavLink to="/units">Units</NavLink></li>
               </ul>
             </div>
