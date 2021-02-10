@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ImageUploading from 'react-images-uploading';
  
-function ImageUpload({onNewImageBase64}) {
+function ImageUpload({onNewImageBase64, onSave, currentPhoto}) {
   const [images, setImages] = React.useState([]);
  
   const onChange = (imageList, addUpdateIndex) => {
@@ -13,6 +13,20 @@ function ImageUpload({onNewImageBase64}) {
         onNewImageBase64(null)
     }
   };
+  useEffect(()=>{
+    if (images.length == 0) {
+      onNewImageBase64(null)
+    }
+  },[images])
+
+  const saveImg = (remove, imageList) => {
+    // console.log(images[0].data_url)
+    // return
+    onSave(images[0].data_url)
+    setImages([])
+    // remove(0)
+    // imageList[0] = null
+  }
 
   return (
     <div>
@@ -49,6 +63,8 @@ function ImageUpload({onNewImageBase64}) {
                 <div className="image-item__btn-wrapper">
                   <button onClick={() => onImageUpdate(index)}>Update</button>
                   <button onClick={() => onImageRemove(index)}>Remove</button>
+                  <button onClick={() => saveImg((index)=>onImageRemove(index))}>Save</button>
+                  
                 </div>
               </div>
             ))}

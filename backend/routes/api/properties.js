@@ -41,6 +41,21 @@ router.post(
       ownerId,
     });
 
+    for (let a=1; a <= numUnits; a++) {
+        await Unit.create({
+          propertyId:property.id,
+          sqft: 500,
+          isVacant: true,
+          rentalPrice: 1000,
+          numOccupants: 1,
+          numBaths: 1,
+          numBeds: 1,
+          unitNumber: a,
+          unitType: propertyType,
+          userId:ownerId
+      });
+    }
+
     return res.json({
       property,
     });

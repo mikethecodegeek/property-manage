@@ -20,7 +20,7 @@ const setPropertyFeatures = (property) => ({
   
   export const uploadImg = (imgData, propertyId) => async (dispatch) => {
     const { imgUrl } = imgData;
-    console.log(imgUrl)
+    console.log('I was here!!!!!!!!!!!!!!!!!!')
     const response = await fetch(`/api/properties/${propertyId}/photo`, {
       method: 'POST',
       body: JSON.stringify({

@@ -26,17 +26,20 @@ const [rentedUnits, setRentedUnits] = useState([])
 const [newProperty,setNewProperty] = useState(false)
 const [imgUrl, setImgUrl] = useState('');
 
+
 useEffect(()=>{
   const getProperties = async(id)=>{
     let properties = await dispatch(getAllProperties(id))
     // let propresp = await properties.json()
     setPropData(properties.data)
+    // findCurrentProp(currentProp.id)
     console.log(properties.data)
+    // setImgUrl('')
   } 
   if(sessionUser) {
     getProperties(sessionUser.id)
   }
-},[])
+},[imgUrl])
 
 useEffect(()=>{
   if (propData.properties) {
@@ -66,10 +69,15 @@ const showPropertiesForm = () => {
   setNewProperty(!newProperty)
 }
 
-const uploadPhoto = () => {
+const uploadPhoto = (imgUrl) => {
   const id = currentProp.id
-  // alert(imgUrl)
-  return dispatch(uploadImg({imgUrl},id))
+  console.log(currentProp)
+  const test = async () => {
+    await dispatch(uploadImg({imgUrl},id))
+    console.log(currentProp)
+    findCurrentProp(currentProp.id)
+  }
+  test()
 }
 
   return (
@@ -100,11 +108,11 @@ const uploadPhoto = () => {
       <div>
       <h2>Property Details</h2>
     <div className='property-page-details' >
-        <img src={imgUrl||currentProp.photo} style={{maxHeight:'150px'}}></img>
-        <ImageUpload onNewImageBase64={img => setImgUrl(img)} />
-        {imgUrl &&
+        <img src={imgUrl || currentProp.photo} style={{maxHeight:'150px'}}></img>
+        <ImageUpload onNewImageBase64={img => setImgUrl(img)} currentPhoto={currentProp.photo} onSave={(photo)=>uploadPhoto(photo)} />
+        {/* {imgUrl &&
         <button onClick={uploadPhoto}>Save</button>
-        }
+        } */}
         <div style={{display:'flex', flexDirection:'column'}}>
           <p>{currentProp.propertyName}</p>
           <p>{currentProp.propertyType}</p>
