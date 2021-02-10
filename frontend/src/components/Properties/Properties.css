@@ -1,0 +1,9 @@
+.property-page-details {
+    display:flex;
+    justify-content:space-between;
+    width:90%
+}
+
+.property-page-details > img {
+    height: 50px;
+}

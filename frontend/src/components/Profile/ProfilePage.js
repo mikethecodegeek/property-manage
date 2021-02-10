@@ -86,6 +86,12 @@ function ProfilePage() {
     propArray.forEach(prop => expense += prop.monthlyPayment)
     return expense
   }
+  
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  })
 
   // useEffect(()=>{
   //   const asyncStuff = async () =>{
@@ -125,14 +131,14 @@ function ProfilePage() {
         {unitData.units &&
         <>
           <p>{numVacant} Vacant Units</p>
-          <p>${calculateIncome(rentedUnits)} Income from rentals</p>
+          <p>{formatter.format(calculateIncome(rentedUnits))} Income from rentals</p>
         
         </>
         }
         {allProperties.length >0 &&
           <>
-          <p>${calculateExpense(allProperties)} Expenses this month</p>
-          <p>${calculateIncome(rentedUnits)-calculateExpense(allProperties)} Net</p>
+          <p>{formatter.format(calculateExpense(allProperties))} Expenses this month</p>
+          <p>{formatter.format(calculateIncome(rentedUnits)-calculateExpense(allProperties))} Net</p>
           </>
         }
         

@@ -5,7 +5,8 @@ import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import PropertiesForm from "./PropertiesForm";
 import PropertyFeaturesForm from "./PropertyFeaturesForm";
-
+import ImageUpload from "../PhotoUpload/PhotoUpload";
+import {uploadImg} from "../../store/properties"
 
 function PropertiesPage() {
 //   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const [propertyUnits,setPropertyUnits] = useState()
 const [vacantUnits, setVacantUnits] = useState([])
 const [rentedUnits, setRentedUnits] = useState([])
 const [newProperty,setNewProperty] = useState(false)
+const [imgUrl, setImgUrl] = useState('');
 
 useEffect(()=>{
   const getProperties = async(id)=>{
@@ -64,6 +66,12 @@ const showPropertiesForm = () => {
   setNewProperty(!newProperty)
 }
 
+const uploadPhoto = () => {
+  const id = currentProp.id
+  // alert(imgUrl)
+  return dispatch(uploadImg({imgUrl},id))
+}
+
   return (
     <>
       <div className='flex-between'>
@@ -79,7 +87,7 @@ const showPropertiesForm = () => {
     <div>
 
    
-    {sessionProperties.properties &&
+    {sessionProperties && sessionProperties.properties &&
     
       <select onChange={(e)=>findCurrentProp(e.target.value)}>
         <option value='0'>Please select a property</option>
@@ -87,11 +95,16 @@ const showPropertiesForm = () => {
       </select>
     }
 
+
       {currentProp && propertyUnits &&
       <div>
       <h2>Property Details</h2>
-    <div className='property-page-details' style={{display:'flex',justifyContent:'space-between',width:'90%'}}>
-        <img src={currentProp.photo}></img>
+    <div className='property-page-details' >
+        <img src={imgUrl||currentProp.photo} style={{maxHeight:'150px'}}></img>
+        <ImageUpload onNewImageBase64={img => setImgUrl(img)} />
+        {imgUrl &&
+        <button onClick={uploadPhoto}>Save</button>
+        }
         <div style={{display:'flex', flexDirection:'column'}}>
           <p>{currentProp.propertyName}</p>
           <p>{currentProp.propertyType}</p>
@@ -104,7 +117,7 @@ const showPropertiesForm = () => {
       <div>
         <div style={{display:'flex',justifyContent:'space-between',width:'90%'}}>
           {/* {rentedUnits.length + vacantUnits.length == currentProp.numUnits ? currentProp.numUnits : 'More unit data needed'} */}
-          <h3>Total Units: {currentProp.numUnits} </h3>
+          <h3>Total Units: {propertyUnits.length} </h3>
           <h3>Rented Units: {rentedUnits.length} </h3>
           <h3>Vacant Units: {vacantUnits.length} </h3>
           {/* <h3>Units Rented: {currentProp.Units.filter(unit => unit.isVacant)} </h3> */}

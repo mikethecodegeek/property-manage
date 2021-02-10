@@ -48,6 +48,26 @@ router.post(
 );
 
 router.post(
+  "/:propertyId/photo",
+  asyncHandler(async (req, res) => {
+    // const propertyId = req.params
+    const { imgUrl } = req.body;
+
+    const { propertyId } = req.params;
+    // console.log(req.body);
+    const currentProperty = await Property.findOne({ where: { id: propertyId } });
+    console.log(currentProperty);
+    
+    currentProperty.set({ photo: imgUrl });
+    currentProperty.save();
+    const properties = await Property.findAll({ where: { ownerId: 1 } });
+    return res.json({
+      currentProperty
+    });
+  })
+);
+
+router.post(
   "/:propertyId/features/new",
   asyncHandler(async (req, res) => {
     //   const propertyId = req.params

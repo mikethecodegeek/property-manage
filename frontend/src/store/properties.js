@@ -18,7 +18,19 @@ const setPropertyFeatures = (property) => ({
     payload: property
   });
   
-
+  export const uploadImg = (imgData, propertyId) => async (dispatch) => {
+    const { imgUrl } = imgData;
+    console.log(imgUrl)
+    const response = await fetch(`/api/properties/${propertyId}/photo`, {
+      method: 'POST',
+      body: JSON.stringify({
+        imgUrl
+      })
+    });
+  
+    dispatch(showProperties(response.data.property));
+    return response;
+  };
 
 export const getAllProperties = (id) => async (dispatch) => {
   let properties = await fetch(`/api/properties/${id}/all`)
