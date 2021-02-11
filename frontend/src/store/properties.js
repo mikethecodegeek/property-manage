@@ -1,7 +1,7 @@
 import { fetch } from './csrf.js';
-
+import { useAlert } from 'react-alert'
 const GET_PROPERTIES = 'session/getProperties';
-// const NEW_PROPERTY =  'session/newProperty'
+const NEW_PROPERTY =  'session/newProperty'
 
 const showProperties = (properties) => ({
   type: GET_PROPERTIES,
@@ -9,8 +9,8 @@ const showProperties = (properties) => ({
 });
 
 const newProperty = (property) => ({
-    type: GET_PROPERTIES,
-    payload: property
+    type: NEW_PROPERTY,
+    property
   });
 
 const setPropertyFeatures = (property) => ({
@@ -88,6 +88,12 @@ function propertiesReducer(state = initialState, action) {
   switch (action.type) {
     case GET_PROPERTIES:
       newState = Object.assign({}, state, { properties: action.payload });
+      return newState;
+    case NEW_PROPERTY:
+      console.log(state)
+      // newState = Object.assign({}, state, { properties: action.property });
+      newState = state
+      // newState.properties.properties.push()
       return newState;
     default:
       return state;

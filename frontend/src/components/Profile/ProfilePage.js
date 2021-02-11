@@ -6,6 +6,7 @@ import {getAllProperties} from '../../store/properties'
 import {getAllTenants} from '../../store/tenants'
 import {getUserUnits} from '../../store/units'
 import LeaseForm from '../LeaseFormPage'
+import { useAlert } from 'react-alert'
 // import './SignupForm.css';
 
 function ProfilePage() {
@@ -100,7 +101,7 @@ function ProfilePage() {
   // },[])
 
   // if (!sessionUser) return <Redirect to="/" />;
-
+  // const alert = useAlert()
 
   return (
     <>

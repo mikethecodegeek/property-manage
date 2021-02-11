@@ -88,7 +88,7 @@ const uploadPhoto = (imgUrl) => {
       </div>
       {newProperty &&
       <div>
-        <PropertiesForm />
+        <PropertiesForm saved={()=>setNewProperty(!newProperty)} />
       </div>
   }
     {!newProperty &&
