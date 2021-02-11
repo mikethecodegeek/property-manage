@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import './Properties.css'
 import {createPropertyFeatures} from '../../store/properties'
 // import './SignupForm.css';
 
@@ -23,7 +24,7 @@ function PropertyFeaturesForm({propertyId}) {
 
   const handleSubmit = (e) => {
         e.preventDefault();
-        // return dispatch(sessionActions.signup({ email, username, password }))
+        
         return dispatch(createPropertyFeatures({size,gym,pool,wifi,clubhouse,petsAllowed,numParkingSpots,overheadParking},propertyId))
         console.log('Form Submitted')
     }
@@ -32,19 +33,35 @@ function PropertyFeaturesForm({propertyId}) {
   return (
     <>
       {/* <h1>Property Feat</h1> */}
-      <form onSubmit={handleSubmit}>
+      <form className='property-features-form' onSubmit={handleSubmit}>
+        {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label>
-          Size (in acres)
-          <input
-            type="number"
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
-            required
-          />
-        </label>
+        }
+        <div className='section-one'>
+          <label>
+            Size (in acres)
+            <input
+              type="number"
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Parking Spots (per unit)
+            <input
+              type="number"
+              value={numParkingSpots}
+              onChange={(e) => setNumParkingSpots(e.target.value)}
+              required
+            />
+          </label>
+
+        </div>
+        <div className='section-two'>
+        <div>
         <label>
           Gym
           <input
@@ -72,6 +89,8 @@ function PropertyFeaturesForm({propertyId}) {
            
           />
         </label>
+        </div>
+        <div>
         <label>
           Clubhouse
           <input
@@ -99,18 +118,11 @@ function PropertyFeaturesForm({propertyId}) {
          
           />
         </label>
-        <label>
-          Parking Spots (per unit)
-          <input
-            type="number"
-            value={numParkingSpots}
-            onChange={(e) => setNumParkingSpots(e.target.value)}
-            required
-          />
-        </label>
+        </div>
+       </div>
         
       
-        <button type="submit">Add Features</button>
+        <button type="submit" className='form-button features-button'>Add Features</button>
       </form>
     </>
   );

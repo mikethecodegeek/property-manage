@@ -50,6 +50,46 @@ router.post(
     })
   );
 
+router.post(
+    '/edit',
+    asyncHandler(async (req, res) => {
+    //   const propertyId = req.params  
+      const { 
+        propertyId,
+        sqft,
+        isVacant,
+        rentalPrice,
+        numOccupants,
+        numBaths,
+        numBeds,
+        unitNumber,
+        unitType,
+        userId,
+        unitId
+        } = req.body;
+
+    //   const {propertyId} = req.params 
+    //   console.log(req.body)
+      const currentUnit = await Unit.findOne({where:{id:unitId}})
+      currentUnit.set({ 
+        sqft,
+        rentalPrice,
+        numOccupants,
+        numBaths,
+        numBeds,
+      })
+
+      currentUnit.save()
+      console.log(currentUnit)
+      
+      const allUnits = await Unit.findAll({where:{userId:userId}})
+    //   const properties = await Property.findAll({where:{ownerId:1}})
+      return res.json({
+        allUnits
+      });
+    })
+  );
+
 router.get(
   ':userId/:propertyId/all',
   asyncHandler(async (req, res) => {

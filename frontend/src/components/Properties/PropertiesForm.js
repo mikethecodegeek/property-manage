@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import {createProperty} from '../../store/properties'
 import { useAlert } from 'react-alert'
 // import './SignupForm.css';
+import './Properties.css'
 import { css } from "@emotion/core";
 import BeatLoader from "react-spinners/BeatLoader";
 
@@ -76,7 +77,7 @@ function PropertiesForm({saved}) {
 
       
     </div> */}
-      <form className='basic-form' style={{width:'300px'}} onSubmit={handleSubmit}>
+      <form className='basic-form properties-form' style={{width:'300px'}} onSubmit={handleSubmit}>
           {errors.length > 0 &&
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}

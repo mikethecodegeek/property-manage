@@ -2,6 +2,7 @@ import { fetch } from './csrf.js';
 import { useAlert } from 'react-alert'
 const GET_PROPERTIES = 'session/getProperties';
 const NEW_PROPERTY =  'session/newProperty'
+const UPDATE_PROPERTY = 'session/updateProperty'
 
 const showProperties = (properties) => ({
   type: GET_PROPERTIES,
@@ -13,6 +14,11 @@ const newProperty = (property) => ({
     property
   });
 
+const showUpdatedProperty = (property) => ({
+    type: UPDATE_PROPERTY,
+    payload: property
+  });
+
 const setPropertyFeatures = (property) => ({
     type: GET_PROPERTIES,
     payload: property
@@ -20,15 +26,15 @@ const setPropertyFeatures = (property) => ({
   
   export const uploadImg = (imgData, propertyId) => async (dispatch) => {
     const { imgUrl } = imgData;
-    console.log('I was here!!!!!!!!!!!!!!!!!!')
     const response = await fetch(`/api/properties/${propertyId}/photo`, {
       method: 'POST',
       body: JSON.stringify({
         imgUrl
       })
     });
+    console.log(response.data)
   
-    dispatch(showProperties(response.data.property));
+    dispatch(showUpdatedProperty(response.data.currentProperty));
     return response;
   };
 
@@ -95,6 +101,17 @@ function propertiesReducer(state = initialState, action) {
       newState = state
       // newState.properties.properties.push()
       return newState;
+    case UPDATE_PROPERTY:
+        newState = JSON.parse(JSON.stringify(state))
+        const newProperties = newState.properties.properties.map(prop => {
+          if (prop.id === action.payload.id) {
+            return action.payload
+          } else {
+            return prop
+          }
+        })
+        newState.properties.properties = newProperties
+        return newState
     default:
       return state;
   }

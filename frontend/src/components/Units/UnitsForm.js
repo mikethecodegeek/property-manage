@@ -3,22 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { createUnit } from "../../store/units";
 import { getAllProperties } from "../../store/properties";
+import { editUnit } from "../../store/units";
 import BeatLoader from "react-spinners/BeatLoader";
 import { useAlert } from "react-alert";
 // import './SignupForm.css';
 
-function UnitsForm() {
+function UnitsForm({current, property}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const [propertyId, setPropertyId] = useState("");
-  const [sqft, setSqft] = useState("");
-  const [isVacant, setIsVacant] = useState(true);
-  const [rentalPrice, setRentalPrice] = useState("");
-  const [numOccupants, setNumOccupants] = useState("");
-  const [numBeds, setNumBeds] = useState("");
-  const [numBaths, setNumBaths] = useState("");
-  const [unitNumber, setUnitNumber] = useState("");
-  const [unitType, setUnitType] = useState("");
+  const [propertyId, setPropertyId] = useState(current.id);
+  const [sqft, setSqft] = useState();
+  const [isVacant, setIsVacant] = useState(current.isVacant);
+  const [rentalPrice, setRentalPrice] = useState();
+  const [numOccupants, setNumOccupants] = useState();
+  const [numBeds, setNumBeds] = useState();
+  const [numBaths, setNumBaths] = useState();
+  const [unitNumber, setUnitNumber] = useState();
+  const [unitType, setUnitType] = useState(current.unitType);
+  const [available, setIsAvailable] = useState(current.isVacant)
+  const [unitId, setUnitId] = useState(current.id)
   const [loading, setLoading] = useState(false);
 
   //   const [propList, setPropList] = useState([])
@@ -27,6 +30,7 @@ function UnitsForm() {
   const sessionProperties = useSelector(
     (state) => state.userProperties.properties
   );
+  console.log(property)
 
   //   if (sessionUser) return <Redirect to="/" />;
 
@@ -36,7 +40,7 @@ function UnitsForm() {
       setLoading(true);
       try {
         await dispatch(
-          createUnit(
+          editUnit(
             {
               propertyId,
               sqft,
@@ -47,6 +51,7 @@ function UnitsForm() {
               numBeds,
               unitNumber,
               unitType,
+              unitId,
             },
             sessionUser.id
           )
@@ -58,6 +63,7 @@ function UnitsForm() {
         setLoading(false);
       }
     };
+    asyncFunc()
   };
 
   useEffect(() => {
@@ -72,7 +78,7 @@ function UnitsForm() {
   // let currentProps =
   return (
     <>
-      <h3>Add Unit Property</h3>
+      {/* <h3>Add Unit Property</h3> */}
       <div className="loader">
         <BeatLoader color={"#0183BD"} loading={loading} size={35} />
       </div>
@@ -92,14 +98,15 @@ function UnitsForm() {
           <div>
             <label>
               Property
-              {sessionProperties && (
+              {/* {sessionProperties && (
                 <select onChange={(e) => setPropertyId(e.target.value)}>
                   <option value="0">Please select a property</option>
                   {sessionProperties.properties.map((prop) => (
                     <option value={prop.id}>{prop.propertyName}</option>
                   ))}
                 </select>
-              )}
+              )} */}
+              <input type='text' value={property.propertyName} disabled />
               {/* <input
             type="text"
             value={propertyId}
@@ -109,30 +116,30 @@ function UnitsForm() {
             </label>{" "}
             <br />
             <label>
-              Square Feet
-              <input
-                type="number"
-                value={sqft}
-                onChange={(e) => setSqft(e.target.value)}
-                required
-              />
-            </label>{" "}
-            <br />
-            <label>
               Rental Price
               <input
                 type="number"
-                value={rentalPrice}
+                value={rentalPrice || current.rentalPrice}
                 onChange={(e) => setRentalPrice(e.target.value)}
                 required
               />
             </label>
             <br />
             <label>
+              Square Feet
+              <input
+                type="number"
+                value={current.sqft || sqft}
+                onChange={(e) => setSqft(e.target.value)}
+                required
+              />
+            </label>{" "}
+            <br />
+            <label>
               Max Occupants
               <input
                 type="number"
-                value={numOccupants}
+                value={current.numOccupants || numOccupants}
                 onChange={(e) => setNumOccupants(e.target.value)}
                 required
               />
@@ -141,10 +148,32 @@ function UnitsForm() {
           </div>
           <div>
             <label>
+              Unit Number
+              <input
+                type="number"
+                disabled
+                value={current.unitNumber || unitNumber}
+                onChange={(e) => setUnitNumber(e.target.value)}
+                required
+              />
+            </label>
+            <br />
+            <label>
+            <label>
+              Available
+              <input
+                type="text"
+                value={available != true ? 'No' : 'Yes'}
+                disabled
+                onChange={(e) => setUnitType(e.target.value)}
+                required
+              />
+            </label>
+            <br />
               Number of Beds
               <input
                 type="number"
-                value={numBeds}
+                value={current.numBeds || numBeds}
                 onChange={(e) => setNumBeds(e.target.value)}
                 required
               />
@@ -154,28 +183,8 @@ function UnitsForm() {
               Number of Baths
               <input
                 type="number"
-                value={numBaths}
+                value={current.numBaths || numBaths}
                 onChange={(e) => setNumBaths(e.target.value)}
-                required
-              />
-            </label>
-            <br />
-            <label>
-              Unit Number
-              <input
-                type="number"
-                value={unitNumber}
-                onChange={(e) => setUnitNumber(e.target.value)}
-                required
-              />
-            </label>
-            <br />
-            <label>
-              Unit Type
-              <input
-                type="text"
-                value={unitType}
-                onChange={(e) => setUnitType(e.target.value)}
                 required
               />
             </label>
@@ -183,7 +192,7 @@ function UnitsForm() {
           </div>
         </div>
         <button className="form-button submit-button" type="submit">
-          Add Unit
+          Save
         </button>
       </form>
     </>

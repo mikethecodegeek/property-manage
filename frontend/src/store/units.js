@@ -37,6 +37,30 @@ export const createUnit = (unit,userId) => async (dispatch) => {
     return response;
   };
 
+export const editUnit = (unit,userId) => async (dispatch) => {
+    const { propertyId,sqft,isVacant,rentalPrice,numOccupants,numBaths,numBeds,unitNumber,unitType,unitId } = unit;
+    // console.log(property)
+    const response = await fetch('/api/units/edit', {
+      method: 'POST',
+      body: JSON.stringify({
+        propertyId,
+        sqft,
+        isVacant,
+        rentalPrice,
+        numOccupants,
+        numBaths,
+        numBeds,
+        unitNumber,
+        unitType,
+        userId,
+        unitId
+      })
+    });
+  
+    dispatch(showUnits(response.data));
+    return response;
+  };
+
 export const getAllUnits = (propertyId,userId) => async (dispatch) => {
   let units = await fetch(`/api/units/${userId}/${propertyId}/all`)
   dispatch(showUnits(units.data));

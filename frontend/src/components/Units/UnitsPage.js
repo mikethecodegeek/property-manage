@@ -51,6 +51,9 @@ const findCurrentProp = (id) => {
    setCurrentProp(current)
    setPropertyUnits(current.Units)
    setVacantUnits(current.Units.filter(unit=> unit.isVacant))
+   setCurrentUnit(null)
+   setNewUnit(false)
+  //  findCurrentUnit(0)
    console.log(current.Units)
  } else {
    setCurrentProp(null)
@@ -66,6 +69,8 @@ const findCurrentUnit = (id) => {
     // setVacantUnits(current.Units.filter(unit=> unit.isVacant))
     setCurrentUnit(current)
     console.log(current)
+  } else {
+    setCurrentUnit(0)
   }
 }
 
@@ -75,57 +80,38 @@ const showUnitForm = () => {
 
   return (
     <>
-      <div className='flex-between'>
+      <div className='flex' style={{display:'flex', alignItems:'center'}}>
         <h1>Units Page</h1>
-        <button className='form-button' onClick={showUnitForm}>New Unit</button>
+        <div>
+        {sessionProperties && sessionProperties.properties &&
+        <select onChange={(e)=>findCurrentProp(e.target.value)}>
+        <option value='0'>Please select a property</option>
+          {sessionProperties.properties.map(prop => <option value={prop.id}>{prop.propertyName}</option>)}
+        </select>
+        }
+        </div>
+
+        {propertyUnits &&
+        <div>
+          {/* <h2>Select a Unit</h2> */}
+          <select onChange={(e)=>findCurrentUnit(e.target.value)}>
+          <option value='0' >Please select a unit</option>
+          {propertyUnits.map(unit => <option value={unit.id}>{unit.unitNumber}</option>)}
+        </select>
+        </div>
+    }
       </div>
-      {newUnit &&
-        <UnitsForm />
-      }
+   
      {!newUnit &&
       <div>
       <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
-    {sessionProperties.properties &&
-    <div>
-
-      <h2>Select a Property:</h2>
-      <select onChange={(e)=>findCurrentProp(e.target.value)}>
-      <option value='0'>Please select a property</option>
-        {sessionProperties.properties.map(prop => <option value={prop.id}>{prop.propertyName}</option>)}
-      </select>
-    </div>
-  }
-   {/* <UnitsForm /> */}
-    {propertyUnits &&
-    <div>
-      <h2>Select a Unit</h2>
-       <select onChange={(e)=>findCurrentUnit(e.target.value)}>
-       <option value='0'>Please select a unit</option>
-       {propertyUnits.map(unit => <option value={unit.id}>{unit.unitNumber}</option>)}
-     </select>
-    </div>
-    }
     </div>
     {currentUnit &&
     <div>
-      <h2>Unit Details</h2>
-      <div className='current-unit-details' style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
-      <div>
-        <p>Unit #: {currentUnit.unitNumber}</p>
-        <p>Beds: {currentUnit.numBeds}</p>
-        <p>Baths: {currentUnit.numBaths}</p>
-        <p>Unit Type #: {currentUnit.unitType}</p>
-      </div>
-      <div>
-        <p>Available: {currentUnit.isVacant == true ? 'Yes' : 'No'} </p>
-        <p>Sqft: {currentUnit.sqft}</p>
-        <p>Price: {currentUnit.rentalPrice}</p>
-        <p>Max Occupancy: {currentUnit.numOccupants}</p>
-      </div>
-      </div>
+
+      <UnitsForm current={currentUnit} property={currentProp}  />
     </div>
 
-    
     }
     </div>
     }
