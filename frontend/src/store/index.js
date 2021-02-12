@@ -4,12 +4,15 @@ import session from './session'
 import propertiesReducer from './properties'
 import unitsReducer from './units'
 import tenantsReducer from './tenants'
+import purchasesReducer from './purchases'
+
 
 const rootReducer = combineReducers({
   session,
   userProperties: propertiesReducer,
   propertyUnits: unitsReducer,
   tenants: tenantsReducer,
+  purchases: purchasesReducer
 });
 
 let enhancer;

@@ -7,6 +7,7 @@ import {getAllTenants} from '../../store/tenants'
 import {getUserUnits} from '../../store/units'
 import LeaseForm from '../LeaseFormPage'
 import { useAlert } from 'react-alert'
+import {getAllPurchases} from '../../store/purchases'
 // import './SignupForm.css';
 
 function ProfilePage() {
@@ -14,6 +15,7 @@ function ProfilePage() {
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector((state) => state.userProperties.properties);
   const sessionTenants = useSelector(state => state.tenants.tenants)
+  const sessionPurchases = useSelector(state => state.purchases)
   const unitData = useSelector(state => state.propertyUnits.units)
   
   // const ownerUnits = useSelector(state => state.units.units)
@@ -32,6 +34,8 @@ function ProfilePage() {
       setAllProperties(properties.data.properties)
       dispatch(getAllTenants(id))
       dispatch(getUserUnits(id))
+      await dispatch(getAllPurchases(id))
+      console.log(sessionPurchases)
       console.log(properties.data.properties)
      
     } 
@@ -83,9 +87,19 @@ function ProfilePage() {
   }
 
   const calculateExpense = (propArray) => {
+    let unitTot = 0;
+    let propTot = 0;
+  
+    const props = Array.from(sessionPurchases.propertyPurchases)
+    const units = Array.from(sessionPurchases.unitPurchases)
+    units.forEach(un=>unitTot+=un.amount)
+    props.forEach(prop=>propTot+=prop.amount)
+    console.log(unitTot)
+   
+
     let expense = 0;
     propArray.forEach(prop => expense += prop.monthlyPayment)
-    return expense
+    return expense + unitTot + propTot
   }
   
   const formatter = new Intl.NumberFormat('en-US', {
@@ -94,14 +108,15 @@ function ProfilePage() {
     minimumFractionDigits: 2
   })
 
-  // useEffect(()=>{
-  //   const asyncStuff = async () =>{
-       
-  //   }
-  // },[])
-
-  // if (!sessionUser) return <Redirect to="/" />;
-  // const alert = useAlert()
+  const calcAllPurchases = (unitPurchases,propertyPurchases) => {
+    let unitTot = 0;
+    let propTot = 0;
+    unitPurchases.forEach(purchase => unitTot += purchase.amount)
+    propertyPurchases.forEach(purchase => propTot += purchase.amount)
+    return unitTot + propTot
+   
+  }
+ 
 
   return (
     <>
@@ -118,11 +133,6 @@ function ProfilePage() {
            
            })} units </p>
 
-
-          {/* <p>{sessionProperties.properties.reduce((acc,val) => acc.numUnits+val.numUnits)} units </p>
-          <p>{sessionProperties.properties.filter(prop => prop.Units.filter(unit => unit.isVacant))} vacant units </p> */}
-
-          {/* <LeaseForm /> */}
           {sessionTenants.tenants &&
           <>
           <p>{activeTenants} Tenants</p>
@@ -136,12 +146,19 @@ function ProfilePage() {
         
         </>
         }
-        {allProperties.length >0 &&
+        {allProperties.length >0 && sessionPurchases.unitPurchases &&
           <>
           <p>{formatter.format(calculateExpense(allProperties))} Expenses this month</p>
           <p>{formatter.format(calculateIncome(rentedUnits)-calculateExpense(allProperties))} Net</p>
           </>
         }
+
+        {/* {sessionPurchases &&
+        <p>{calcAllPurchases(Array.from(sessionPurchases.unitPurchases),Array.from(sessionPurchases.propertyPurchases))}</p>
+        } */}
+        {/* {sessionPurchases && calcAllPurchases(1,2)} */}
+
+
         
       </div>
         }
