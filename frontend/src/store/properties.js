@@ -11,7 +11,7 @@ const showProperties = (properties) => ({
 
 const newProperty = (property) => ({
     type: NEW_PROPERTY,
-    property
+    payload:property
   });
 
 const showUpdatedProperty = (property) => ({
@@ -61,7 +61,7 @@ export const createPropertyFeatures = (property, propertyId) => async (dispatch)
       })
     });
   
-    dispatch(setPropertyFeatures(response.data.property));
+    dispatch(setPropertyFeatures(response.data));
     return response;
   };
 
@@ -82,8 +82,8 @@ export const createProperty = (property,ownerId) => async (dispatch) => {
         ownerId
       })
     });
-  
-    dispatch(newProperty(response.data.property));
+    console.log(response)
+    dispatch(newProperty(response.data.newProperty));
     return response;
   };
 
@@ -96,11 +96,9 @@ function propertiesReducer(state = initialState, action) {
       newState = Object.assign({}, state, { properties: action.payload });
       return newState;
     case NEW_PROPERTY:
-      console.log(state)
-      // newState = Object.assign({}, state, { properties: action.property });
-      newState = state
-      // newState.properties.properties.push()
-      return newState;
+      newState = JSON.parse(JSON.stringify(state))
+      newState.properties.properties.push(action.payload)
+      return newState
     case UPDATE_PROPERTY:
         newState = JSON.parse(JSON.stringify(state))
         const newProperties = newState.properties.properties.map(prop => {

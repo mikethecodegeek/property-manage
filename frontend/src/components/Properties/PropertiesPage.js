@@ -50,7 +50,7 @@ function PropertiesPage() {
   }, [propData]);
 
   const findCurrentProp = (id) => {
-    if (id !== "0") {
+    if (id !== "0" && sessionProperties && sessionProperties.properties) {
      
       let current = sessionProperties.properties.find((prop) => prop.id == id);
       setCurrentProp(current);
@@ -219,7 +219,7 @@ function PropertiesPage() {
                   {!currentProp.PropertyFeature && (
                     <div>
                       <h3>Please add some features to this property</h3>
-                      <PropertyFeaturesForm propertyId={currentProp.id} />
+                      <PropertyFeaturesForm propertyId={currentProp.id} finished={()=> setViewFeatures(false)} />
                     </div>
                   )}
                 </div>

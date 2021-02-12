@@ -58,6 +58,37 @@ router.post(
     })
   );
 
+  router.post(
+    '/delete',
+    asyncHandler(async (req, res) => {
+    //   const propertyId = req.params  
+      const { 
+        leaseId
+        } = req.body;
+ 
+
+      const lease = await Lease.fineOne({where:{id:leaseId}})
+
+      const currentUnit = await Unit.findOne({where: {
+          unitNumber:lease.unitNumber,
+          propertyId:lease.propertyId
+      }})
+
+    //   console.log(currentUnit)
+      currentUnit.set({isVacant:true})
+      currentUnit.save()
+
+      currentTenant = await Tenant.findOne({where:{id:lease.tenantId}})
+      currentTenant.set({active:false,propertyId:null,unitId:null,unitNumber:null})
+      currentTenant.save()
+      
+    //   const properties = await Property.findAll({where:{ownerId:1}})
+      return res.json({
+        lease
+      });
+    })
+  );
+
 
 router.get(
   '/:userId/:propertyId/all',

@@ -55,9 +55,17 @@ router.post(
           userId:ownerId
       });
     }
+    
+    console.log('******************')
+    console.log(property)
+    console.log('******************')
+    const newProperty = await Property.findOne({where:{id:property.id}, include:[Unit]})
 
+    console.log('========================')
+    console.log(newProperty)
+    console.log('========================')
     return res.json({
-      property,
+      newProperty,
     });
   })
 );
@@ -111,7 +119,7 @@ router.post(
       propertyId,
     });
 
-    const properties = await Property.findAll({ where: { ownerId: 1 } });
+    const properties = await Property.findAll({ where: { ownerId: 1 }, include:[Unit,PropertyFeature] });
     return res.json({
       properties,
     });
