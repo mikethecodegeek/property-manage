@@ -47,6 +47,7 @@ function PropertyFeaturesForm({ propertyId, finished }) {
         finished();
       } catch {
         alert.error("Error!");
+        // finished()
       } finally {
         setLoading(false);
       }

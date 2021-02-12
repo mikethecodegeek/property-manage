@@ -129,7 +129,7 @@ function UnitsForm({current, property}) {
               Square Feet
               <input
                 type="number"
-                value={current.sqft || sqft}
+                value={sqft || current.sqft}
                 onChange={(e) => setSqft(e.target.value)}
                 required
               />
@@ -139,7 +139,7 @@ function UnitsForm({current, property}) {
               Max Occupants
               <input
                 type="number"
-                value={current.numOccupants || numOccupants}
+                value={numOccupants || current.numOccupants}
                 onChange={(e) => setNumOccupants(e.target.value)}
                 required
               />
@@ -152,7 +152,7 @@ function UnitsForm({current, property}) {
               <input
                 type="number"
                 disabled
-                value={current.unitNumber || unitNumber}
+                value={unitNumber || current.unitNumber}
                 onChange={(e) => setUnitNumber(e.target.value)}
                 required
               />
@@ -173,7 +173,7 @@ function UnitsForm({current, property}) {
               Number of Beds
               <input
                 type="number"
-                value={current.numBeds || numBeds}
+                value={numBeds || current.numBeds}
                 onChange={(e) => setNumBeds(e.target.value)}
                 required
               />
@@ -183,7 +183,7 @@ function UnitsForm({current, property}) {
               Number of Baths
               <input
                 type="number"
-                value={current.numBaths || numBaths}
+                value={numBaths || current.numBaths}
                 onChange={(e) => setNumBaths(e.target.value)}
                 required
               />
