@@ -65,6 +65,7 @@ function purchasesReducer(state = initialState, action) {
 
     case NEW_PURCHASE:
       newState = Object.assign({}, action.purchase );
+      return state;
       return newState;
 
     default:

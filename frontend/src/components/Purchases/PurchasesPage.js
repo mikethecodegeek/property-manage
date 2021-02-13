@@ -75,13 +75,13 @@ const handleSubmit = (e) => {
         datePurchased,
         purchaseType},
         sessionUser.id))
-      setPropertyId(null)
-      setUnitId(null)
-      setVendorId(null)
-      setAmount(null)
-      setDescription('')
-      setBillDueBy(null)
-      setPurchaseType(null)
+      // setPropertyId(null)
+      // setUnitId(null)
+      // setVendorId(null)
+      // setAmount(null)
+      // setDescription('')
+      // setBillDueBy(null)
+      // setPurchaseType(null)
       // setLoading(!loading)
       alert.show('Saved!')
     } catch {

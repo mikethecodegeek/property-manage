@@ -35,8 +35,8 @@ function ProfilePage() {
       dispatch(getAllTenants(id))
       dispatch(getUserUnits(id))
       await dispatch(getAllPurchases(id))
-      console.log(sessionPurchases)
-      console.log(properties.data.properties)
+      // console.log(sessionPurchases)
+      // console.log(properties.data.properties)
      
     } 
     if(sessionUser) {
@@ -72,7 +72,7 @@ function ProfilePage() {
         return unit.isVacant == true})
       let rented = unitData.units.filter(unit =>{
         return unit.isVacant != true})
-        console.log(rented)
+        // console.log(rented)
         setRentedUnits(rented)
         setNumVacant(vacant.length)
     }
@@ -94,7 +94,7 @@ function ProfilePage() {
     const units = Array.from(sessionPurchases.unitPurchases)
     units.forEach(un=>unitTot+=un.amount)
     props.forEach(prop=>propTot+=prop.amount)
-    console.log(unitTot)
+    // console.log(unitTot)
    
 
     let expense = 0;
@@ -126,8 +126,8 @@ function ProfilePage() {
         <h2>Quick View</h2>
           <p>{sessionProperties.properties.length} properties</p>
           <p>{sessionProperties.properties.reduce((acc,val) => {
-            console.log(acc.numUnits,acc.propertyName)
-            console.log(val.numUnits,val.propertyName)
+            // console.log(acc.numUnits,acc.propertyName)
+            // console.log(val.numUnits,val.propertyName)
             
            return acc.numUnits==undefined || val.numUnits==undefined? acc+ 0: parseInt(acc.numUnits)+parseInt(val.numUnits)
            
