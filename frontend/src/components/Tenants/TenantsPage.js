@@ -7,6 +7,8 @@ import * as sessionActions from "../../store/session";
 import TenantsForm from './TenantsForm'
 import { useTable,useSortBy, useGlobalFilter } from 'react-table'
 import '../Table/Table.css'
+import Table from '../Table/Table'
+import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
 function TenantsPage() {
@@ -20,6 +22,7 @@ function TenantsPage() {
   const [tenant, setCurrentTenant] = useState()
   const [newApplicant,setNewApplicant] = useState(false)
   const [data,setData]= useState([])
+  const [showTenant, setShowTenant] = useState(false)
 
 //   if (!sessionUser) return <Redirect to="/" />;
   
@@ -56,6 +59,7 @@ function TenantsPage() {
       let current =sessionTenants.tenants.find(prop => prop.id==tennant)
       setCurrentTenant(current)
       console.log(current)
+      setShowTenant(true)
       // setPropertyUnits(current.Units)
       // setVacantUnits(current.Units.filter(unit=> unit.isVacant))
       // console.log(current.Units)
@@ -97,7 +101,7 @@ function TenantsPage() {
       },
       {
         id:'createdAt',
-        Header: 'App Date',
+        Header: 'Application Date',
         accessor: d=>{
           d = new Date(d.createdAt)
           return d.toDateString()
@@ -108,24 +112,13 @@ function TenantsPage() {
     []
   )
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    setGlobalFilter
-  } = useTable({ columns, data },useGlobalFilter,useSortBy)
 
-  const {globalFilter} = state
   return (
     <>
     <div>
       <div className='flex-between'>
 
         <h1>Applicants and Tenants</h1>
-        <input type='text' onChange={(e) =>setGlobalFilter(e.target.value)}></input>
         <button className='form-button' onClick={showApplicantForm}>New Applicant</button>
       </div>
       {newApplicant &&
@@ -136,75 +129,24 @@ function TenantsPage() {
       }
       {!newApplicant &&
       <div>
-      {/* {sessionTenants.tenants && !newApplicant &&
-      <select onChange={(e)=>findCurrentTenant(e.target.value)}>
-        
-        <option value='0'>Please select a tenant</option>
-        {sessionTenants.tenants.map(prop => <option value={prop.id}>{prop.firstName} {prop.lastName}</option>)}
-      </select>
-     }    */}
-    {/* {tenant && */}
+    
      <div>
-        {/* <h2>Tenant Details</h2>
-      <p>First Name: {tenant.firstName}</p>
-      <p>Last Name: {tenant.lastName}</p>
-      <p>Phone: {tenant.phoneNumber}</p>
-      <p>Status: {tenant.active !== true ? 'Waitlist' : 'Active'}</p>
-      {tenant.active == true && 
-      <>
-      <p>Unit #: {tenant.unitNumber}</p>
-      <p>{getPropertyName(tenant.propertyId)}</p>
-      </>
-      } */}
-
-<table className='table' {...getTableProps()} style={{ border: 'none',height:'350px',overflowY:'scroll', display:'inline-block'}}>
-       <thead>
-         {headerGroups.map(headerGroup => (
-           <tr {...headerGroup.getHeaderGroupProps()}>
-             {headerGroup.headers.map(column => (
-               <th
-                 {...column.getHeaderProps(column.getSortByToggleProps())}
-                //  style={{
-                //    borderBottom: 'solid 3px red',
-                //    background: 'aliceblue',
-                //    color: 'black',
-                //    fontWeight: 'bold',
-                //  }}
-               >
-                 {column.render('Header')}
-                 <span>{column.isSorted ? (column.isSortedDesc ? '%' : '^') : ''}</span>
-               </th>
-             ))}
-           </tr>
-         ))}
-       </thead>
-       <tbody {...getTableBodyProps()}>
-         {rows.map(row => {
-           prepareRow(row)
-           return (
-             <tr {...row.getRowProps()} onClick={() => findCurrentTenant(row.original.id)}>
-               {row.cells.map(cell => {
-                 return (
-                   <td
-                     {...cell.getCellProps()}
-                    //  style={{
-                    //    padding: '10px',
-                    //    border: 'solid 1px gray',
-                    //    background: 'papayawhip',
-                    //  }}
-                   >
-                     {cell.render('Cell')}
-                   </td>
-                 )
-               })}
-             </tr>
-           )
-         })}
-       </tbody>
-     </table>
-
-
-
+       {showTenant &&
+      <div>
+        <h2>Tenant Details</h2>
+        <p>First Name: {tenant.firstName}</p>
+        <p>Last Name: {tenant.lastName}</p>
+        <p>Phone: {tenant.phoneNumber}</p>
+        <p>Status: {tenant.active !== true ? 'Waitlist' : 'Active'}</p>
+        {tenant.active == true && 
+        <>
+        <p>Unit #: {tenant.unitNumber}</p>
+        <p>{getPropertyName(tenant.propertyId)}</p>
+        </>
+      }
+      </div>
+      }
+      <TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentTenant(e)} />
      
      </div>
   

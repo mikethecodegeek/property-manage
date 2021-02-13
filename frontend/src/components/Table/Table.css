@@ -20,3 +20,9 @@ table {
     background-color: #0183BD;
     color: white;
   }
+
+  /* table tr td:nth-child(2) { width:100% } */
+
+  .search-box {
+      margin-bottom: 10px;
+  }

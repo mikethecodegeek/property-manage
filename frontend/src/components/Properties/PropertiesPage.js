@@ -7,6 +7,7 @@ import PropertiesForm from "./PropertiesForm";
 import PropertyFeaturesForm from "./PropertyFeaturesForm";
 import ImageUpload from "../PhotoUpload/PhotoUpload";
 import { uploadImg } from "../../store/properties";
+import TableComponent from "../Table/Table";
 import "./Properties.css";
 
 function PropertiesPage() {
@@ -28,11 +29,14 @@ function PropertiesPage() {
   const [newProperty, setNewProperty] = useState(false);
   const [viewFeatures, setViewFeatures] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
+  const [data, setData] = useState([]) 
 
   useEffect(() => {
     const getProperties = async (id) => {
       let properties = await dispatch(getAllProperties(id));
       setPropData(properties.data);
+      console.log(properties.data)
+      setData(properties.data.properties)
     };
     if (sessionUser) {
       getProperties(sessionUser.id);
@@ -80,18 +84,60 @@ function PropertiesPage() {
     findCurrentProp(currentProp.id)
   },[sessionProperties])
 
+
+  const columns = React.useMemo(
+    () => [
+      {
+        
+        Header: 'Property Name',
+        accessor: 'propertyName', // accessor is the "key" in the data
+      },
+      {
+        Header: 'Type',
+        accessor: 'propertyType',
+      },
+      {
+        Header: '# of Units',
+        accessor: 'numUnits',
+      },
+      {
+        Header: 'Mortgage',
+        accessor: 'monthlyPayment'
+      },
+      {
+        Header: 'Address',
+        accessor: 'address'
+      },
+      {
+        Header: 'City',
+        accessor: 'city'
+      },
+      {
+        Header: 'State',
+        accessor: 'state'
+      },
+      {
+        Header: 'Zip Code',
+        accessor: 'zipCode'
+      },
+      
+    ],
+    []
+  )
+
   return (
     <>
       <div className="flex-between">
         <h1>Properties</h1>
-        {sessionProperties && sessionProperties.properties && (
+        {/* {sessionProperties && sessionProperties.properties && (
           <select onChange={(e) => findCurrentProp(e.target.value)}>
             <option value="0">Please select a property</option>
             {sessionProperties.properties.map((prop) => (
               <option value={prop.id}>{prop.propertyName}</option>
             ))}
           </select>
-        )}
+        )} */}
+
         {currentProp && (
           <button
             className="form-button"
@@ -109,6 +155,10 @@ function PropertiesPage() {
           <PropertiesForm saved={() => setNewProperty(!newProperty)} />
         </div>
       )}
+
+
+<TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentProp(e)} />
+
       {!newProperty && (
         <div>
           {currentProp && propertyUnits && (
