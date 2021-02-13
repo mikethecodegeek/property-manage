@@ -52,7 +52,8 @@ function Navigation({ isLoaded, content }){
                 <li className='side-link'><NavLink to="/properties">Properties</NavLink></li>
                 <li className='side-link'><NavLink to="/tenants">Tenants</NavLink></li>
                 <li className='side-link'><NavLink to="/leases">Leases</NavLink></li>
-                <li className='link-no-decorate'><NavLink to="/units">Units</NavLink></li>
+                <li className='side-link'><NavLink to="/units">Units</NavLink></li>
+                <li className='link-no-decorate'><NavLink to="/purchases">Purchases</NavLink></li>
               </ul>
             </div>
             <div>

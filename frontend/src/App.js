@@ -11,6 +11,7 @@ import HomePage from "./components/HomePage/HomePage"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LeaseForm from "./components/LeaseFormPage";
+import PurchasesPage from "./components/Purchases/PurchasesPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path="/units">
             <UnitsPage />
+          </Route>
+          <Route path="/purchases">
+            <PurchasesPage />
           </Route>
           <Route path="/">
             <HomePage />

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {createProperty} from '../../store/properties'
-import { useAlert } from 'react-alert'
 // import './SignupForm.css';
 import './Properties.css'
 import { css } from "@emotion/core";
+import { useAlert } from 'react-alert'
 import BeatLoader from "react-spinners/BeatLoader";
 
 function PropertiesForm({saved}) {

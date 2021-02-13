@@ -55,15 +55,9 @@ router.post(
           userId:ownerId
       });
     }
-    
-    console.log('******************')
-    console.log(property)
-    console.log('******************')
+ 
     const newProperty = await Property.findOne({where:{id:property.id}, include:[Unit]})
 
-    console.log('========================')
-    console.log(newProperty)
-    console.log('========================')
     return res.json({
       newProperty,
     });
