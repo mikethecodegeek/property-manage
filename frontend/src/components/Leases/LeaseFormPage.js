@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 // import {createTenant} from '../../store/tenants'
-import { getAllProperties } from "../store/properties";
-import { getAllTenants } from "../store/tenants";
-import { createLease } from "../store/leases";
+import { getAllProperties } from "../../store/properties";
+import { getAllTenants } from "../../store/tenants";
+import { createLease } from "../../store/leases";
 import { useAlert } from "react-alert";
 import { css } from "@emotion/core";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -149,6 +149,8 @@ function LeaseForm() {
             ))}
           </ul>
         )}
+        <div style={{display:'flex', justifyContent:'space-between'}}>
+          <div>
         <label>
           Property
           {sessionProperties && sessionProperties.properties && (
@@ -160,6 +162,7 @@ function LeaseForm() {
             </select>
           )}
         </label>
+        <br />
         <label>
           Unit
           {propertyUnits && (
@@ -183,6 +186,7 @@ function LeaseForm() {
             </select>
           )}
         </label>
+        <br />
         <label>
           Tenant
           {sessionTenants.tenants && (
@@ -196,6 +200,9 @@ function LeaseForm() {
             </select>
           )}
         </label>
+        <br />
+        </div>
+        <div>
         <label>
           Start Date
           <input
@@ -205,6 +212,7 @@ function LeaseForm() {
             required
           />
         </label>
+        <br />
         <label>
           End Date
           <input
@@ -214,15 +222,19 @@ function LeaseForm() {
             required
           />
         </label>
+        <br />
         <label>
           Deposit
           <input
             type="number"
             value={depositAmnt}
             onChange={(e) => setDepositAmnt(e.target.value)}
-            required
+            required 
           />
         </label>
+        <br />
+        </div>
+        </div>
 
         <button className="form-button submit-button" type="submit">
           Create Lease

@@ -90,6 +90,32 @@ router.post(
   );
 
 
+
+router.get(
+  '/:userId/all',
+  asyncHandler(async (req, res) => {
+    const {userId} = req.params 
+    // const property = await Property.findOne({where:{userId:propertyId}});
+    // const units = await Unit.findAll({
+    //     where:{
+    //         userId: userId,
+    //         propertyId:property.id,
+    //         isVacant: false
+    //     },
+    // })
+    
+    const leases = await Lease.findAll({
+            where: {userId},
+            include: [{model:Property,attributes:['propertyName']}, {model:Tenant,attributes:['firstName','lastName']},{model:Unit,attributes:['rentalPrice']}]
+         })
+   
+      
+    return res.json({
+       leases
+    });
+  })
+);
+
 router.get(
   '/:userId/:propertyId/all',
   asyncHandler(async (req, res) => {

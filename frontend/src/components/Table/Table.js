@@ -2,7 +2,7 @@ import React from "react";
 import { useTable, useSortBy, useGlobalFilter } from "react-table";
 import "./Table.css";
 
-const TableComponent = ({columns,data, onClickCallback}) => {
+const TableComponent = ({columns,data, onClickCallback, findPropCallback}) => {
 //   const [data, setData] = useState([]);
 
   const {
@@ -55,6 +55,7 @@ const TableComponent = ({columns,data, onClickCallback}) => {
             return (
               <tr
                 {...row.getRowProps()}
+  
                 onClick={() => onClickCallback(row.original.id)}
               >
                 {row.cells.map((cell) => {

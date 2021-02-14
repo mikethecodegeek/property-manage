@@ -79,6 +79,11 @@ function TenantsPage() {
       return prop.propertyName
   }
 
+  const showAllTenants = () => {
+    setNewApplicant(null)
+    setShowTenant(false)
+  }
+
   const columns = React.useMemo(
     () => [
       {
@@ -119,6 +124,9 @@ function TenantsPage() {
       <div className='flex-between'>
 
         <h1>Applicants and Tenants</h1>
+        {newApplicant || showTenant &&
+            <button className='form-button' onClick={showAllTenants}>All Tenants</button>
+          }
         <button className='form-button' onClick={showApplicantForm}>New Applicant</button>
       </div>
       {newApplicant &&
@@ -146,7 +154,10 @@ function TenantsPage() {
       }
       </div>
       }
+      {!newApplicant && !showTenant &&
+      
       <TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentTenant(e)} />
+      }
      
      </div>
   

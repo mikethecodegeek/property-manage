@@ -5,7 +5,7 @@ import * as sessionActions from "../../store/session";
 import {getAllProperties} from '../../store/properties'
 import {getAllTenants} from '../../store/tenants'
 import {getUserUnits} from '../../store/units'
-import LeaseForm from '../LeaseFormPage'
+// import LeaseForm from '../LeaseFormPage'
 import { useAlert } from 'react-alert'
 import {getAllPurchases} from '../../store/purchases'
 // import './SignupForm.css';

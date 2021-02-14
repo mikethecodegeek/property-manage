@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {getAllProperties} from '../../store/properties'
-import {getAllUnits} from '../../store/units'
+import {getAllUnits, getUserUnits} from '../../store/units'
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+// import TenantsForm from './TenantsForm'
 import UnitsForm from "./UnitsForm";
+import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
 function UnitsPage() {
@@ -19,6 +21,7 @@ function UnitsPage() {
   const [propertyUnits,setPropertyUnits] = useState([])
   const [vacantUnits, setVacantUnits] = useState([])
   const [newUnit, setNewUnit] = useState(false)
+  const [data,setData] = useState([])
 
 //   if (!sessionUser) return <Redirect to="/" />;
 // const sessionProperties = useSelector((state) => state.userProperties.properties);
@@ -26,9 +29,12 @@ function UnitsPage() {
 useEffect(()=>{
   const getProperties = async(id)=>{
     let properties = await dispatch(getAllProperties(id))
+    let units = await dispatch(getUserUnits(id))
+    console.log(units.data.units)
+    console.log(properties.data)
+    setData(units.data.units)
     // let propresp = await properties.json()
     setPropData(properties.data)
-    console.log(properties.data)
   } 
   if(sessionUser) {
     getProperties(sessionUser.id)
@@ -78,28 +84,54 @@ const showUnitForm = () => {
   setNewUnit(!newUnit)
 }
 
+
+const columns = [
+    {
+      id: 'propertyId',
+      Header: 'Property',
+      accessor: d => {
+          console.log(propData)
+          let prop = sessionProperties.properties.find(prop => prop.id==d.propertyId)
+          return prop.propertyName
+      }
+    },
+    {
+      Header: 'Unit #',
+      accessor: 'unitNumber',
+    },
+    {
+      Header: 'Type',
+      accessor: 'unitType',
+    },
+    {
+      Header: 'Beds',
+      accessor: 'numBeds',
+    },
+    {
+      Header: 'Baths',
+      accessor: 'numBaths',
+    },
+    {
+      Header: 'Price',
+      accessor: 'rentalPrice'
+    },
+    {
+      id: 'isVacant',
+      Header: 'Status',
+      accessor: d => d.isVacant != true ? 'Rented' : 'Vacant'
+    },
+    
+  ]
+
+
   return (
     <>
       <div className='flex' style={{display:'flex', alignItems:'center'}}>
-        <h1>Units Page</h1>
-        <div>
-        {sessionProperties && sessionProperties.properties &&
-        <select onChange={(e)=>findCurrentProp(e.target.value)}>
-        <option value='0'>Please select a property</option>
-          {sessionProperties.properties.map(prop => <option value={prop.id}>{prop.propertyName}</option>)}
-        </select>
-        }
-        </div>
+        <h1>Units</h1>
+       
 
-        {propertyUnits &&
-        <div>
-          {/* <h2>Select a Unit</h2> */}
-          <select onChange={(e)=>findCurrentUnit(e.target.value)}>
-          <option value='0' >Please select a unit</option>
-          {propertyUnits.map(unit => <option value={unit.id}>{unit.unitNumber}</option>)}
-        </select>
-        </div>
-    }
+
+
       </div>
    
      {!newUnit &&
@@ -113,6 +145,9 @@ const showUnitForm = () => {
     </div>
 
     }
+   
+    
+  <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} />
     </div>
     }
     </>

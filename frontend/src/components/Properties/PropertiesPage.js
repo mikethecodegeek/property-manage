@@ -139,12 +139,20 @@ function PropertiesPage() {
         )} */}
 
         {currentProp && (
+          <>
           <button
             className="form-button"
             onClick={() => setViewFeatures(!viewFeatures)}
           >
             {viewFeatures == false ? "View Features" : "View Property"}
           </button>
+          <button
+            className="form-button"
+            onClick={() => setCurrentProp(null)}
+          >
+            All Properties
+          </button>
+          </>
         )}
         <button className="form-button" onClick={showPropertiesForm}>
           New Property
@@ -157,10 +165,13 @@ function PropertiesPage() {
       )}
 
 
-<TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentProp(e)} />
 
       {!newProperty && (
         <div>
+          {!currentProp && 
+          
+<TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentProp(e)} />
+          }
           {currentProp && propertyUnits && (
             <div>
               <div className="property-page-details">
