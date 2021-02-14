@@ -30,6 +30,7 @@ function TenantsForm({cancelTenant}) {
            setLastName('')
            setPhoneNumber('')
            alert.show('Saved!') 
+           cancelTenant()
           } catch {
           alert.error('Failed')
         } finally {

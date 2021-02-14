@@ -50,10 +50,17 @@ router.post(
       currentTenant = await Tenant.findOne({where:{id:tenantId}})
       currentTenant.set({active:true,propertyId:propertyId,unitId:unitId,unitNumber:unitNumber})
       currentTenant.save()
+
+      const currentLease = await Lease.findOne({
+        where: {id:lease.id},
+        include: [{model:Property,attributes:['propertyName']}, {model:Tenant,attributes:['firstName','lastName']},{model:Unit,attributes:['rentalPrice']}]
+     })
+
+     console.log(currentLease)
       
     //   const properties = await Property.findAll({where:{ownerId:1}})
       return res.json({
-        lease
+        currentLease
       });
     })
   );

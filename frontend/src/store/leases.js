@@ -2,6 +2,7 @@ import { fetch } from './csrf.js';
 
 const GET_ALL_LEASES = 'session/getAllLeases';
 const GET_LEASE = 'session/getLease';
+const NEW_LEASE = 'session/newLease';
 
 const showLease = (lease) => ({
   type: GET_LEASE,
@@ -13,8 +14,8 @@ const showLeases = (leases) => ({
   payload: leases
 });
 
-const newLease = (lease) => ({
-    type: GET_ALL_LEASES,
+const addLease = (lease) => ({
+    type: NEW_LEASE,
     payload: lease
   });
 
@@ -43,7 +44,7 @@ export const createLease = (lease,userId) => async (dispatch) => {
       })
     });
   
-    dispatch(newLease(response.data.lease));
+    dispatch(addLease(response.data.currentLease));
     return response;
   };
 
@@ -55,6 +56,11 @@ function leasesReducer(state = initialState, action) {
     case GET_ALL_LEASES:
       newState = Object.assign({}, state, { leases: action.payload });
       return newState;
+      case NEW_LEASE:
+        newState = JSON.parse(JSON.stringify(state))
+        newState.leases.leases.push(action.payload)
+      
+        return newState
     default:
       return state;
   }

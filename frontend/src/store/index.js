@@ -6,6 +6,7 @@ import unitsReducer from './units'
 import tenantsReducer from './tenants'
 import purchasesReducer from './purchases'
 import vendorsReducer from './vendors'
+import leasesReducer from './leases';
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   tenants: tenantsReducer,
   purchases: purchasesReducer,
   vendors: vendorsReducer,
+  leases: leasesReducer
 });
 
 let enhancer;

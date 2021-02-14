@@ -13,6 +13,7 @@ function LeasesPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const sessionTenants = useSelector(state => state.tenants.tenants)
   const sessionProps = useSelector(state => state.userProperties.properties)
+  const leases = useSelector(state => state.leases.leases)
 
   const [lease, setCurrentLease] = useState()
   const [newLease,setNewLease] = useState(false)
@@ -51,6 +52,13 @@ function LeasesPage() {
     setNewLease(!newLease)
     // console.log(newApplicant)
   }
+
+  useEffect(()=>{
+    if(leases.leases) {
+      console.log(leases.leases)
+      setData(leases.leases)
+    }
+  },[leases])
 
 //   const getPropertyName = (id) => {
 //       // const prop = sessionProps.find({id:id})

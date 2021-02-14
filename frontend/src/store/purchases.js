@@ -1,15 +1,20 @@
 import { fetch } from './csrf.js';
 
 const GET_ALL_PURCHASES = 'session/getPurchases';
-const NEW_PURCHASE = 'session/newPurchase'
+const NEW_PROPERTY_PURCHASE = 'session/newPurchase'
+const NEW_UNIT_PURCHASE = 'session/newPurchase'
 
 const showPurchases = (purchases) => ({
   type: GET_ALL_PURCHASES,
   purchases
 });
 
-const newPurchase = (purchase) => ({
-  type: NEW_PURCHASE,
+const newPropertyPurchase = (purchase) => ({
+  type: NEW_PROPERTY_PURCHASE,
+  purchase
+});
+const newUnitPurchase = (purchase) => ({
+  type: NEW_UNIT_PURCHASE,
   purchase
 });
 
@@ -48,8 +53,12 @@ export const createPurchase = (purchase, ownerId) => async (dispatch) => {
         purchaseType
       })
     });
-  
-    dispatch(newPurchase(response.data.purchase));
+    if (purchaseType=='Property') {
+      console.log(response)
+      dispatch(newPropertyPurchase(response.data.purchase));
+    } else {
+      dispatch(newUnitPurchase(response.data.purchase));
+    }
     return response;
   };
 
@@ -63,9 +72,11 @@ function purchasesReducer(state = initialState, action) {
       newState = Object.assign({}, action.purchases );
       return newState;
 
-    case NEW_PURCHASE:
-      newState = Object.assign({}, action.purchase );
-      return state;
+    case NEW_PROPERTY_PURCHASE:
+      newState = JSON.parse(JSON.stringify(state))
+      console.log(newState)
+      console.log(action.purchase)
+      newState.propertyPurchases.push(action.purchase)
       return newState;
 
     default:

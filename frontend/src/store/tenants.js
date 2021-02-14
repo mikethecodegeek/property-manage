@@ -1,14 +1,15 @@
 import { fetch } from './csrf.js';
 
 const GET_TENANTS = 'session/getTenants';
+const NEW_TENANT = 'session/newTenant';
 
 const showTenants = (tenants) => ({
   type: GET_TENANTS,
   payload: tenants
 });
 
-const newTenant = (tenant) => ({
-    type: GET_TENANTS,
+const addTenant = (tenant) => ({
+    type: NEW_TENANT,
     payload: tenant
   });
 
@@ -33,7 +34,7 @@ export const createTenant = (tenant, userId) => async (dispatch) => {
       })
     });
   
-    dispatch(newTenant(response.data.tenant));
+    dispatch(addTenant(response.data.tenant));
     return response;
   };
 
@@ -45,6 +46,12 @@ function tenantsReducer(state = initialState, action) {
     case GET_TENANTS:
       newState = Object.assign({}, state, { tenants: action.payload });
       return newState;
+    case NEW_TENANT:
+        newState = JSON.parse(JSON.stringify(state))
+        console.log(newState)
+        newState.tenants.tenants.push(action.payload)
+      
+        return newState
     default:
       return state;
   }

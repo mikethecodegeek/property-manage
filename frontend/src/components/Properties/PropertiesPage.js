@@ -80,8 +80,16 @@ function PropertiesPage() {
   };
 
   useEffect(()=>{
+    // setData(sessionProperties.properties.data.properties)
+  
+    if (sessionProperties) {
+
+      // console.log(sessionProperties.properties)
+      setData(sessionProperties.properties)
+    }
     if (!currentProp) return
     findCurrentProp(currentProp.id)
+    
   },[sessionProperties])
 
 
@@ -129,6 +137,7 @@ function PropertiesPage() {
     <>
       <div className="flex-between">
         <h1>Properties</h1>
+        
         {/* {sessionProperties && sessionProperties.properties && (
           <select onChange={(e) => findCurrentProp(e.target.value)}>
             <option value="0">Please select a property</option>

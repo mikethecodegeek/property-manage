@@ -10,7 +10,7 @@ import { css } from "@emotion/core";
 import BeatLoader from "react-spinners/BeatLoader";
 // import './SignupForm.css';
 
-function LeaseForm() {
+function LeaseForm({cancelLease}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector(
@@ -67,6 +67,7 @@ function LeaseForm() {
         setDepositAmnt('')
         setUnitNumber('')
         alert.show("Saved!");
+        cancelLease()
       } catch {
         alert.error("Save Failed");
       } finally {

@@ -32,7 +32,8 @@ function PurchasesPage() {
   const [propertyId, setPropertyId] = useState(0)
   const [unitId, setUnitId] = useState(0)
   const [vendorId, setVendorId] = useState(0)
-  let [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [creatingPurchase,setCreatingPurchase] = useState(false)
  
   const [data,setData] = useState([])
 
@@ -46,17 +47,24 @@ useEffect(()=>{
     await dispatch(getAllVendors(id))
     await dispatch(getUserUnits(id))
     const purchases = await dispatch(getAllPurchases(id))
-    const allPurchases = purchases.data.allPurchases
+    // const allPurchases = purchases.data.allPurchases
     
-    console.log(allPurchases)
+    // console.log(allPurchases)
 
-    setData([...allPurchases.unitPurchases, ...allPurchases.propertyPurchases])
+    // setData([...allPurchases.unitPurchases, ...allPurchases.propertyPurchases])
   } 
 
   if(sessionUser) {
     getData(sessionUser.id)
   }
 },[])
+
+useEffect(()=>{
+  if (purchases.unitPurchases && purchases.propertyPurchases) {
+    // console.log(purchases)
+    setData([...purchases.unitPurchases, ...purchases.propertyPurchases])
+  }
+},[purchases])
 
   // useEffect(()=>{
   //   if (purchases.unitPurchases.length ==0) return
@@ -94,15 +102,9 @@ const handleSubmit = (e) => {
         datePurchased,
         purchaseType},
         sessionUser.id))
-      // setPropertyId(null)
-      // setUnitId(null)
-      // setVendorId(null)
-      // setAmount(null)
-      // setDescription('')
-      // setBillDueBy(null)
-      // setPurchaseType(null)
-      // setLoading(!loading)
+      
       alert.show('Saved!')
+      setCreatingPurchase(false)
     } catch {
       alert.error('Failed') 
     } finally {
@@ -121,7 +123,7 @@ const columns =  [
        if (sessionProperties.properties) {
           let props =Array.from(sessionProperties.properties)
           let prop = props.find(prop => prop.id==d.propertyId)
-          console.log(sessionProperties)
+          // console.log(sessionProperties)
           return prop.propertyName
        }
       }
@@ -154,7 +156,7 @@ const columns =  [
       accessor: d=> {
         // console.log(d.vendorId)
         const vend = vendors.find(v => v.id == d.vendorId)
-        console.log(vend)
+        // console.log(vend)
         // return
         return vend.vendorName
       }
@@ -173,8 +175,17 @@ const columns =  [
 
   return (
     <>
+      <div className='flex-between'>
+
         <h1>Purchases</h1>
-        {vendors && units &&
+        {creatingPurchase &&
+        
+        <button className='form-button' onClick={() =>setCreatingPurchase(!creatingPurchase)}>All Purchases</button>
+        }
+        <button className='form-button' onClick={() =>setCreatingPurchase(!creatingPurchase)}>New Purchase</button>
+      </div>
+
+        {vendors && units && !creatingPurchase &&
         <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} />
 }
         {/* <div style={{display:'flex',justifyContent:'space-between'}}> */}
@@ -183,6 +194,7 @@ const columns =  [
       <div className="loader">
         <BeatLoader color={"#0183BD"} loading={loading} size={35} />
       </div>
+        {creatingPurchase &&
       <form className="basic-form" onSubmit={handleSubmit}>
         {/* {errors.length > 0 && (
           <ul>
@@ -294,6 +306,7 @@ const columns =  [
           Create Invoice
         </button>
       </form>
+          }
    
    
     </>

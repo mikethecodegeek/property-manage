@@ -54,6 +54,13 @@ function TenantsPage() {
     
   },[])
 
+  useEffect(()=>{
+    if (sessionTenants.tenants) {
+      console.log(sessionTenants.tenants)
+      setData(sessionTenants.tenants)
+    }
+  },[sessionTenants])
+
   const findCurrentTenant = tennant => {
     if (tennant !== '0') {
       let current =sessionTenants.tenants.find(prop => prop.id==tennant)
