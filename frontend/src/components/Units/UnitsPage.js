@@ -22,10 +22,12 @@ function UnitsPage() {
   const [propertyUnits,setPropertyUnits] = useState([])
   const [vacantUnits, setVacantUnits] = useState([])
   const [newUnit, setNewUnit] = useState(false)
+  const [editingUnit,setEditingUnit] = useState(false)
   const [data,setData] = useState([])
 
 //   if (!sessionUser) return <Redirect to="/" />;
 // const sessionProperties = useSelector((state) => state.userProperties.properties);
+const allUnits = useSelector((state) => state.propertyUnits.units);
 
 useEffect(()=>{
   const getProperties = async(id)=>{
@@ -41,6 +43,13 @@ useEffect(()=>{
     getProperties(sessionUser.id)
   }
 },[])
+
+useEffect(()=>{
+  if (allUnits.units){
+    console.log(allUnits.units)
+    setData(allUnits.units)
+  }
+},[allUnits])
 
 useEffect(()=>{
   if (propData.properties) {
@@ -78,6 +87,7 @@ const findCurrentUnit = (id) => {
     // setVacantUnits(current.Units.filter(unit=> unit.isVacant))
     setCurrentProp(currProp)
     setCurrentUnit(current)
+    setEditingUnit(true)
     console.log(current)
   } else {
     setCurrentUnit(0)
@@ -130,8 +140,12 @@ const columns = [
 
   return (
     <>
-      <div className='flex' style={{display:'flex', alignItems:'center'}}>
+      <div className='flex-between'>
         <h1>Units</h1>
+        {editingUnit &&
+            <button className='form-button' onClick={() =>setEditingUnit(false)}>All Units</button>
+          }
+        {/* <button className='form-button' onClick={showApplicantForm}>New Applicant</button> */}
        
 
 
@@ -142,16 +156,18 @@ const columns = [
       <div>
       <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
     </div>
-    {currentUnit &&
+    {currentUnit && editingUnit &&
     <div>
 
-      <UnitsForm current={currentUnit} property={currentProp}  />
+      <UnitsForm current={currentUnit} property={currentProp} onSave={()=>setEditingUnit(false)}  />
     </div>
 
     }
    
+    {!editingUnit &&
     
   <TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentUnit(e)} />
+    }
     </div>
     }
     </>

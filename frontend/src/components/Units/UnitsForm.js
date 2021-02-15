@@ -8,16 +8,16 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { useAlert } from "react-alert";
 // import './SignupForm.css';
 
-function UnitsForm({current, property}) {
+function UnitsForm({current, property, onSave}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [propertyId, setPropertyId] = useState(current.id);
-  const [sqft, setSqft] = useState();
+  const [sqft, setSqft] = useState(current.sqft);
   const [isVacant, setIsVacant] = useState(current.isVacant);
-  const [rentalPrice, setRentalPrice] = useState();
-  const [numOccupants, setNumOccupants] = useState();
-  const [numBeds, setNumBeds] = useState();
-  const [numBaths, setNumBaths] = useState();
+  const [rentalPrice, setRentalPrice] = useState(current.rentalPrice);
+  const [numOccupants, setNumOccupants] = useState(current.numOccupants);
+  const [numBeds, setNumBeds] = useState(current.numBeds);
+  const [numBaths, setNumBaths] = useState(current.numBaths);
   const [unitNumber, setUnitNumber] = useState();
   const [unitType, setUnitType] = useState(current.unitType);
   const [available, setIsAvailable] = useState(current.isVacant)
@@ -57,6 +57,7 @@ function UnitsForm({current, property}) {
           )
         );
         alert.show("Saved!");
+        onSave()
       } catch {
         alert.error("Failed");
       } finally {
@@ -119,7 +120,7 @@ function UnitsForm({current, property}) {
               Rental Price
               <input
                 type="number"
-                value={rentalPrice || current.rentalPrice}
+                value={rentalPrice}
                 onChange={(e) => setRentalPrice(e.target.value)}
                 required
               />
@@ -129,7 +130,7 @@ function UnitsForm({current, property}) {
               Square Feet
               <input
                 type="number"
-                value={sqft || current.sqft}
+                value={sqft}
                 onChange={(e) => setSqft(e.target.value)}
                 required
               />
@@ -139,7 +140,7 @@ function UnitsForm({current, property}) {
               Max Occupants
               <input
                 type="number"
-                value={numOccupants || current.numOccupants}
+                value={numOccupants}
                 onChange={(e) => setNumOccupants(e.target.value)}
                 required
               />
@@ -152,7 +153,7 @@ function UnitsForm({current, property}) {
               <input
                 type="number"
                 disabled
-                value={unitNumber || current.unitNumber}
+                value={unitNumber}
                 onChange={(e) => setUnitNumber(e.target.value)}
                 required
               />
@@ -173,7 +174,7 @@ function UnitsForm({current, property}) {
               Number of Beds
               <input
                 type="number"
-                value={numBeds || current.numBeds}
+                value={numBeds}
                 onChange={(e) => setNumBeds(e.target.value)}
                 required
               />
@@ -183,7 +184,7 @@ function UnitsForm({current, property}) {
               Number of Baths
               <input
                 type="number"
-                value={numBaths || current.numBaths}
+                value={numBaths}
                 onChange={(e) => setNumBaths(e.target.value)}
                 required
               />
@@ -191,7 +192,7 @@ function UnitsForm({current, property}) {
             <br />
           </div>
         </div>
-        <button className="form-button submit-button" type="submit">
+        <button className="form-button" style={{width:'55px'}} type="submit">
           Save
         </button>
       </form>

@@ -85,7 +85,7 @@ router.post(
       const allUnits = await Unit.findAll({where:{userId:userId}})
     //   const properties = await Property.findAll({where:{ownerId:1}})
       return res.json({
-        allUnits
+        currentUnit
       });
     })
   );
