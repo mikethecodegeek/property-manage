@@ -14,7 +14,7 @@ function PropertiesPage() {
   //   const dispatch = useDispatch();
   // const sessionUser = useSelector((state) => state.session.user);
 
-  //   if (!sessionUser) return <Redirect to="/" />;
+    // if (!sessionUser) return <Redirect to="/" />;
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector(
@@ -42,6 +42,7 @@ function PropertiesPage() {
       getProperties(sessionUser.id);
     }
   }, [sessionUser]);
+
 
   // useEffect(() => {
   //   if (propData.properties) {
@@ -135,7 +136,7 @@ function PropertiesPage() {
     ],
     []
   )
-
+  if (!sessionUser) return <Redirect to="/" />;
   return (
     <>
       <div className="flex-between">

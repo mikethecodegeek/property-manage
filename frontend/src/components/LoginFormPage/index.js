@@ -22,6 +22,15 @@ function LoginFormPage() {
       });
   };
 
+  const demoLogin = () => {
+    setCredential('demo@user.io')
+    setPassword('password')
+    return dispatch(sessionActions.login({ credential, password }))
+    .catch((res) => {
+      if (res.data && res.data.errors) setErrors(res.data.errors);
+    });
+  }
+
   return (
     <>
       <div className='flex-between'>
@@ -58,6 +67,7 @@ function LoginFormPage() {
           />
         </label>
         <button class='submit-button form-button' type="submit">Log In</button>
+        <button class='submit-button form-button' onClick={()=>demoLogin()}>Demo User</button>
       </form>
      
     </>

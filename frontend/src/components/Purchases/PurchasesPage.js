@@ -15,7 +15,7 @@ import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
 function PurchasesPage() {
-
+  // if (!sessionUser) return <Redirect to="/" />;
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector((state) => state.userProperties.properties);
@@ -73,8 +73,8 @@ useEffect(()=>{
   //   setData([...newPurchases.unitPurchases, ...newPurchases.propertyPurchases])
   // },[purchases])
 
-
-
+  
+ 
 
 const findCurrentProp = (id) => {
  if (id !== '0') {
@@ -174,7 +174,7 @@ const columns =  [
   
     
   ]
-
+  if (!sessionUser) return <Redirect to="/" />;
   return (
     <>
       <div className='flex-between'>

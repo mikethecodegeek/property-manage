@@ -10,7 +10,7 @@ import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
 function UnitsPage() {
-//   const dispatch = useDispatch();
+  // if (!sessionUser) return <Redirect to="/" />;
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector((state) => state.userProperties.properties);
@@ -136,7 +136,7 @@ const columns = [
     },
     
   ]
-
+  if (!sessionUser) return <Redirect to="/" />;
 
   return (
     <>

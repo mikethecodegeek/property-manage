@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import {format} from 'date-fns'
 import {getAllTenants} from '../../store/tenants'
 import {getAllProperties} from '../../store/properties'
@@ -9,6 +10,7 @@ import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
 function TenantsPage() {
+  // if (!sessionUser) return <Redirect to="/" />;
   const dispatch = useDispatch();
  
   const sessionUser = useSelector((state) => state.session.user);
@@ -58,6 +60,7 @@ function TenantsPage() {
     }
   },[sessionTenants])
 
+  // if (!sessionUser) return <Redirect to="/" />;
   const findCurrentTenant = tennant => {
     if (tennant !== '0') {
       let current =sessionTenants.tenants.find(prop => prop.id==tennant)
@@ -119,7 +122,7 @@ function TenantsPage() {
     []
   )
 
-
+  if (!sessionUser) return <Redirect to="/" />;
   return (
     <>
     <div>

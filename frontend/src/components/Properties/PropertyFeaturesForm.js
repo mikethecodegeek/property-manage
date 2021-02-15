@@ -8,6 +8,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 // import './SignupForm.css';
 
 function PropertyFeaturesForm({ propertyId, finished }) {
+  // if (!sessionUser) return <Redirect to="/" />;
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [size, setSize] = useState("");

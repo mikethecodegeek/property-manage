@@ -10,15 +10,17 @@ import { useAlert } from "react-alert";
 import { getAllPurchases } from "../../store/purchases";
 // import './SignupForm.css';
 
+
 function ProfilePage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector(
     (state) => state.userProperties.properties
-  );
-  const sessionTenants = useSelector((state) => state.tenants.tenants);
-  const sessionPurchases = useSelector((state) => state.purchases);
-  const unitData = useSelector((state) => state.propertyUnits.units);
+    );
+    const sessionTenants = useSelector((state) => state.tenants.tenants);
+    const sessionPurchases = useSelector((state) => state.purchases);
+    const unitData = useSelector((state) => state.propertyUnits.units);
+    // if (!sessionUser) return <Redirect to="/" />;
 
   // const ownerUnits = useSelector(state => state.units.units)
   const [propData, setPropData] = useState([]);
@@ -81,7 +83,7 @@ function ProfilePage() {
       setNumVacant(vacant.length);
     }
   }, [unitData.units]);
-
+  if (!sessionUser) return <Redirect to="/" />;
   const calculateIncome = (arr) => {
     let starting = 0;
     arr.forEach((unit) => {

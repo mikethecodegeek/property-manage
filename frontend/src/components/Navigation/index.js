@@ -28,8 +28,9 @@ function Navigation({ isLoaded, content }){
 
   const logout = (e) => {
     e.preventDefault();
+    // history.push('/')
     dispatch(sessionActions.logout());
-    history.push('/')
+    return <Redirect to="/" />;
   
  
   };
