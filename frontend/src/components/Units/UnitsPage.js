@@ -14,6 +14,7 @@ function UnitsPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector((state) => state.userProperties.properties);
+  const units = useSelector((state) => state.propertyUnits.units);
   const [propData, setPropData] = useState([])
   const [numUnits,setNumUnits] = useState(0)
   const [currentProp,setCurrentProp] = useState({})
@@ -68,11 +69,14 @@ const findCurrentProp = (id) => {
 }
 
 const findCurrentUnit = (id) => {
-  if (id !== 0) {
-    let current = propertyUnits.find(unit => unit.id==id)
+  if (id !== 0 && units.units) {
+    
+    let current = units.units.find(unit => unit.id==id)
+    const currProp = sessionProperties.properties.find(prop => prop.id == current.propertyId)
     // setCurrentProp(current)
     // setPropertyUnits(current.Units)
     // setVacantUnits(current.Units.filter(unit=> unit.isVacant))
+    setCurrentProp(currProp)
     setCurrentUnit(current)
     console.log(current)
   } else {
@@ -90,7 +94,7 @@ const columns = [
       id: 'propertyId',
       Header: 'Property',
       accessor: d => {
-          console.log(propData)
+          // console.log(propData)
           let prop = sessionProperties.properties.find(prop => prop.id==d.propertyId)
           return prop.propertyName
       }
@@ -147,7 +151,7 @@ const columns = [
     }
    
     
-  <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} />
+  <TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentUnit(e)} />
     </div>
     }
     </>
