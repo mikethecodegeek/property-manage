@@ -113,9 +113,9 @@ router.post(
       propertyId,
     });
 
-    const properties = await Property.findAll({ where: { ownerId: 1 }, include:[Unit,PropertyFeature] });
+    const property = await Property.findOne({ where: { id: propertyId }, include:[Unit,PropertyFeature] });
     return res.json({
-      properties,
+      property,
     });
   })
 );

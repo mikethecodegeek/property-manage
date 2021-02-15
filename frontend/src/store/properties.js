@@ -61,7 +61,8 @@ export const createPropertyFeatures = (property, propertyId) => async (dispatch)
       })
     });
   
-    dispatch(setPropertyFeatures(response.data));
+    dispatch(setPropertyFeatures(response.data.property));
+    console.log(response.data.property)
     return response;
   };
 
@@ -102,8 +103,10 @@ function propertiesReducer(state = initialState, action) {
       return newState
     case UPDATE_PROPERTY:
         newState = JSON.parse(JSON.stringify(state))
+        console.log(action.payload.id)
         const newProperties = newState.properties.properties.map(prop => {
           if (prop.id === action.payload.id) {
+            console.log('changed!!!!!!!!!')
             return action.payload
           } else {
             return prop

@@ -1,13 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import {format} from 'date-fns'
 import {getAllTenants} from '../../store/tenants'
 import {getAllProperties} from '../../store/properties'
-import * as sessionActions from "../../store/session";
 import TenantsForm from './TenantsForm'
-import { useTable,useSortBy, useGlobalFilter } from 'react-table'
 import '../Table/Table.css'
-import Table from '../Table/Table'
 import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
@@ -114,10 +111,8 @@ function TenantsPage() {
       {
         id:'createdAt',
         Header: 'Application Date',
-        accessor: d=>{
-          d = new Date(d.createdAt)
-          return d.toDateString()
-        }
+        accessor: 'createdAt',
+        Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
       },
       
     ],

@@ -5,6 +5,7 @@ import {getAllVendors} from '../../store/vendors'
 import {getUserUnits} from '../../store/units'
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import {format} from 'date-fns'
 import './Purchases.css'
 import { useAlert } from 'react-alert'
 import BeatLoader from "react-spinners/BeatLoader";
@@ -167,7 +168,8 @@ const columns =  [
     },
     {
       Header: 'Due',
-      accessor: 'billDueBy'
+      accessor: 'billDueBy',
+      Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
     },
   
     
@@ -185,7 +187,7 @@ const columns =  [
         <button className='form-button' onClick={() =>setCreatingPurchase(!creatingPurchase)}>New Purchase</button>
       </div>
 
-        {vendors && units && !creatingPurchase &&
+        {vendors && vendors.length > 0 && units && !creatingPurchase &&
         <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} />
 }
         {/* <div style={{display:'flex',justifyContent:'space-between'}}> */}

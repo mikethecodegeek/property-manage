@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProperties } from "../../store/properties";
 import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
+import {format} from 'date-fns'
 import PropertiesForm from "./PropertiesForm";
 import PropertyFeaturesForm from "./PropertyFeaturesForm";
 import ImageUpload from "../PhotoUpload/PhotoUpload";
@@ -43,15 +43,15 @@ function PropertiesPage() {
     }
   }, [sessionUser]);
 
-  useEffect(() => {
-    if (propData.properties) {
-      let totUnits = 0;
-      propData.properties.forEach((prop) => (totUnits += prop.numUnits));
+  // useEffect(() => {
+  //   if (propData.properties) {
+  //     let totUnits = 0;
+  //     propData.properties.forEach((prop) => (totUnits += prop.numUnits));
      
-      setNumUnits(totUnits);
+  //     setNumUnits(totUnits);
       
-    }
-  }, [propData]);
+  //   }
+  // }, [propData]);
 
   const findCurrentProp = (id) => {
     if (id !== "0" && sessionProperties && sessionProperties.properties) {
@@ -82,15 +82,18 @@ function PropertiesPage() {
   useEffect(()=>{
     // setData(sessionProperties.properties.data.properties)
   
-    if (sessionProperties) {
-
+    if (sessionProperties.properties ) {
+      let totUnits = 0;
+      sessionProperties.properties.forEach((prop) => (totUnits += prop.numUnits));
+     
+      setNumUnits(totUnits);
       // console.log(sessionProperties.properties)
       setData(sessionProperties.properties)
     }
     if (!currentProp) return
     findCurrentProp(currentProp.id)
     
-  },[sessionProperties])
+  },[sessionProperties.properties])
 
 
   const columns = React.useMemo(
@@ -125,7 +128,7 @@ function PropertiesPage() {
         accessor: 'state'
       },
       {
-        Header: 'Zip Code',
+        Header: 'Zip',
         accessor: 'zipCode'
       },
       
@@ -169,7 +172,10 @@ function PropertiesPage() {
       </div>
       {newProperty && (
         <div>
-          <PropertiesForm saved={() => setNewProperty(!newProperty)} />
+          <PropertiesForm saved={() => {
+            setNewProperty(false)
+            setViewFeatures(false)}
+            } />
         </div>
       )}
 
@@ -286,10 +292,10 @@ function PropertiesPage() {
                       </div>
                     </div>
                   )}
-                  {!currentProp.PropertyFeature && (
+                  {!currentProp.PropertyFeature && currentProp.id && (
                     <div>
                       <h3>Please add some features to this property</h3>
-                      <PropertyFeaturesForm propertyId={currentProp.id} finished={()=> setViewFeatures(false)} />
+                      <PropertyFeaturesForm propertyId={currentProp.id} finished={(e)=> findCurrentProp(e)} />
                     </div>
                   )}
                 </div>

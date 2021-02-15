@@ -42,7 +42,7 @@ const TableComponent = ({columns,data, onClickCallback, findPropCallback}) => {
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
                   <span>
-                    {column.isSorted ? (column.isSortedDesc ? "%" : "^") : ""}
+                    {column.isSorted ? (column.isSortedDesc ? <i class="fas fa-sort-down"></i> : <i class="fas fa-sort-up"></i>) : ""}
                   </span>
                 </th>
               ))}

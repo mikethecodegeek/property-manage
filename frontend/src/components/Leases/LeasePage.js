@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {getAllTenants} from '../../store/tenants'
 import {getAllProperties} from '../../store/properties'
+import {format} from 'date-fns'
 import {getAllLeases} from '../../store/leases'
 import '../Table/Table.css'
 import TableComponent from "../Table/Table";
@@ -97,11 +98,13 @@ function LeasesPage() {
       },
       {
         Header: 'Start Date',
-        accessor: 'startDate'
+        accessor: 'startDate',
+        Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
       },
       {
         Header: 'End Date',
-        accessor: 'endDate'
+        accessor: 'endDate',
+        Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
       },
      
       

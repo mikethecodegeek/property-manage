@@ -134,3 +134,7 @@ body {
 .account h3:last-child {
   margin-top: 0px;
 }
+
+.mono {
+  font-family: monospace;
+}

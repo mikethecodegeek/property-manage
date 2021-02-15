@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
 import {createProperty} from '../../store/properties'
-// import './SignupForm.css';
+
 import './Properties.css'
-import { css } from "@emotion/core";
 import { useAlert } from 'react-alert'
 import BeatLoader from "react-spinners/BeatLoader";
 
@@ -15,21 +13,17 @@ function PropertiesForm({saved}) {
   const [state, setState] = useState("");
   const [zipCode, setZip] = useState("");
   const [address, setAddress] = useState("");
-  const [monthlyPayment, setPayment] = useState("");
+  const [monthlyPayment, setPayment] = useState(0);
   const [propertyName, setPropName] = useState("");
   const [propertyType, setPropType] = useState("");
   const [numUnits, setNumUnits] = useState("");
-  let [loading, setLoading] = useState(false);
-  let [color, setColor] = useState("#0183BD");
+  const [loading, setLoading] = useState(false);
+
   const [errors, setErrors] = useState([]);
 
 //   if (sessionUser) return <Redirect to="/" />;
 
-  const override = css`
-    position: static;
-    margin: 0 auto;
-    border-color: red;
-  `;
+ 
 
   const alert = useAlert();
   const handleSubmit = (e) => {
@@ -39,16 +33,16 @@ function PropertiesForm({saved}) {
           setLoading(!loading)
           try {
             await dispatch(createProperty({city,state,zipCode,address,monthlyPayment,propertyName,propertyType,numUnits},sessionUser.id))
-            setCity('')
-            setState('')
-            setZip('')
-            setAddress('')
-            setPayment('')
-            setPropName('')
-            setPropType('')
-            setNumUnits('')
-            saved()
-            // setLoading(!loading)
+            // setCity('')
+            // setState('')
+            // setZip('')
+            // setAddress('')
+            // setPayment(0)
+            // setPropName('')
+            // setPropType('')
+            // setNumUnits('')
+            // saved()
+           
             alert.show('Saved!')
           } catch {
             alert.error('Failed') 
@@ -67,16 +61,7 @@ function PropertiesForm({saved}) {
       <div className='loader'>
         <BeatLoader color={'#0183BD'} loading={loading} size={35} />
       </div>
-      {/* <div className="sweet-loading"> */}
-      {/* <button onClick={() => setLoading(!loading)}>Toggle Loader</button>
-      <input
-        value={color}
-        onChange={(input) => setColor(input.target.value)}
-        placeholder="Color of the loader"
-      />
-
-      
-    </div> */}
+    
       <form className='basic-form properties-form' style={{width:'300px'}} onSubmit={handleSubmit}>
           {errors.length > 0 &&
         <ul>
