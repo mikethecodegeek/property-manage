@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {getAllProperties} from '../../store/properties'
-import {getAllUnits} from '../../store/units'
+import {getAllUnits, getUserUnits} from '../../store/units'
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+// import TenantsForm from './TenantsForm'
 import UnitsForm from "./UnitsForm";
+import TableComponent from "../Table/Table";
 // import './SignupForm.css';
 
 function UnitsPage() {
@@ -12,6 +14,7 @@ function UnitsPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const sessionProperties = useSelector((state) => state.userProperties.properties);
+  const units = useSelector((state) => state.propertyUnits.units);
   const [propData, setPropData] = useState([])
   const [numUnits,setNumUnits] = useState(0)
   const [currentProp,setCurrentProp] = useState({})
@@ -19,21 +22,34 @@ function UnitsPage() {
   const [propertyUnits,setPropertyUnits] = useState([])
   const [vacantUnits, setVacantUnits] = useState([])
   const [newUnit, setNewUnit] = useState(false)
+  const [editingUnit,setEditingUnit] = useState(false)
+  const [data,setData] = useState([])
 
 //   if (!sessionUser) return <Redirect to="/" />;
 // const sessionProperties = useSelector((state) => state.userProperties.properties);
+const allUnits = useSelector((state) => state.propertyUnits.units);
 
 useEffect(()=>{
   const getProperties = async(id)=>{
     let properties = await dispatch(getAllProperties(id))
+    let units = await dispatch(getUserUnits(id))
+    console.log(units.data.units)
+    console.log(properties.data)
+    setData(units.data.units)
     // let propresp = await properties.json()
     setPropData(properties.data)
-    console.log(properties.data)
   } 
   if(sessionUser) {
     getProperties(sessionUser.id)
   }
 },[])
+
+useEffect(()=>{
+  if (allUnits.units){
+    console.log(allUnits.units)
+    setData(allUnits.units)
+  }
+},[allUnits])
 
 useEffect(()=>{
   if (propData.properties) {
@@ -51,6 +67,9 @@ const findCurrentProp = (id) => {
    setCurrentProp(current)
    setPropertyUnits(current.Units)
    setVacantUnits(current.Units.filter(unit=> unit.isVacant))
+   setCurrentUnit(null)
+   setNewUnit(false)
+  //  findCurrentUnit(0)
    console.log(current.Units)
  } else {
    setCurrentProp(null)
@@ -59,13 +78,19 @@ const findCurrentProp = (id) => {
 }
 
 const findCurrentUnit = (id) => {
-  if (id !== 0) {
-    let current = propertyUnits.find(unit => unit.id==id)
+  if (id !== 0 && units.units) {
+    
+    let current = units.units.find(unit => unit.id==id)
+    const currProp = sessionProperties.properties.find(prop => prop.id == current.propertyId)
     // setCurrentProp(current)
     // setPropertyUnits(current.Units)
     // setVacantUnits(current.Units.filter(unit=> unit.isVacant))
+    setCurrentProp(currProp)
     setCurrentUnit(current)
+    setEditingUnit(true)
     console.log(current)
+  } else {
+    setCurrentUnit(0)
   }
 }
 
@@ -73,57 +98,75 @@ const showUnitForm = () => {
   setNewUnit(!newUnit)
 }
 
+
+const columns = [
+    {
+      id: 'propertyId',
+      Header: 'Property',
+      accessor: d => {
+          // console.log(propData)
+          let prop = sessionProperties.properties.find(prop => prop.id==d.propertyId)
+          return prop.propertyName
+      }
+    },
+    {
+      Header: 'Unit #',
+      accessor: 'unitNumber',
+    },
+    {
+      Header: 'Type',
+      accessor: 'unitType',
+    },
+    {
+      Header: 'Beds',
+      accessor: 'numBeds',
+    },
+    {
+      Header: 'Baths',
+      accessor: 'numBaths',
+    },
+    {
+      Header: 'Price',
+      accessor: 'rentalPrice'
+    },
+    {
+      id: 'isVacant',
+      Header: 'Status',
+      accessor: d => d.isVacant != true ? 'Rented' : 'Vacant'
+    },
+    
+  ]
+
+
   return (
     <>
       <div className='flex-between'>
-        <h1>Units Page</h1>
-        <button className='form-button' onClick={showUnitForm}>New Unit</button>
+        <h1>Units</h1>
+        {editingUnit &&
+            <button className='form-button' onClick={() =>setEditingUnit(false)}>All Units</button>
+          }
+        {/* <button className='form-button' onClick={showApplicantForm}>New Applicant</button> */}
+       
+
+
+
       </div>
-      {newUnit &&
-        <UnitsForm />
-      }
+   
      {!newUnit &&
       <div>
       <div style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
-    {sessionProperties.properties &&
+    </div>
+    {currentUnit && editingUnit &&
     <div>
 
-      <h2>Select a Property:</h2>
-      <select onChange={(e)=>findCurrentProp(e.target.value)}>
-      <option value='0'>Please select a property</option>
-        {sessionProperties.properties.map(prop => <option value={prop.id}>{prop.propertyName}</option>)}
-      </select>
+      <UnitsForm current={currentUnit} property={currentProp} onSave={()=>setEditingUnit(false)}  />
     </div>
-  }
-   {/* <UnitsForm /> */}
-    {propertyUnits &&
-    <div>
-      <h2>Select a Unit</h2>
-       <select onChange={(e)=>findCurrentUnit(e.target.value)}>
-       <option value='0'>Please select a unit</option>
-       {propertyUnits.map(unit => <option value={unit.id}>{unit.unitNumber}</option>)}
-     </select>
-    </div>
+
     }
-    </div>
-    {currentUnit &&
-    <div>
-      <h2>Unit Details</h2>
-      <div className='current-unit-details' style={{display:'flex',justifyContent:'space-between',width:'80%'}}>
-      <div>
-        <p>Unit #: {currentUnit.unitNumber}</p>
-        <p>Beds: {currentUnit.numBeds}</p>
-        <p>Baths: {currentUnit.numBaths}</p>
-        <p>Unit Type #: {currentUnit.unitType}</p>
-      </div>
-      <div>
-        <p>Available: {currentUnit.isVacant == true ? 'Yes' : 'No'} </p>
-        <p>Sqft: {currentUnit.sqft}</p>
-        <p>Price: {currentUnit.rentalPrice}</p>
-        <p>Max Occupancy: {currentUnit.numOccupants}</p>
-      </div>
-      </div>
-    </div>
+   
+    {!editingUnit &&
+    
+  <TableComponent data={data} columns={columns} onClickCallback={(e)=> findCurrentUnit(e)} />
     }
     </div>
     }

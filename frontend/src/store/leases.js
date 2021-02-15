@@ -2,24 +2,30 @@ import { fetch } from './csrf.js';
 
 const GET_ALL_LEASES = 'session/getAllLeases';
 const GET_LEASE = 'session/getLease';
+const NEW_LEASE = 'session/newLease';
 
 const showLease = (lease) => ({
   type: GET_LEASE,
   payload: lease
 });
 
-const newLease = (lease) => ({
-    type: GET_ALL_LEASES,
+const showLeases = (leases) => ({
+  type: GET_ALL_LEASES,
+  payload: leases
+});
+
+const addLease = (lease) => ({
+    type: NEW_LEASE,
     payload: lease
   });
 
 
-// export const getAllLeases = (userId) => async (dispatch) => {
-//   let tenants = await fetch(`/api/tenants/${userId}/all`)
-//   console.log(tenants.data)
-//   dispatch(showTenants(tenants.data));
-//   return tenants;
-// };
+export const getAllLeases = (userId) => async (dispatch) => {
+  let leases = await fetch(`/api/leases/${userId}/all`)
+  // console.log(tenants.data)
+  dispatch(showLeases(leases.data));
+  return leases;
+};
 
 export const createLease = (lease,userId) => async (dispatch) => {
     const { propertyId,unitId,tenantId,startDate,endDate,depositAmnt,unitNumber } = lease;
@@ -38,7 +44,7 @@ export const createLease = (lease,userId) => async (dispatch) => {
       })
     });
   
-    dispatch(newLease(response.data.lease));
+    dispatch(addLease(response.data.currentLease));
     return response;
   };
 
@@ -50,6 +56,11 @@ function leasesReducer(state = initialState, action) {
     case GET_ALL_LEASES:
       newState = Object.assign({}, state, { leases: action.payload });
       return newState;
+      case NEW_LEASE:
+        newState = JSON.parse(JSON.stringify(state))
+        newState.leases.leases.push(action.payload)
+      
+        return newState
     default:
       return state;
   }

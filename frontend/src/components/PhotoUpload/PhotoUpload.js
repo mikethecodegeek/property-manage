@@ -50,6 +50,7 @@ function ImageUpload({onNewImageBase64, onSave, currentPhoto}) {
             {!images[0] &&
             <button
               style={isDragging ? { color: 'red' } : undefined}
+              className='form-button'
               onClick={onImageUpload}
               {...dragProps}
             >
@@ -61,9 +62,9 @@ function ImageUpload({onNewImageBase64, onSave, currentPhoto}) {
               <div key={index} className="image-item">
                 {/* <img src={image['data_url']} alt="" width="100" /> */}
                 <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageUpdate(index)}>Update</button>
-                  <button onClick={() => onImageRemove(index)}>Remove</button>
-                  <button onClick={() => saveImg((index)=>onImageRemove(index))}>Save</button>
+                  <button className='form-button' onClick={() => onImageUpdate(index)}>Update</button>
+                  <button className="form-button" onClick={() => onImageRemove(index)}>Remove</button>
+                  <button className='form-button' onClick={() => saveImg((index)=>onImageRemove(index))}>Save</button>
                   
                 </div>
               </div>

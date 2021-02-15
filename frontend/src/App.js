@@ -10,7 +10,8 @@ import UnitsPage from "./components/Units/UnitsPage";
 import HomePage from "./components/HomePage/HomePage"
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import LeaseForm from "./components/LeaseFormPage";
+import LeasesPage from "./components/Leases/LeasePage";
+import PurchasesPage from "./components/Purchases/PurchasesPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,10 +42,13 @@ function App() {
             <TenantsPage />
           </Route>
           <Route path="/leases">
-            <LeaseForm />
+            <LeasesPage />
           </Route>
           <Route path="/units">
             <UnitsPage />
+          </Route>
+          <Route path="/purchases">
+            <PurchasesPage />
           </Route>
           <Route path="/">
             <HomePage />

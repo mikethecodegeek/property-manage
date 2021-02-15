@@ -37,7 +37,7 @@ function Navigation({ isLoaded, content }){
   return (
     <div className='nav-section'>
       <div className='nav-bar'>
-            <NavLink className='logo' exact to="/">NO-IDEA</NavLink>
+            <NavLink className='logo' exact to="/">PropertEye</NavLink>
         <ul>
           <li>
             {isLoaded && sessionLinks}
@@ -48,11 +48,12 @@ function Navigation({ isLoaded, content }){
           <div className='side-bar' style={{paddingTop:'30px'}}>
             <div>
               <ul>
-                <li className='side-link'><NavLink to="/profile">My Profile</NavLink></li>
-                <li className='side-link'><NavLink to="/properties">Properties</NavLink></li>
-                <li className='side-link'><NavLink to="/tenants">Tenants</NavLink></li>
-                <li className='side-link'><NavLink to="/leases">Leases</NavLink></li>
-                <li className='link-no-decorate'><NavLink to="/units">Units</NavLink></li>
+                <li className='side-link mono'><NavLink to="/profile">My Profile</NavLink></li>
+                <li className='side-link mono'><NavLink to="/properties">Properties</NavLink></li>
+                <li className='side-link mono'><NavLink to="/tenants">Tenants</NavLink></li>
+                <li className='side-link mono'><NavLink to="/leases">Leases</NavLink></li>
+                <li className='side-link mono'><NavLink to="/units">Units</NavLink></li>
+                <li className='link-no-decorate mono'><NavLink to="/purchases">Purchases</NavLink></li>
               </ul>
             </div>
             <div>

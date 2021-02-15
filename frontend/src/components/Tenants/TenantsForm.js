@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import {createTenant} from '../../store/tenants'
+import { css } from "@emotion/core";
+import { useAlert } from "react-alert";
+import {createTenant} from '../../store/tenants';
+import BeatLoader from "react-spinners/BeatLoader";
 // import './SignupForm.css';
 
 function TenantsForm({cancelTenant}) {
@@ -10,22 +13,40 @@ function TenantsForm({cancelTenant}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  let [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState([]);
 
 //   if (sessionUser) return <Redirect to="/" />;
+  const alert = useAlert();
 
   const handleSubmit = (e) => {
         e.preventDefault();
-        // return dispatch(sessionActions.signup({ email, username, password }))
-        return dispatch(createTenant({firstName,lastName,phoneNumber}, sessionUser.id))
-        console.log('Form Submitted')
+        const asyncFunc = async() => {
+          setLoading(true)
+          try {
+           await dispatch(createTenant({firstName,lastName,phoneNumber}, sessionUser.id))
+           setFirstName('')
+           setLastName('')
+           setPhoneNumber('')
+           alert.show('Saved!') 
+           cancelTenant()
+          } catch {
+          alert.error('Failed')
+        } finally {
+          setLoading(false)
+        }
+      }
+        asyncFunc()
     }
 
 
   return (
     <>
       <h3>Tenant Application</h3>
+      <div className="loader">
+        <BeatLoader color={"#0183BD"} loading={loading} size={35} />
+      </div>
       <form className='basic-form' onSubmit={handleSubmit}>
           {errors.length > 0 &&
         <ul>

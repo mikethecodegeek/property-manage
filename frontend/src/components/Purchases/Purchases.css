@@ -1,0 +1,7 @@
+.pickme {
+    height: 0px
+}
+
+.pickme :first-child {
+    border: none;
+}

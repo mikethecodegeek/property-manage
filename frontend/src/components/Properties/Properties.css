@@ -1,9 +1,41 @@
 .property-page-details {
-    display:flex;
-    justify-content:space-between;
+    /* display:flex;
+    justify-content:space-between; */
     width:90%
 }
 
 .property-page-details > img {
     height: 50px;
+}
+
+.prop-top-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.prop-name > p, .prop-address > p {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.section-one {
+    display: flex;
+    justify-content: space-between;
+    width: 550px;
+}
+
+.section-two {
+    display: flex;
+    flex-direction: column;
+    width: 425px;
+}
+
+.section-two > div {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0px;
+}
+
+.features-button {
+    margin-top: 10px;
 }

@@ -55,9 +55,11 @@ router.post(
           userId:ownerId
       });
     }
+ 
+    const newProperty = await Property.findOne({where:{id:property.id}, include:[Unit]})
 
     return res.json({
-      property,
+      newProperty,
     });
   })
 );
@@ -70,12 +72,12 @@ router.post(
 
     const { propertyId } = req.params;
     // console.log(req.body);
-    const currentProperty = await Property.findOne({ where: { id: propertyId } });
+    const currentProperty = await Property.findOne({ where: { id: propertyId },include:Unit });
     console.log(currentProperty);
     
-    currentProperty.set({ photo: imgUrl });
-    currentProperty.save();
-    const properties = await Property.findAll({ where: { ownerId: 1 } });
+    await currentProperty.update({ photo: imgUrl });
+    // currentProperty.save();
+    // const properties = await Property.findAll({ where: { ownerId: 1 } });
     return res.json({
       currentProperty
     });
@@ -111,9 +113,9 @@ router.post(
       propertyId,
     });
 
-    const properties = await Property.findAll({ where: { ownerId: 1 } });
+    const property = await Property.findOne({ where: { id: propertyId }, include:[Unit,PropertyFeature] });
     return res.json({
-      properties,
+      property,
     });
   })
 );
