@@ -18,7 +18,7 @@ function UnitsForm({current, property, onSave}) {
   const [numOccupants, setNumOccupants] = useState(current.numOccupants);
   const [numBeds, setNumBeds] = useState(current.numBeds);
   const [numBaths, setNumBaths] = useState(current.numBaths);
-  const [unitNumber, setUnitNumber] = useState();
+  const [unitNumber, setUnitNumber] = useState(current.unitNumber);
   const [unitType, setUnitType] = useState(current.unitType);
   const [available, setIsAvailable] = useState(current.isVacant)
   const [unitId, setUnitId] = useState(current.id)

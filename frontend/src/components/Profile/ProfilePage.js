@@ -9,6 +9,7 @@ import { getUserUnits } from "../../store/units";
 import { useAlert } from "react-alert";
 import { getAllPurchases } from "../../store/purchases";
 // import './SignupForm.css';
+import './Profile.css'
 
 
 function ProfilePage() {
@@ -123,17 +124,17 @@ function ProfilePage() {
 
   return (
     <>
-      <h1 className="profile-username">{sessionUser.username}</h1>
+      <h1 className="profile-username" style={{textAlign:'center'}}>{sessionUser.username}</h1>
       {sessionProperties.properties && (
-        <div className="profile-quickview">
+        <div className="">
           {/* <h2>Quick View</h2> */}
 
-          <div className="flex-even">
+          <div className="flex-even" style={{flexWrap:'wrap'}}>
             <div class="card">
               <div class="header">
                 <p>Properties</p>
               </div>
-              <div class="container center-div">
+              <div class="container center-div thing1">
                 <p>Properties: {sessionProperties.properties.length} </p>
                 {unitData.units && (
                   <>
@@ -145,11 +146,11 @@ function ProfilePage() {
             </div>
 
             {sessionTenants.tenants && (
-              <div class="card">
+              <div class="card thing2" >
                 <div class="header">
                   <p>Applicants / Tenants</p>
                 </div>
-                <div class="container center-div">
+                <div class="container center-div thing4" >
                   {unitData.units && (
                     <>
                       <p> Tenants: {activeTenants}</p>
