@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Vendor.associate = function(models) {
     // associations can be defined here
+    Vendor.belongsTo(models.VendorType, {foreignKey:'vendorType'})
   };
   return Vendor;
 };

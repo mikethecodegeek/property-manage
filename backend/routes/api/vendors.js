@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 
-const { User,Property,Tenant, Unit, Lease, UnitPurchases ,PropertyPurchases, Vendor} = require('../../db/models');
+const { User,Property,Tenant, Unit, Lease, UnitPurchases ,PropertyPurchases, Vendor, VendorType} = require('../../db/models');
 const unit = require('../../db/models/unit');
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get(
   '/:userId/all',
   asyncHandler(async (req, res) => {
     const {userId} = req.params 
-    const allVendors = await Vendor.findAll({where:{userId}});
+    const allVendors = await Vendor.findAll({where:{userId},include:[VendorType]});
     // const propertyPurchases = await PropertyPurchases.findAll({where:{ownerId:userId}});
     // const allPurchases = {unitPurchases,propertyPurchases}     
     return res.json({
@@ -43,52 +43,46 @@ router.get(
 //   })
 // );
 
-// router.post(
-//     "/new",
-//     asyncHandler(async (req, res) => {
-//       const {
-//         ownerId,
-//         propertyId,
-//         unitId,
-//         vendorId,
-//         amount,
-//         description,
-//         billDueBy,
-//         purchaseType
-//       } = req.body;
+router.post(
+    "/new",
+    asyncHandler(async (req, res) => {
+      const {
+        userId,
+        vendorName,
+        phone,
+        vendorDescription,
+        vendorType,
+        vendorContactName,
+        city,
+        state,
+        address,
+        email,
+        zipCode
+      } = req.body;
   
-//       if (purchaseType == 'Unit') {
+      console.log(req.body)
           
-//           const unitPurchase = await UnitPurchases.create({
-//             ownerId,
-//             propertyId,
-//             unitId,
-//             vendorId,
-//             amount,
-//             description,
-//             billDueBy,
-//           });
+          const vendor = await Vendor.create({
+            userId,
+            vendorName,
+            phone,
+            vendorDescription,
+            vendorType,
+            vendorContactName,
+            city,
+            state,
+            address,
+            email,
+            zipCode
+          });
 
-//           return res.json({
-//             purchase:unitPurchase,
-//           });
-//       }
+          const newVendor = await Vendor.findOne({where:{id:vendor.id},include:[VendorType]})
 
-//       if (purchaseType == 'Unit') {
-//       const propertyPurchase = await PropertyPurchases.create({
-//         ownerId,
-//         propertyId,
-//         vendorId,
-//         amount,
-//         description,
-//         billDueBy,
-//       });
-  
-//       return res.json({
-//         purchase:propertyPurchase,
-//       });
-//     }
-//     })
-//   );
+          return res.json({
+            newVendor,
+          });
+      }
+
+  ));
 
 module.exports = router;

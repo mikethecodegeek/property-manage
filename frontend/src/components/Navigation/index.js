@@ -54,7 +54,8 @@ function Navigation({ isLoaded, content }){
                 <li className='side-link mono'><NavLink to="/tenants">Tenants</NavLink></li>
                 <li className='side-link mono'><NavLink to="/leases">Leases</NavLink></li>
                 <li className='side-link mono'><NavLink to="/units">Units</NavLink></li>
-                <li className='link-no-decorate mono'><NavLink to="/purchases">Purchases</NavLink></li>
+                <li className='side-link mono'><NavLink to="/purchases">Purchases</NavLink></li>
+                <li className='link-no-decorate mono'><NavLink to="/vendors">Vendors</NavLink></li>
               </ul>
             </div>
             <div>

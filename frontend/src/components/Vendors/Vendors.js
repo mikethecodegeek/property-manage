@@ -1,16 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getAllProperties} from '../../store/properties'
-import {getAllVendors} from '../../store/vendors'
-import {getAllUnits} from '../../store/units'
-import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
-import './Purchases.css'
+import {getAllVendors, createVendor} from '../../store/vendors'
+import TableComponent from '../Table/Table'
+import '../Table/Table.css'
 import { useAlert } from 'react-alert'
 import BeatLoader from "react-spinners/BeatLoader";
-import {createPurchase} from '../../store/purchases'
+import VendorForm from './VendorForm'
 
-// import './SignupForm.css';
 
 function VendorsPage() {
 
@@ -22,13 +18,15 @@ function VendorsPage() {
   const [vendorName,setVendorName] = useState('')
   const [phone,setPhone] = useState('')
   const [vendorDescription,setVendorDescription] = useState('')
-  const [vendorType,setVendorType] = useState('')
+  const [vendorType,setVendorType] = useState(1)
   const [vendorContactName,setVendorContactName] = useState('')
   const [city,setCity] = useState('')
   const [state,setState] = useState('')
   const [address,setAddress] = useState('')
   const [zipCode,setZipcode] = useState('')
   const [email,setEmail] = useState('')
+  const [data,setData]= useState([])
+  const [newVendor, setNewVendor] = useState(false)
  
   let [loading, setLoading] = useState(false);
  
@@ -47,15 +45,13 @@ useEffect(()=>{
   }
 },[])
 
+useEffect(()=>{
+  if (vendors) {
+    setData(vendors)
+  }
+},[vendors])
 
-// const findCurrentProp = (id) => {
-//  if (id !== '0') {
-//    let current =sessionProperties.properties.find(prop => prop.id==id)
-//    setPropertyUnits(current.Units)
-//    setPropertyId(id)
-//  }
 
-// }
 const alert = useAlert();
 
 const handleSubmit = (e) => {
@@ -64,7 +60,7 @@ const handleSubmit = (e) => {
   const asyncHandle = async () => {
     setLoading(!loading)
     try {
-      await dispatch(createPurchase({  
+      await dispatch(createVendor({  
         vendorName,
         phone,
         vendorDescription,
@@ -87,55 +83,49 @@ const handleSubmit = (e) => {
   asyncHandle()
 }
 
+const columns =  [
+    {
+      
+      Header: 'Name',
+      accessor: 'vendorName', // accessor is the "key" in the data
+    },
+    {
+      Header: 'Phone',
+      accessor: 'phone',
+    },
+    {
+      Header: 'Description',
+      accessor: 'vendorDescription',
+    },
+    {
+      Header: 'Type',
+      accessor: 'VendorType.description',
+    },
+    {
+      Header: 'Email',
+      accessor: 'email',
+    },
+   
+    
+  ]
+
   return (
     <>
+      <div className='flex-between'>
         <h1>Vendors</h1>
-        
-        {/* <div style={{display:'flex',justifyContent:'space-between'}}> */}
-        
-        {/* vendorName,
-        phone,
-        vendorDescription,
-        vendorType,
-        vendorContactName,
-        city,
-        state,
-        address,
-        email,
-        zipCode}, */}
-      <div className="loader">
-      {/* {vendors.length > 0 &&
-            <select onChange={(e) => setVendorId(e.target.value)}>
-            <option value='0' >Please select a vendor</option>
-            {vendors.map(vendor => <option value={vendor.id}>{vendor.vendorName}</option>)}
-          </select>
-          } */}
-        <BeatLoader color={"#0183BD"} loading={loading} size={35} />
+        <button className='form-button' onClick={()=>setNewVendor(!newVendor)}>New Vendor</button>
       </div>
-      <form className="basic-form" onSubmit={handleSubmit}>
-        {/* {errors.length > 0 && (
-          <ul>
-            {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
-            ))}
-          </ul>
-        )} */}
         
-    
-        
-  
       
-        
-       
+      {!newVendor && data.length > 0 &&
       
-       
-
-        <button className="form-button submit-button" type="submit">
-          Add Vendor
-        </button>
-      </form>
-   
-   
+        <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} />
+      }
+      {newVendor &&
+        <VendorForm />
+      }
+     
+     
     </>
   );
 }

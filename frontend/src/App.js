@@ -12,6 +12,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import LeasesPage from "./components/Leases/LeasePage";
 import PurchasesPage from "./components/Purchases/PurchasesPage";
+import VendorsPage from './components/Vendors/Vendors'
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,9 @@ function App() {
           </Route>
           <Route path="/purchases">
             <PurchasesPage />
+          </Route>
+          <Route path="/vendors">
+            <VendorsPage />
           </Route>
           <Route path="/">
             <HomePage />

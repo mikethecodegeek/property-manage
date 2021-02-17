@@ -1,6 +1,7 @@
 import { fetch } from './csrf.js';
 
 const GET_ALL_VENDORS = 'session/getVendors';
+const CREATE_VENDOR = 'session/newVendor'
 // const NEW_PURCHASE = 'session/newPurchase'
 
 const getVendors = (vendors) => ({
@@ -8,47 +9,54 @@ const getVendors = (vendors) => ({
   vendors
 });
 
-// const newPurchase = (purchase) => ({
-//   type: NEW_PURCHASE,
-//   purchase
-// });
+const newVendor= (vendor) => ({
+  type: CREATE_VENDOR,
+  vendor
+});
 
 
 export const getAllVendors = (userId) => async (dispatch) => {
-console.log('hiiiiiitttt')
   let vendors = await fetch(`/api/vendors/${userId}/all`)
 //   console.log(purchases.data.allPurchases)
   dispatch(getVendors(vendors.data.allVendors));
   return vendors;
 };
 
-// export const createPurchase = (purchase, ownerId) => async (dispatch) => {
-//     const {  
-//         propertyId,
-//         unitId,
-//         vendorId,
-//         amount,
-//         description,
-//         billDueBy,
-//         purchaseType } = purchase;
+export const createVendor = (vendor, userId) => async (dispatch) => {
+  // console.log(userId,vendor)
+    const {  
+      vendorName,
+      phone,
+      vendorDescription,
+      vendorType,
+      vendorContactName,
+      city,
+      state,
+      address,
+      email,
+      zipCode,
+      } = vendor;
  
-//     const response = await fetch('/api/purchases/new', {
-//       method: 'POST',
-//       body: JSON.stringify({
-//         ownerId,
-//         propertyId,
-//         unitId,
-//         vendorId,
-//         amount,
-//         description,
-//         billDueBy,
-//         purchaseType
-//       })
-//     });
+    const response = await fetch('/api/vendors/new', {
+      method: 'POST',
+      body: JSON.stringify({
+        vendorName,
+        phone,
+        vendorDescription,
+        vendorType,
+        vendorContactName,
+        city,
+        state,
+        address,
+        email,
+        zipCode,
+        userId,
+      })
+    });
   
-//     dispatch(newPurchase(response.data.purchase));
-//     return response;
-//   };
+    dispatch(newVendor(response.data.newVendor));
+    return response;
+  };
 
 
 const initialState = { vendors: [] };
@@ -61,9 +69,12 @@ function vendorsReducer(state = initialState, action) {
       newState = Object.assign({}, action.vendors );
       return action.vendors;
 
-    // case NEW_PURCHASE:
-    //   newState = Object.assign({}, action.purchase );
-    //   return newState;
+    case CREATE_VENDOR:
+      newState = JSON.parse(JSON.stringify(state))
+      console.log(newState)
+      console.log(action.vendor)
+      newState.push(action.vendor)
+      return newState;
 
     default:
       return state;
