@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   UnitPurchases.associate = function(models) {
     // associations can be defined here
+    UnitPurchases.belongsTo(models.Vendor, {foreignKey:'vendorId'})
   };
   return UnitPurchases;
 };

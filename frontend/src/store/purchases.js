@@ -26,6 +26,13 @@ export const getAllPurchases = (userId) => async (dispatch) => {
   return purchases;
 };
 
+export const getPropertyPurchases = (propId) => async (dispatch) => {
+  let purchases = await fetch(`/api/purchases/property/${propId}/all`)
+  console.log(purchases.data.allPurchases)
+  dispatch(showPurchases(purchases.data.allPurchases));
+  return purchases;
+};
+
 export const createPurchase = (purchase, ownerId) => async (dispatch) => {
   console.log('Yeah buddy')
     const {  

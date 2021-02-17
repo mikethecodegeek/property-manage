@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProperties } from "../../store/properties";
 import { Redirect } from "react-router-dom";
 import {format} from 'date-fns'
+import {getAllPurchases,getPropertyPurchases} from '../../store/purchases'
+import {getAllVendors} from '../../store/vendors'
 import PropertiesForm from "./PropertiesForm";
 import PropertyFeaturesForm from "./PropertyFeaturesForm";
 import ImageUpload from "../PhotoUpload/PhotoUpload";
@@ -17,6 +19,8 @@ function PropertiesPage() {
     // if (!sessionUser) return <Redirect to="/" />;
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const propPurchases = useSelector((state) => state.purchases);
+  const vendors = useSelector( state => state.vendors)
   const sessionProperties = useSelector(
     (state) => state.userProperties.properties
   );
@@ -30,10 +34,12 @@ function PropertiesPage() {
   const [viewFeatures, setViewFeatures] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
   const [data, setData] = useState([]) 
+  const [columns, setColumns] = useState([])
 
   useEffect(() => {
     const getProperties = async (id) => {
       let properties = await dispatch(getAllProperties(id));
+      // await dispatch(getAllVendors(id))
       setPropData(properties.data);
       console.log(properties.data)
       setData(properties.data.properties)
@@ -54,15 +60,49 @@ function PropertiesPage() {
   //   }
   // }, [propData]);
 
-  const findCurrentProp = (id) => {
+  const findCurrentProp = async (id) => {
+    console.log(id)
     if (id !== "0" && sessionProperties && sessionProperties.properties) {
-     
+      console.log('=============================')
+      console.log(vendors)
+      console.log('=============================')
+      const purchases = await dispatch(getPropertyPurchases(id))
+      console.log(purchases.data.allPurchases)
+      setData([...purchases.data.allPurchases.unitPurchases,...purchases.data.allPurchases.propertyPurchases])
       let current = sessionProperties.properties.find((prop) => prop.id == id);
       setCurrentProp(current);
       setPropertyUnits(current.Units);
       setVacantUnits(current.Units.filter((unit) => unit.isVacant));
       setRentedUnits(current.Units.filter((unit) => !unit.isVacant));
       setImgUrl('');
+      setColumns( [
+       
+        {
+          Header: 'Type',
+          accessor: d => d.unitId ? 'Unit' : 'Property'
+        },
+        {
+          id: 'unitId',
+          Header: 'Unit',
+          accessor: 'unitId'
+        },
+        {
+          Header: 'Description',
+          accessor: 'description',
+        },
+        {
+          id:'vendorId',
+          Header: 'Vendor',
+          accessor: 'Vendor.vendorName'
+          }
+        ,
+        {
+          Header: 'Amount',
+          accessor: 'amount',
+        },
+      
+        
+      ])
      
     } else {
       setCurrentProp(null);
@@ -80,25 +120,9 @@ function PropertiesPage() {
       
   };
 
-  useEffect(()=>{
-    // setData(sessionProperties.properties.data.properties)
-  
-    if (sessionProperties.properties ) {
-      let totUnits = 0;
-      sessionProperties.properties.forEach((prop) => (totUnits += prop.numUnits));
-     
-      setNumUnits(totUnits);
-      // console.log(sessionProperties.properties)
-      setData(sessionProperties.properties)
-    }
-    if (!currentProp) return
-    findCurrentProp(currentProp.id)
-    
-  },[sessionProperties.properties])
-
-
-  const columns = React.useMemo(
-    () => [
+  const setPropsTable = () => {
+    setData(sessionProperties.properties)
+    setColumns([
       {
         
         Header: 'Property Name',
@@ -133,23 +157,71 @@ function PropertiesPage() {
         accessor: 'zipCode'
       },
       
-    ],
-    []
-  )
+    ])
+    setCurrentProp(null)
+  }
+
+  useEffect(()=>{
+    // setData(sessionProperties.properties.data.properties)
+  
+    if (sessionProperties.properties ) {
+      let totUnits = 0;
+      sessionProperties.properties.forEach((prop) => (totUnits += prop.numUnits));
+     
+      setNumUnits(totUnits);
+      // console.log(sessionProperties.properties)
+      setColumns([
+        {
+          
+          Header: 'Property Name',
+          accessor: 'propertyName', // accessor is the "key" in the data
+        },
+        {
+          Header: 'Type',
+          accessor: 'propertyType',
+        },
+        {
+          Header: '# of Units',
+          accessor: 'numUnits',
+        },
+        {
+          Header: 'Mortgage',
+          accessor: 'monthlyPayment'
+        },
+        {
+          Header: 'Address',
+          accessor: 'address'
+        },
+        {
+          Header: 'City',
+          accessor: 'city'
+        },
+        {
+          Header: 'State',
+          accessor: 'state'
+        },
+        {
+          Header: 'Zip',
+          accessor: 'zipCode'
+        },
+        
+      ])
+      setData(sessionProperties.properties)
+      
+    }
+    if (!currentProp) return
+    findCurrentProp(currentProp.id)
+    
+  },[sessionProperties.properties])
+
+
+  
   if (!sessionUser) return <Redirect to="/" />;
   return (
     <>
       <div className="flex-between">
         <h1>Properties</h1>
         
-        {/* {sessionProperties && sessionProperties.properties && (
-          <select onChange={(e) => findCurrentProp(e.target.value)}>
-            <option value="0">Please select a property</option>
-            {sessionProperties.properties.map((prop) => (
-              <option value={prop.id}>{prop.propertyName}</option>
-            ))}
-          </select>
-        )} */}
 
         {currentProp && (
           <>
@@ -161,7 +233,7 @@ function PropertiesPage() {
           </button>
           <button
             className="form-button"
-            onClick={() => setCurrentProp(null)}
+            onClick={() => setPropsTable() }
           >
             All Properties
           </button>
@@ -196,7 +268,7 @@ function PropertiesPage() {
                   <div className="prop-img">
                     <img
                       src={imgUrl || currentProp.photo}
-                      style={{ maxHeight: "150px" }}
+                      style={{ maxHeight: "100px" }}
                     ></img>
                     <ImageUpload
                       onNewImageBase64={(img) => setImgUrl(img)}
@@ -222,6 +294,7 @@ function PropertiesPage() {
                       {currentProp.zipCode}
                     </p>
                   </div>
+                  
                 </div>
               }
               {!viewFeatures &&
@@ -231,6 +304,8 @@ function PropertiesPage() {
                     display: "flex",
                     justifyContent: "space-between",
                     width: "90%",
+                    position:'relative',
+                    
                   }}
                 >
                   {/* {rentedUnits.length + vacantUnits.length == currentProp.numUnits ? currentProp.numUnits : 'More unit data needed'} */}
@@ -239,7 +314,9 @@ function PropertiesPage() {
                   <h3>Vacant Units: {vacantUnits.length} </h3>
                   {/* <h3>Units Rented: {currentProp.Units.filter(unit => unit.isVacant)} </h3> */}
                 </div>
-          }
+                
+              }
+              <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} height='150px' />
               </div>
                   
               {viewFeatures && (

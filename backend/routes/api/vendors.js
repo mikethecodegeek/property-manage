@@ -9,6 +9,7 @@ const router = express.Router();
 router.get(
   '/:userId/all',
   asyncHandler(async (req, res) => {
+    console.log('FFFFFFFFFFFFFFFFFFFFFFFFFFF')
     const {userId} = req.params 
     const allVendors = await Vendor.findAll({where:{userId},include:[VendorType]});
     // const propertyPurchases = await PropertyPurchases.findAll({where:{ownerId:userId}});

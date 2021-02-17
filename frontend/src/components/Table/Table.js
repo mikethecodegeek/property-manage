@@ -2,7 +2,7 @@ import React from "react";
 import { useTable, useSortBy, useGlobalFilter } from "react-table";
 import "./Table.css";
 
-const TableComponent = ({columns,data, onClickCallback, findPropCallback}) => {
+const TableComponent = ({columns,data, onClickCallback, findPropCallback, height}) => {
 //   const [data, setData] = useState([]);
 
   const {
@@ -30,7 +30,7 @@ const TableComponent = ({columns,data, onClickCallback, findPropCallback}) => {
         {...getTableProps()}
         style={{
           border: "none",
-          height: "350px",
+          height: height || "350px",
           overflowY: "scroll",
           display: "inline-block",
         }}

@@ -1,7 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 
-const { User,Property,Tenant, Unit, Lease, UnitPurchases ,PropertyPurchases} = require('../../db/models');
+const { User,Property,Tenant, Unit, Lease, UnitPurchases ,PropertyPurchases, Vendor} = require('../../db/models');
 const unit = require('../../db/models/unit');
 
 const router = express.Router();
@@ -20,13 +20,14 @@ router.get(
 );
 
 router.get(
-  '/:propertyId/all',
+  '/property/:propertyId/all',
   asyncHandler(async (req, res) => {
     const {propertyId} = req.params 
-    const propertyPurchases = await PropertyPurchases.findAll({where:{id:propertyId}});
-      
+    const propertyPurchases = await PropertyPurchases.findAll({where:{propertyId:propertyId},include: Vendor});
+    const unitPurchases = await UnitPurchases.findAll({where:{propertyId:propertyId}, include: Vendor});
+    const allPurchases = {unitPurchases,propertyPurchases}   
     return res.json({
-       propertyPurchases
+       allPurchases
     });
   })
 );
