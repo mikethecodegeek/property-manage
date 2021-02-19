@@ -153,19 +153,19 @@ function LeaseForm({cancelLease}) {
         <div style={{display:'flex', justifyContent:'space-between'}}>
           <div>
         <label>
-          Property
+          {/* Property */}
           {sessionProperties && sessionProperties.properties && (
             <select onChange={(e) => findCurrentProp(e.target.value)}>
-              <option value="0">Please select a property</option>
+              <option value="0">Select a property</option>
               {sessionProperties.properties.map((prop) => (
                 <option value={prop.id}>{prop.propertyName}</option>
               ))}
             </select>
           )}
         </label>
-        <br />
         <label>
-          Unit
+        <br />
+          {/* Unit */}
           {propertyUnits && (
             <select
               onChange={(e) =>
@@ -189,10 +189,10 @@ function LeaseForm({cancelLease}) {
         </label>
         <br />
         <label>
-          Tenant
+          {/* Tenant */}
           {sessionTenants.tenants && (
             <select onChange={(e) => setTenantId(e.target.value)}>
-              <option value="0">Please select a tenant</option>
+              <option value="0">Select a tenant</option>
               {getAvailableTenants(sessionTenants.tenants).map((prop) => (
                 <option value={prop.id}>
                   {prop.firstName} {prop.lastName}
@@ -201,7 +201,17 @@ function LeaseForm({cancelLease}) {
             </select>
           )}
         </label>
-        <br />
+        {/* <br /> */}
+        <label>
+          {/* Deposit */}
+          <input
+            type="number"
+            value={depositAmnt}
+            placeholder='Deposit Amount'
+            onChange={(e) => setDepositAmnt(e.target.value)}
+            required 
+          />
+        </label>
         </div>
         <div>
         <label>
@@ -224,15 +234,6 @@ function LeaseForm({cancelLease}) {
           />
         </label>
         <br />
-        <label>
-          Deposit
-          <input
-            type="number"
-            value={depositAmnt}
-            onChange={(e) => setDepositAmnt(e.target.value)}
-            required 
-          />
-        </label>
         <br />
         </div>
         </div>

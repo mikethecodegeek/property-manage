@@ -105,7 +105,15 @@ body {
 .basic-form  input[type='text'],input[type='number'],input[type='date'],input[type='password'],select {
   padding: 5px;
   margin: 10px 5px;
+  width: 150px;
+  height: 16px
 }
+
+.basic-form select {
+ height: 30px
+}
+
+
 
 .submit-button {
   width: 100px;

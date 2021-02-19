@@ -217,7 +217,7 @@ const columns =  [
           Vendor
           {vendors.length > 0 &&
             <select onChange={(e) => setVendorId(e.target.value)}>
-            <option value='0' >Please select a vendor</option>
+            <option value='0' >Select a vendor</option>
             {vendors.map(vendor => <option value={vendor.id}>{vendor.vendorName}</option>)}
           </select>
           }
@@ -226,7 +226,7 @@ const columns =  [
           Property
           {sessionProperties && sessionProperties.properties && (
             <select onChange={(e) => findCurrentProp(e.target.value)}>
-              <option value="0">Please select a property</option>
+              <option value="0">Select a property</option>
               {sessionProperties.properties.map((prop) => (
                 <option value={prop.id}>{prop.propertyName}</option>
               ))}
