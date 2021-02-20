@@ -25,24 +25,13 @@ function TenantsPage() {
 
 //   if (!sessionUser) return <Redirect to="/" />;
   
-  // useMemo(() => {
-  //   const getTenants = async(id)=>{
-  //     let tenants = await dispatch(getAllTenants(id))
-    
-  //     console.log(tenants.data.tenants)
-  //     setTenants(tenants.data)
-  //     await dispatch(getAllProperties(id))
-  //   } 
-  //   if (sessionUser) {
-  //     getTenants(sessionUser.id)
-  //   }
-  // },[])
+
 
   useEffect(()=>{
     const getTenants = async(id)=>{
       let tenants = await dispatch(getAllTenants(id))
     
-      console.log(tenants.data.tenants)
+  
       setTenants(tenants.data)
       setData(tenants.data.tenants)
       await dispatch(getAllProperties(id))
@@ -55,7 +44,7 @@ function TenantsPage() {
 
   useEffect(()=>{
     if (sessionTenants.tenants) {
-      console.log(sessionTenants.tenants)
+      
       setData(sessionTenants.tenants)
     }
   },[sessionTenants])
@@ -65,11 +54,9 @@ function TenantsPage() {
     if (tennant !== '0') {
       let current =sessionTenants.tenants.find(prop => prop.id==tennant)
       setCurrentTenant(current)
-      console.log(current)
+     
       setShowTenant(true)
-      // setPropertyUnits(current.Units)
-      // setVacantUnits(current.Units.filter(unit=> unit.isVacant))
-      // console.log(current.Units)
+  
     } else {
       setCurrentTenant(null)
     }
@@ -77,7 +64,7 @@ function TenantsPage() {
 
   const showApplicantForm = () => {
     setNewApplicant(!newApplicant)
-    console.log(newApplicant)
+   
   }
 
   const getPropertyName = (id) => {

@@ -27,7 +27,7 @@ function LeasesPage() {
     const getLeases = async(id)=>{
       const leases = await dispatch(getAllLeases(id))
     
-      console.log(leases.data)  
+     
       setData(leases.data.leases)
     //   await dispatch(getAllProperties(id))
     } 
@@ -41,7 +41,7 @@ function LeasesPage() {
 //     if (tennant !== '0') {
 //       let current =sessionTenants.tenants.find(prop => prop.id==tennant)
 //       setCurrentTenant(current)
-//       console.log(current)
+//      
 //       setShowTenant(true)
     
 //     } else {
@@ -51,12 +51,12 @@ function LeasesPage() {
 
   const showNewLeaseForm = () => {
     setNewLease(!newLease)
-    // console.log(newApplicant)
+    
   }
 
   useEffect(()=>{
     if(leases.leases) {
-      console.log(leases.leases)
+     
       setData(leases.leases)
     }
   },[leases])

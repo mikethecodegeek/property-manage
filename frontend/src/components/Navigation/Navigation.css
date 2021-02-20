@@ -146,3 +146,16 @@ body {
 .mono {
   font-family: monospace;
 }
+
+.me {
+  margin-right: 20px;
+  font-size: 1.2rem;
+  width: 200px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.me > span >a {
+  color: white;
+  text-decoration: none;
+}

@@ -22,10 +22,9 @@ function LoginFormPage() {
       });
   };
 
-  const demoLogin = () => {
-    setCredential('demo@user.io')
-    setPassword('password')
-    return dispatch(sessionActions.login({ credential, password }))
+  const demoLogin = (e) => {
+    e.preventDefault()
+    return dispatch(sessionActions.login({ credential:'demo@user.io',password: 'password' }))
     .catch((res) => {
       if (res.data && res.data.errors) setErrors(res.data.errors);
     });
@@ -67,7 +66,7 @@ function LoginFormPage() {
           />
         </label>
         <button class='submit-button form-button' type="submit">Log In</button>
-        <button class='submit-button form-button' onClick={()=>demoLogin()}>Demo User</button>
+        <button class='submit-button form-button' onClick={demoLogin}>Demo User</button>
       </form>
      
     </>

@@ -50,7 +50,7 @@ useEffect(()=>{
     const purchases = await dispatch(getAllPurchases(id))
     // const allPurchases = purchases.data.allPurchases
     
-    // console.log(allPurchases)
+  
 
     // setData([...allPurchases.unitPurchases, ...allPurchases.propertyPurchases])
   } 
@@ -62,7 +62,7 @@ useEffect(()=>{
 
 useEffect(()=>{
   if (purchases.unitPurchases && purchases.propertyPurchases) {
-    // console.log(purchases)
+    
     setData([...purchases.unitPurchases, ...purchases.propertyPurchases])
   }
 },[purchases])
@@ -88,8 +88,8 @@ const alert = useAlert();
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  console.log('anything')
-  // return dispatch(sessionActions.signup({ email, username, password }))
+ 
+ 
   const asyncHandle = async () => {
     setLoading(!loading)
     try {
@@ -124,7 +124,7 @@ const columns =  [
        if (sessionProperties.properties) {
           let props =Array.from(sessionProperties.properties)
           let prop = props.find(prop => prop.id==d.propertyId)
-          // console.log(sessionProperties)
+          
           return prop.propertyName
        }
       }
@@ -155,9 +155,9 @@ const columns =  [
       id:'vendorId',
       Header: 'Vendor',
       accessor: d=> {
-        // console.log(d.vendorId)
+        
         const vend = vendors.find(v => v.id == d.vendorId)
-        // console.log(vend)
+        
         // return
         return vend.vendorName
       }

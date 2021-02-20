@@ -40,8 +40,7 @@ function ProfilePage() {
       dispatch(getAllTenants(id));
       dispatch(getUserUnits(id));
       await dispatch(getAllPurchases(id));
-      // console.log(sessionPurchases)
-      // console.log(properties.data.properties)
+   
     };
     if (sessionUser) {
       getProperties(sessionUser.id);
@@ -52,26 +51,26 @@ function ProfilePage() {
     if (propData.properties) {
       let totUnits = 0;
       propData.properties.forEach((prop) => (totUnits += prop.numUnits));
-      // console.log(totUnits)
+      
       setNumUnits(totUnits);
-      // console.log(numUnits)
+     
     }
   }, [propData]);
 
   useEffect(() => {
-    // console.log(sessionTenants.tenants)
+   
     if (sessionTenants.tenants) {
       let active = sessionTenants.tenants.filter((tenant) => {
-        // console.log(tenant)
+       
         return tenant.active == true;
       });
-      // console.log(active.length)
+      
       setActiveTenants(active.length);
     }
   }, [sessionTenants]);
 
   useEffect(() => {
-    // console.log(sessionTenants.tenants)
+    
     if (unitData.units) {
       let vacant = unitData.units.filter((unit) => {
         return unit.isVacant == true;
@@ -79,7 +78,7 @@ function ProfilePage() {
       let rented = unitData.units.filter((unit) => {
         return unit.isVacant != true;
       });
-      // console.log(rented)
+      
       setRentedUnits(rented);
       setNumVacant(vacant.length);
     }
@@ -101,7 +100,7 @@ function ProfilePage() {
     const units = Array.from(sessionPurchases.unitPurchases);
     units.forEach((un) => (unitTot += un.amount));
     props.forEach((prop) => (propTot += prop.amount));
-    // console.log(unitTot)
+   
 
     let expense = 0;
     propArray.forEach((prop) => (expense += prop.monthlyPayment));

@@ -40,6 +40,11 @@ function Navigation({ isLoaded, content }){
       <div className='nav-bar'>
             <NavLink className='logo' exact to="/">PropertEye</NavLink>
         <ul>
+          <li className='me'>
+           <span><a href='mailto: mikethecodegeek@gmail.com'>Michael Sanford </a></span>
+           <span><a target="_blank" href='https://github.com/mikethecodegeek'><i class="fab fa-github"></i></a></span>
+           <span><a target="_blank" href='https://www.linkedin.com/in/michael-sanford-1180b3115/'><i class="fab fa-linkedin"></i></a></span>
+          </li>
           <li>
             {isLoaded && sessionLinks}
           </li>

@@ -30,7 +30,7 @@ function UnitsForm({current, property, onSave}) {
   const sessionProperties = useSelector(
     (state) => state.userProperties.properties
   );
-  console.log(property)
+  
 
   //   if (sessionUser) return <Redirect to="/" />;
 

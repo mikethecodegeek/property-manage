@@ -33,8 +33,7 @@ useEffect(()=>{
   const getProperties = async(id)=>{
     let properties = await dispatch(getAllProperties(id))
     let units = await dispatch(getUserUnits(id))
-    console.log(units.data.units)
-    console.log(properties.data)
+  
     setData(units.data.units)
     // let propresp = await properties.json()
     setPropData(properties.data)
@@ -46,7 +45,7 @@ useEffect(()=>{
 
 useEffect(()=>{
   if (allUnits.units){
-    console.log(allUnits.units)
+    
     setData(allUnits.units)
   }
 },[allUnits])
@@ -55,9 +54,9 @@ useEffect(()=>{
   if (propData.properties) {
     let totUnits = 0
     propData.properties.forEach(prop => totUnits+=prop.numUnits)
-    console.log(totUnits)
+    
     setNumUnits(totUnits)
-    console.log(numUnits)
+   
   }
 },[propData])
 
@@ -70,7 +69,7 @@ const findCurrentProp = (id) => {
    setCurrentUnit(null)
    setNewUnit(false)
   //  findCurrentUnit(0)
-   console.log(current.Units)
+  
  } else {
    setCurrentProp(null)
    setCurrentUnit([])
@@ -88,7 +87,7 @@ const findCurrentUnit = (id) => {
     setCurrentProp(currProp)
     setCurrentUnit(current)
     setEditingUnit(true)
-    console.log(current)
+    
   } else {
     setCurrentUnit(0)
   }
@@ -104,7 +103,7 @@ const columns = [
       id: 'propertyId',
       Header: 'Property',
       accessor: d => {
-          // console.log(propData)
+         
           let prop = sessionProperties.properties.find(prop => prop.id==d.propertyId)
           return prop.propertyName
       }

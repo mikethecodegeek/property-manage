@@ -73,7 +73,7 @@ function LeaseForm({cancelLease}) {
       } finally {
         setLoading(false);
       }
-      //  console.log('Form Submitted')
+     
     };
     asyncFunc();
   };
@@ -87,7 +87,7 @@ function LeaseForm({cancelLease}) {
       );
       setPropertyId(id);
       //   setVacantUnits(current.Units.filter(unit=> unit.isVacant))
-      console.log(typeof current.Units);
+     
     } else {
       setCurrentProp(null);
       setCurrentUnit([]);
@@ -96,14 +96,14 @@ function LeaseForm({cancelLease}) {
   useEffect(() => {
     const getTenants = async (id) => {
       let tenants = await dispatch(getAllTenants(id));
-      console.log(Array.from(tenants.data));
+     
       // let tenantsresp = await tenants.json()
       setTenants(
         Array.from(tenants.data.tenants).filter(
           (tenant) => tenant.status != true
         )
       );
-      // console.log(properties.data)
+     
     };
     if (sessionUser) {
       getTenants(sessionUser.id);
@@ -115,7 +115,7 @@ function LeaseForm({cancelLease}) {
       let properties = await dispatch(getAllProperties(id));
       // let propresp = await properties.json()
       setPropData(properties.data);
-      console.log(properties.data);
+      
     };
     if (sessionUser) {
       getProperties(sessionUser.id);
@@ -124,15 +124,13 @@ function LeaseForm({cancelLease}) {
 
   const handleUnit = (unitId, unitNum) => {
     setUnitId(unitId);
-    console.log(unitId);
-    console.log(unitNum);
-    console.log("somestuff");
+ 
     setUnitNumber(parseInt(unitNum));
   };
 
   const getAvailableTenants = (tenants) => {
     const avail = tenants.filter((ten) => ten.active != true);
-    console.log(avail);
+   
     return avail;
   };
 

@@ -20,7 +20,7 @@ function ImageUpload({onNewImageBase64, onSave, currentPhoto}) {
   },[images])
 
   const saveImg = (remove, imageList) => {
-    // console.log(images[0].data_url)
+    
     // return
     onSave(images[0].data_url)
     setImages([])

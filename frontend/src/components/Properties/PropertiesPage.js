@@ -41,7 +41,7 @@ function PropertiesPage() {
       let properties = await dispatch(getAllProperties(id));
       // await dispatch(getAllVendors(id))
       setPropData(properties.data);
-      console.log(properties.data)
+     
       setData(properties.data.properties)
     };
     if (sessionUser) {
@@ -61,13 +61,11 @@ function PropertiesPage() {
   // }, [propData]);
 
   const findCurrentProp = async (id) => {
-    console.log(id)
+   
     if (id !== "0" && sessionProperties && sessionProperties.properties) {
-      console.log('=============================')
-      console.log(vendors)
-      console.log('=============================')
+   
       const purchases = await dispatch(getPropertyPurchases(id))
-      console.log(purchases.data.allPurchases)
+   
       setData([...purchases.data.allPurchases.unitPurchases,...purchases.data.allPurchases.propertyPurchases])
       let current = sessionProperties.properties.find((prop) => prop.id == id);
       setCurrentProp(current);
@@ -169,7 +167,7 @@ function PropertiesPage() {
       sessionProperties.properties.forEach((prop) => (totUnits += prop.numUnits));
      
       setNumUnits(totUnits);
-      // console.log(sessionProperties.properties)
+      
       setColumns([
         {
           
