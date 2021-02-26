@@ -45,6 +45,23 @@ router.get(
 // );
 
 router.post(
+  "/delete",
+  asyncHandler(async (req, res) => {
+    const {
+      id
+    } = req.body;
+
+        const vendor = await Vendor.findOne({where: id})
+        vendor.destroy()
+        return res.json({
+          vendor,
+        });
+    }
+
+));
+
+
+router.post(
     "/new",
     asyncHandler(async (req, res) => {
       const {

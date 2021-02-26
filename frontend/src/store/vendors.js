@@ -2,6 +2,7 @@ import { fetch } from './csrf.js';
 
 const GET_ALL_VENDORS = 'session/getVendors';
 const CREATE_VENDOR = 'session/newVendor'
+const DELETE_VENDOR = 'session/deleteVendor'
 // const NEW_PURCHASE = 'session/newPurchase'
 
 const getVendors = (vendors) => ({
@@ -14,6 +15,11 @@ const newVendor= (vendor) => ({
   vendor
 });
 
+const removeVendor= (vendor) => ({
+  type: DELETE_VENDOR,
+  vendor
+});
+
 
 export const getAllVendors = (userId) => async (dispatch) => {
   let vendors = await fetch(`/api/vendors/${userId}/all`)
@@ -21,6 +27,19 @@ export const getAllVendors = (userId) => async (dispatch) => {
   dispatch(getVendors(vendors.data.allVendors));
   return vendors;
 };
+
+export const deleteVendor = (id) => async (dispatch) => {
+
+    const response = await fetch('/api/vendors/delete', {
+      method: 'POST',
+      body: JSON.stringify({
+        id
+      })
+    });
+  
+    dispatch(removeVendor(response.data.vendor));
+    return response;
+  };
 
 export const createVendor = (vendor, userId) => async (dispatch) => {
   // console.log(userId,vendor)
@@ -75,6 +94,14 @@ function vendorsReducer(state = initialState, action) {
       console.log(action.vendor)
       newState.push(action.vendor)
       return newState;
+
+    case DELETE_VENDOR:
+        newState = JSON.parse(JSON.stringify(state))
+        console.log(action.payload.id)
+        newState = newState.filter(vendor =>{
+         return vendor.id !== action.payload.id
+        })
+        return newState
 
     default:
       return state;

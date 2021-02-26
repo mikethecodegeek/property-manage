@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getAllVendors, createVendor} from '../../store/vendors'
+import {getAllVendors, createVendor, deleteVendor} from '../../store/vendors'
 import TableComponent from '../Table/Table'
 import '../Table/Table.css'
 import { useAlert } from 'react-alert'
@@ -83,6 +83,23 @@ const handleSubmit = (e) => {
   asyncHandle()
 }
 
+const deleteVendorButton = async(id) => {
+
+  if (window.confirm('Are you sure you wish to delete this item?')) {
+
+    try {
+      setLoading(true)
+      await dispatch(deleteVendor(id))
+      alert.show('Saved!')
+    } catch {
+      alert.error('Error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+}
+
 const columns =  [
     {
       
@@ -105,7 +122,21 @@ const columns =  [
       Header: 'Email',
       accessor: 'email',
     },
-   
+    // {
+    //     Header: 'Remove',
+    //     Cell: props => {
+    //       if (props.row.original.active != true) {
+    //         return <button style={{backgroundColor:'#f5776c', color:'white',padding:'5px',border:'none',cursor:'pointer', width:'85%'}}  onClick={(e) => {
+    //           e.stopPropagation()
+    //           console.log(props.row.original.id)
+    //           deleteVendorButton(props.row.original.id)
+            
+    //         }}>Remove</button>
+    //       } else {return 'N/A'} 
+          
+    //     } 
+        
+    //   },
     
   ]
 

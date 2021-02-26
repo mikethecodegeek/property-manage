@@ -3,6 +3,9 @@ import { fetch } from './csrf.js';
 const GET_ALL_PURCHASES = 'session/getPurchases';
 const NEW_PROPERTY_PURCHASE = 'session/newPurchase'
 const NEW_UNIT_PURCHASE = 'session/newPurchase'
+const PAY_PROPERTY_PURCHASE = 'session/editPurchase'
+const PAY_UNIT_PURCHASE = 'session/editPurchase'
+const PAY_PURCHASE = 'session/editPurchase'
 
 const showPurchases = (purchases) => ({
   type: GET_ALL_PURCHASES,
@@ -15,6 +18,11 @@ const newPropertyPurchase = (purchase) => ({
 });
 const newUnitPurchase = (purchase) => ({
   type: NEW_UNIT_PURCHASE,
+  purchase
+});
+
+const editPurchase = (purchase) => ({
+  type: PAY_PURCHASE,
   purchase
 });
 
@@ -33,8 +41,26 @@ export const getPropertyPurchases = (propId) => async (dispatch) => {
   return purchases;
 };
 
+export const payPurchase = (id, purchaseType) => async (dispatch) => {
+    const response = await fetch('/api/purchases/pay', {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        purchaseType
+      })
+    });
+
+    if (purchaseType=='Property') {
+      
+      dispatch(editPurchase(response.data.purchase));
+    } else {
+      dispatch(editPurchase(response.data.purchase));
+    }
+    return response;
+  };
+
 export const createPurchase = (purchase, ownerId) => async (dispatch) => {
-  console.log('Yeah buddy')
+  // console.log('Yeah buddy')
     const {  
         propertyId,
         unitId,
@@ -81,9 +107,12 @@ function purchasesReducer(state = initialState, action) {
 
     case NEW_PROPERTY_PURCHASE:
       newState = JSON.parse(JSON.stringify(state))
-      console.log(newState)
-      console.log(action.purchase)
       newState.propertyPurchases.push(action.purchase)
+      return newState;
+
+    case PAY_PURCHASE:
+      newState = JSON.parse(JSON.stringify(state))
+      newState = newState.map(p => console.log(p))
       return newState;
 
     default:

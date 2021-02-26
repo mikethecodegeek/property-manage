@@ -45,6 +45,35 @@ router.get(
 );
 
 router.post(
+  "/pay",
+  asyncHandler(async (req, res) => {
+    
+    const {
+     id, purchaseType
+    } = req.body;
+
+    if (purchaseType == 'Unit') {
+        
+        const unitPurchase = await UnitPurchases.findOne({where:id})
+        unitPurchase.set({status: 'Paid'})
+        unitPurchase.save()
+        return res.json({
+          purchase:unitPurchase,
+        });
+    }
+
+    if (purchaseType == 'Property') {
+    const propertyPurchase = await PropertyPurchases.findOne({where:id})
+    propertyPurchase.set({status:'Paid'})
+    propertyPurchase.save()
+    return res.json({
+      purchase:propertyPurchase,
+    });
+  }
+  })
+);
+
+router.post(
     "/new",
     asyncHandler(async (req, res) => {
       console.log('buddy')
