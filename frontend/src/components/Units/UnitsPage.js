@@ -126,7 +126,8 @@ const columns = [
     },
     {
       Header: 'Price',
-      accessor: 'rentalPrice'
+      accessor: 'rentalPrice',
+      Cell: ({value}) => formatter.format(value),
     },
     {
       id: 'isVacant',
@@ -135,6 +136,12 @@ const columns = [
     },
     
   ]
+
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
   if (!sessionUser) return <Redirect to="/" />;
 
   return (

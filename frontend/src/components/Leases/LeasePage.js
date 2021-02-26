@@ -93,6 +93,11 @@ function LeasesPage() {
     }
 
   }
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
 
   const columns = [
       {
@@ -112,16 +117,18 @@ function LeasesPage() {
       },
       {
         Header: 'Amount',
-        accessor: 'Unit.rentalPrice'
+        accessor: 'Unit.rentalPrice',
+        Cell: ({value}) => formatter.format(value),
       },
       {
         Header: 'Deposit',
-        accessor: 'depositAmnt'
+        accessor: 'depositAmnt',
+        Cell: ({value}) => formatter.format(value),
       },
       {
         Header: 'Start Date',
         accessor: 'startDate',
-        Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
+        Cell: ({value}) => format(new Date(value),'MM/dd/yyyy')
       },
       {
         Header: 'End Lease',
@@ -147,6 +154,8 @@ function LeasesPage() {
     // }
       
     ]
+
+    
 
 
   return (

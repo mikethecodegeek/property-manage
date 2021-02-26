@@ -12,6 +12,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import {createPurchase, getAllPurchases} from '../../store/purchases'
 import TableComponent from "../Table/Table";
 
+
 // import './SignupForm.css';
 
 function PurchasesPage() {
@@ -165,6 +166,7 @@ const columns =  [
     {
       Header: 'Amount',
       accessor: 'amount',
+      Cell: ({value}) => formatter.format(value),
     },
     {
       Header: 'Due',
@@ -174,6 +176,13 @@ const columns =  [
   
     
   ]
+
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
+
   if (!sessionUser) return <Redirect to="/" />;
   return (
     <>

@@ -184,7 +184,8 @@ function PropertiesPage() {
         },
         {
           Header: 'Mortgage',
-          accessor: 'monthlyPayment'
+          accessor: 'monthlyPayment',
+          Cell: ({value}) => formatter.format(value),
         },
         {
           Header: 'Address',
@@ -212,7 +213,11 @@ function PropertiesPage() {
     
   },[sessionProperties.properties])
 
-
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  });
   
   if (!sessionUser) return <Redirect to="/" />;
   return (

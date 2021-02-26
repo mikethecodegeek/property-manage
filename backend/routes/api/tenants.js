@@ -30,6 +30,22 @@ router.post(
     })
   );
 
+router.post(
+    '/remove',
+    asyncHandler(async (req, res) => {
+      const { 
+         id
+        } = req.body;
+       
+      const tenant = await Tenant.findOne({where: id})
+      tenant.destroy()
+  
+      return res.json({
+        tenant
+      });
+    })
+  );
+
 router.get(
   '/:userId/all',
   asyncHandler(async (req, res) => {
