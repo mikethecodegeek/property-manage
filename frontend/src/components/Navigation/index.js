@@ -56,9 +56,9 @@ function Navigation({ isLoaded, content }){
               <ul>
                 <li className='side-link mono'><NavLink to="/profile">My Profile</NavLink></li>
                 <li className='side-link mono'><NavLink to="/properties">Properties</NavLink></li>
+                <li className='side-link mono'><NavLink to="/units">Units</NavLink></li>
                 <li className='side-link mono'><NavLink to="/tenants">Tenants</NavLink></li>
                 <li className='side-link mono'><NavLink to="/leases">Leases</NavLink></li>
-                <li className='side-link mono'><NavLink to="/units">Units</NavLink></li>
                 <li className='side-link mono'><NavLink to="/purchases">Purchases</NavLink></li>
                 <li className='link-no-decorate mono'><NavLink to="/vendors">Vendors</NavLink></li>
               </ul>

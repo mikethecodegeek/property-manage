@@ -31,6 +31,7 @@ const TableComponent = ({columns,data, onClickCallback, findPropCallback, height
         style={{
           border: "none",
           height: height || "350px",
+          maxHeight: 'calc(100vh - 150px)',
           overflowY: "scroll",
           display: "inline-block",
         }}

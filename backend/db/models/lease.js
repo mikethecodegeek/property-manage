@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Lease.associate = function(models) {
     // associations can be defined here
-    Lease.belongsTo(models.Unit, {foreignKey:'unitNumber'})
+    Lease.belongsTo(models.Unit, {foreignKey:'unitId'})
     Lease.belongsTo(models.Property, {foreignKey:'propertyId'})
     Lease.belongsTo(models.Tenant, {foreignKey:'tenantId'})
 

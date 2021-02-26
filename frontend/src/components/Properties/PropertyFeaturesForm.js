@@ -45,7 +45,7 @@ function PropertyFeaturesForm({ propertyId, finished }) {
           )
         );
         alert.show("Saved!");
-        finished(propertyId);
+        // finished(propertyId);
       } catch {
         alert.error("Error!");
         // finished()

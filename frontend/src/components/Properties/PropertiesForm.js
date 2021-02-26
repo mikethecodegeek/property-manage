@@ -41,7 +41,7 @@ function PropertiesForm({saved}) {
             // setPropName('')
             // setPropType('')
             // setNumUnits('')
-            // saved()
+            saved()
            
             alert.show('Saved!')
           } catch {
@@ -56,8 +56,8 @@ function PropertiesForm({saved}) {
 
 
   return (
-    <>
-      <h3>Add Property</h3>
+    <div style={{position:'relative',top:'-30px'}}>
+      <h3 >Add Property</h3>
       <div className='loader'>
         <BeatLoader color={'#0183BD'} loading={loading} size={35} />
       </div>
@@ -109,7 +109,7 @@ function PropertiesForm({saved}) {
         </div>
         <div>
         <label>
-          Monthly Payment
+          Mortage Payment
           <input
             type="text"
             value={monthlyPayment}
@@ -148,7 +148,7 @@ function PropertiesForm({saved}) {
         </div>
         <button className='form-button submit-button' type="submit">Add Property</button>
       </form>
-    </>
+    </div>
   );
 }
 

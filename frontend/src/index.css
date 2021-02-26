@@ -63,3 +63,94 @@ table {
 .text-center {
     text-align: center;
 }
+
+.form {
+    display: grid;
+    grid-row-gap: 5px;
+  }
+  
+  /* Switch to two columns in wider viewports */
+  @media (min-width: 29.375rem) {
+    .form {
+      grid-column-gap: 25px;
+      grid-template-areas: 
+        "label-name  label-email"
+        "field-name  field-email"
+        "label-phone   ."
+        "field-phone   field-msg"
+        "label-description   ."
+        "field-description   field-msg"
+        "label-type   ."
+        "field-type   field-msg"
+        "button      .";
+    }
+  }
+  
+  /* The values below correspond to the values shown in grid-template-areas above, placing the items on the grid accordingly. Note that the grid-area value does NOT have to match the class name. For example, .field-message has field-msg as its grid-area. */
+  @media (min-width: 29.375rem) {
+    .label-name {
+      grid-area: label-name;
+    }
+    .label-phone {
+      grid-area: label-phone;
+    }
+    .label-description {
+      grid-area: label-description;
+    }
+    .label-description {
+      grid-area: label-type;
+    }
+    .field-name {
+      grid-area: field-name;
+    }
+    .field-phone {
+      grid-area: field-phone;
+    }
+    .field-description {
+      grid-area: field-description;
+    }
+    .field-description {
+      grid-area: field-type;
+    }
+    .button {
+      grid-area: button;
+    }
+  }
+  
+  /* Generic styles for demo purposes
+  -------------------------------------- */
+  .form {
+    background-color: #eee;
+    font-family: Helvetica, Arial, sans-serif;
+    max-width: 600px;
+    padding: 25px;
+  }
+  
+  .field {
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
+  @media (max-width: 29.3125rem) {
+    .label-email {
+      margin-top: 20px;
+    }
+  }
+  
+  .label-message {
+    margin-top: 20px;
+  }
+  
+  .button {
+    appearance: none;
+    background-color: orange;
+    border: none;
+    font-size: .9375rem;
+    margin-top: 20px;
+    padding: 10px;
+    /* without this, the button would be as 
+    wide as its column (and the Name field) */
+    justify-self: start;
+  }

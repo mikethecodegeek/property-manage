@@ -31,7 +31,7 @@ function PropertiesPage() {
   const [vacantUnits, setVacantUnits] = useState([]);
   const [rentedUnits, setRentedUnits] = useState([]);
   const [newProperty, setNewProperty] = useState(false);
-  const [viewFeatures, setViewFeatures] = useState(false);
+  const [viewFeatures, setViewFeatures] = useState(true);
   const [imgUrl, setImgUrl] = useState("");
   const [data, setData] = useState([]) 
   const [columns, setColumns] = useState([])
@@ -223,12 +223,7 @@ function PropertiesPage() {
 
         {currentProp && (
           <>
-          <button
-            className="form-button"
-            onClick={() => setViewFeatures(!viewFeatures)}
-          >
-            {viewFeatures == false ? "View Features" : "View Property"}
-          </button>
+         
           <button
             className="form-button"
             onClick={() => setPropsTable() }
@@ -245,7 +240,7 @@ function PropertiesPage() {
         <div>
           <PropertiesForm saved={() => {
             setNewProperty(false)
-            setViewFeatures(false)}
+            setViewFeatures(true)}
             } />
         </div>
       )}
@@ -261,7 +256,7 @@ function PropertiesPage() {
           {currentProp && propertyUnits && (
             <div>
               <div className="property-page-details">
-              {!viewFeatures &&
+              {viewFeatures &&
                 <div className="prop-top-section">
                   <div className="prop-img">
                     <img
@@ -295,7 +290,7 @@ function PropertiesPage() {
                   
                 </div>
               }
-              {!viewFeatures &&
+              {viewFeatures &&
                 <div
                   className="prop-units"
                   style={{
@@ -314,11 +309,11 @@ function PropertiesPage() {
                 </div>
                 
               }
-              <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} height='150px' />
+              {/* <TableComponent data={data} columns={columns} onClickCallback={(e)=> console.log(e)} height='150px' /> */}
               </div>
                   
               {viewFeatures && (
-                <div>
+                <div style={{position:'relative',top:'-20px'}}>
                   <h2>Property Features</h2>
                   {currentProp.PropertyFeature && (
                     <div

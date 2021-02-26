@@ -3,9 +3,15 @@ import { fetch } from './csrf.js';
 const GET_ALL_LEASES = 'session/getAllLeases';
 const GET_LEASE = 'session/getLease';
 const NEW_LEASE = 'session/newLease';
+const DELETE_LEASE = 'session/deleteLease';
 
 const showLease = (lease) => ({
   type: GET_LEASE,
+  payload: lease
+});
+
+const delLease = (lease) => ({
+  type: DELETE_LEASE,
   payload: lease
 });
 
@@ -26,6 +32,24 @@ export const getAllLeases = (userId) => async (dispatch) => {
   dispatch(showLeases(leases.data));
   return leases;
 };
+
+
+
+export const deleteLease = (leaseId) => async (dispatch) => {
+    // const { leaseId } = lease;
+    console.log('hi')
+    console.log(leaseId)
+    const response = await fetch('/api/leases/delete', {
+      method: 'POST',
+      body: JSON.stringify({
+       leaseId
+      })
+    });
+    console.log(response.data.lease)
+    dispatch(delLease(response.data.lease));
+    return response;
+  };
+
 
 export const createLease = (lease,userId) => async (dispatch) => {
     const { propertyId,unitId,tenantId,startDate,endDate,depositAmnt,unitNumber } = lease;
@@ -56,10 +80,17 @@ function leasesReducer(state = initialState, action) {
     case GET_ALL_LEASES:
       newState = Object.assign({}, state, { leases: action.payload });
       return newState;
-      case NEW_LEASE:
+    case NEW_LEASE:
         newState = JSON.parse(JSON.stringify(state))
         newState.leases.leases.push(action.payload)
-      
+        return newState
+    case DELETE_LEASE:
+        newState = JSON.parse(JSON.stringify(state))
+        console.log(action.payload.id)
+        newState.leases.leases = newState.leases.leases.filter(lease =>{
+          console.log(lease)
+         return lease.id !== action.payload.id
+        })
         return newState
     default:
       return state;

@@ -73,8 +73,8 @@ router.post(
         leaseId
         } = req.body;
  
-
-      const lease = await Lease.fineOne({where:{id:leaseId}})
+      console.log('HIIIIIITTTTTTTT')
+      const lease = await Lease.findOne({where:{id:leaseId}})
 
       const currentUnit = await Unit.findOne({where: {
           unitNumber:lease.unitNumber,
@@ -86,8 +86,10 @@ router.post(
       currentUnit.save()
 
       currentTenant = await Tenant.findOne({where:{id:lease.tenantId}})
-      currentTenant.set({active:false,propertyId:null,unitId:null,unitNumber:null})
+      currentTenant.set({active:null,propertyId:null,unitId:null,unitNumber:null})
       currentTenant.save()
+
+      lease.destroy()
       
     //   const properties = await Property.findAll({where:{ownerId:1}})
       return res.json({

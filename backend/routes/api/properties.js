@@ -44,9 +44,9 @@ router.post(
     for (let a=1; a <= numUnits; a++) {
         await Unit.create({
           propertyId:property.id,
-          sqft: 500,
+          sqft: 0,
           isVacant: true,
-          rentalPrice: 1000,
+          rentalPrice: 0,
           numOccupants: 1,
           numBaths: 1,
           numBeds: 1,

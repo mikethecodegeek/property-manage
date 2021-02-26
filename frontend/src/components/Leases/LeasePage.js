@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {getAllTenants} from '../../store/tenants'
 import {getAllProperties} from '../../store/properties'
 import {format} from 'date-fns'
-import {getAllLeases} from '../../store/leases'
+import {getAllLeases, deleteLease} from '../../store/leases'
 import '../Table/Table.css'
 import TableComponent from "../Table/Table";
 import LeaseForm from './LeaseFormPage'
+import { useAlert } from "react-alert";
+import { css } from "@emotion/core";
+import BeatLoader from "react-spinners/BeatLoader";
 
 function LeasesPage() {
   const dispatch = useDispatch();
@@ -20,6 +23,9 @@ function LeasesPage() {
   const [newLease,setNewLease] = useState(false)
   const [data,setData]= useState([])
   const [showLease, setShowLease] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const alert = useAlert();
 
 //   if (!sessionUser) return <Redirect to="/" />;
 
@@ -72,6 +78,22 @@ function LeasesPage() {
     // setShowLease(false)
   }
 
+  const removeLease = async (id) => {
+    if (window.confirm('Are you sure you wish to delete this item?')) {
+
+      try {
+        setLoading(true)
+        await dispatch(deleteLease(id))
+        alert.show('Saved!')
+      } catch {
+        alert.error('Error')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+  }
+
   const columns = [
       {
         Header: 'Tenant',
@@ -102,11 +124,27 @@ function LeasesPage() {
         Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
       },
       {
-        Header: 'End Date',
-        accessor: 'endDate',
-        Cell: ({value}) => {return format(new Date(value),'MM/dd/yyyy')}
+        Header: 'End Lease',
+        Cell: props => {
+          return <button style={{backgroundColor:'#f5776c', color:'white',padding:'5px',border:'none',cursor:'pointer', width:'85%'}}  onClick={(e) => {
+            e.stopPropagation()
+            console.log(props.row.original.id)
+            removeLease(props.row.original.id)
+          
+          }}>Remove</button>
+          
+        } 
+        
       },
-     
+    
+      // {
+      //   Header: 'Start Date',
+      //   Cell:  _getTdProps = (state, rowInfo, column, instance) => ({
+      //     onClick: (e, handleOriginal) => {
+      //       console.log(e)
+      //    },
+      // }),
+    // }
       
     ]
 
@@ -121,6 +159,9 @@ function LeasesPage() {
             <button className='form-button' onClick={showAllLeases}>All Leases</button>
           }
         <button className='form-button' onClick={showNewLeaseForm}>New Lease</button>
+      </div>
+      <div className="loader">
+        <BeatLoader color={"#0183BD"} loading={loading} size={35} />
       </div>
       {newLease &&
       

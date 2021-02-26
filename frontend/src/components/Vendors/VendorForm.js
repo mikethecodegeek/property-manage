@@ -71,7 +71,7 @@ const handleSubmit = (e) => {
   return (
     <>
       
-      <form className="basic-form" onSubmit={handleSubmit}>
+      <form className="basic-form form" onSubmit={handleSubmit}>
         {/* {errors.length > 0 && (
           <ul>
             {errors.map((error, idx) => (
@@ -84,9 +84,10 @@ const handleSubmit = (e) => {
         </div>
         <div className='flex-between'>
         <div>
-         <label>
+         <label className='label-name'>
           Name
           <input
+           className='field-name'
             type="text"
             value={vendorName}
             onChange={(e) => setVendorName(e.target.value)}
@@ -95,9 +96,10 @@ const handleSubmit = (e) => {
         </label>
           <br/>
      
-        <label>
+        <label className='label-phone'>
           Phone
           <input
+            className='field-phone'
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -105,19 +107,21 @@ const handleSubmit = (e) => {
           />
         </label>
         <br/>
-        <label>
+        <label className='label-description'>
           Description
           <input
             type="text"
+            className='field-description'
             value={vendorDescription}
             onChange={(e) => setVendorDescription(e.target.value)}
             required
           />
         </label>
-        <label>
+        <label className='label-type'>
           Type
           <select
             // value={vendorDescription}
+            className='field-type'
             onChange={(e) => setVendorType(e.target.value)}
             required
             >
