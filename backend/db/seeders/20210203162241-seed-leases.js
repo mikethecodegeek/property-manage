@@ -1,5 +1,5 @@
 "use strict";
-
+const faker = require('faker');
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -12,105 +12,51 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+   let tenantNum=1, unitId=1, leases=[]
+   for (let a= 1; a<=25; a++) {
+     for (let b=1; b<=4; b++) {
+       leases.push({
+        unitId: unitId,
+        userId: 1,
+        propertyId: a,
+        unitNumber: b,
+        tenantId: tenantNum,
+        depositAmnt: faker.random.number({'min': 700,'max': 1200}),
+        startDate: faker.date.between('1-1-2019', new Date()),
+        endDate: faker.date.between(new Date(), '1-1-2023'),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+       })
+       tenantNum++
+       unitId++
+
+     }
+   }
+
+   for (let a= 26; a<=40; a++) {
+    for (let b=1; b<=2; b++) {
+      leases.push({
+       unitId: unitId,
+       userId: 1,
+       propertyId: a,
+       unitNumber: b,
+       tenantId: tenantNum,
+       depositAmnt: faker.random.number({'min': 700,'max': 1200}),
+       startDate: faker.date.between('1-1-2019', new Date()),
+       endDate: faker.date.between(new Date(), '1-1-2023'),
+       createdAt: new Date(),
+       updatedAt: new Date(),
+      })
+      tenantNum++
+      unitId++
+
+    }
+  }
+
     return queryInterface.bulkInsert(
       "Leases",
       [
-        {
-          unitId: 1,
-          userId: 1,
-          propertyId: 1,
-          unitNumber: 1,
-          tenantId: 1,
-          depositAmnt: 800,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 2,
-          userId: 1,
-          unitNumber: 2,
-          propertyId: 1,
-          tenantId: 2,
-          depositAmnt: 700,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 3,
-          userId: 1,
-          unitNumber: 3,
-          propertyId: 1,
-          tenantId: 3,
-          depositAmnt: 800,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 4,
-          userId: 1,
-          unitNumber: 4,
-          propertyId: 1,
-          tenantId: 4,
-          depositAmnt: 1200,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 5,
-          userId: 1,
-          unitNumber: 1,
-          propertyId: 2,
-          tenantId: 5,
-          depositAmnt: 1200,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 6,
-          userId: 1,
-          unitNumber: 2,
-          propertyId: 2,
-          tenantId: 6,
-          depositAmnt: 1300,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 7,
-          userId: 1,
-          unitNumber: 1,
-          propertyId: 3,
-          tenantId: 7,
-          depositAmnt: 1300,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          unitId: 8,
-          userId: 1,
-          unitNumber: 2,
-          propertyId: 3,
-          tenantId: 8,
-          depositAmnt: 1200,
-          startDate: new Date(),
-          endDate: new Date,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+       ...leases
       ],
       {}
     );

@@ -1,5 +1,5 @@
 'use strict';
-
+const faker=require('faker')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -12,44 +12,23 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+   const purchases = [...Array(20)].map( prop => {
+    return {
+      ownerId: 1,
+      propertyId: faker.random.number({'min':1, 'max':50}),
+      unitId: faker.random.number({'min':1,'max': 147}),
+      description: faker.lorem.sentence(30),
+      datePurchased: faker.date.between('1-1-2021', '1-4-2021'),
+      vendorId: 1,
+      amount: faker.random.number({'min':300,'max':600}),
+      billDueBy: faker.date.between(new Date(), '1-4-2021'),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  })
      return queryInterface.bulkInsert('UnitPurchases', 
        [
-        {
-          ownerId: 1,
-          propertyId: 1,
-          unitId: 1,
-          description: "Heater repair",
-          datePurchased: new Date(),
-          vendorId: 1,
-          amount: 550,
-          billDueBy: new Date(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          ownerId: 1,
-          propertyId: 1,
-          unitId: 3,
-          description: "New freezer",
-          datePurchased: new Date(),
-          vendorId: 4,
-          amount: 300,
-          billDueBy: new Date(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          ownerId: 1,
-          propertyId: 2,
-          unitId: 2,
-          description: "Replace kitchen sink",
-          datePurchased: new Date(),
-          vendorId: 2,
-          amount: 300,
-          billDueBy: new Date(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+        ...purchases
        ], {});
   },
 

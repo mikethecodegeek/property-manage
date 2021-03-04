@@ -8,6 +8,7 @@ import { getUserUnits } from "../../store/units";
 // import LeaseForm from '../LeaseFormPage'
 import { useAlert } from "react-alert";
 import { getAllPurchases } from "../../store/purchases";
+import BeatLoader from "react-spinners/BeatLoader";
 // import './SignupForm.css';
 import './Profile.css'
 
@@ -30,16 +31,24 @@ function ProfilePage() {
   const [numVacant, setNumVacant] = useState(0);
   const [rentedUnits, setRentedUnits] = useState([]);
   const [activeTenants, setActiveTenants] = useState([]);
+  const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     const getProperties = async (id) => {
-      let properties = await dispatch(getAllProperties(id));
-      // let propresp = await properties.json()
-      setPropData(properties.data);
-      setAllProperties(properties.data.properties);
-      dispatch(getAllTenants(id));
-      dispatch(getUserUnits(id));
-      await dispatch(getAllPurchases(id));
+      try {
+        setLoading(true)
+        let properties = await dispatch(getAllProperties(id));
+        // let propresp = await properties.json()
+        setPropData(properties.data);
+        setAllProperties(properties.data.properties);
+        await dispatch(getAllTenants(id));
+        await dispatch(getUserUnits(id));
+        await dispatch(getAllPurchases(id));
+      } catch {
+
+      } finally {
+        setLoading(false)
+      }
    
     };
     if (sessionUser) {
@@ -124,6 +133,9 @@ function ProfilePage() {
   return (
     <>
       <h1 className="profile-username" style={{textAlign:'center'}}>{sessionUser.username}</h1>
+      <div className='loader'>
+        <BeatLoader color={'#0183BD'} loading={loading} size={35} />
+      </div>
       {sessionProperties.properties && (
         <div className="">
           {/* <h2>Quick View</h2> */}

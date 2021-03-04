@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       vendorDescription: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       vendorType: {
         allowNull: false,

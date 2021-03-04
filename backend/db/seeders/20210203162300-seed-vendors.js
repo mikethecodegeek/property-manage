@@ -1,5 +1,5 @@
 "use strict";
-
+const faker=require('faker');
 module.exports = {
   up: (queryInterface, Sequelize) => {
     /*
@@ -12,69 +12,27 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+   const vendors = [...Array(25)].map( prop => {
+    return {
+      vendorName: faker.company.companyName(),
+      userId: 1,
+      phone: faker.phone.phoneNumberFormat(3),
+      vendorDescription:faker.lorem.paragraph(3),
+      vendorType: faker.random.number(1) ? 1:2,
+      vendorContactName: faker.name.firstName(),
+      city: faker.address.city(),
+      state: faker.address.state(),
+      address: faker.address.streetAddress(),
+      zipCode:faker.address.zipCode(),
+      email: faker.internet.email(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  })
     return queryInterface.bulkInsert(
       "Vendors",
       [
-        {
-          vendorName: "Bills Electric",
-          userId: 1,
-          phone: "555-555-5555",
-          vendorDescription:'Local Electrician',
-          vendorType: 1,
-          vendorContactName: 'Bill',
-          city: 'Las Vegas',
-          state: 'Nevada',
-          address: '1 Industrial Rd',
-          zipCode:'43256',
-          email: 'billelectric@aol.com',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          vendorName: "John's Plumbing",
-          userId: 1,
-          phone: "555-555-7777",
-          vendorDescription:'Local Plumber',
-          vendorType: 1,
-          vendorContactName: 'John',
-          city: 'Las Vegas',
-          state: 'Nevada',
-          address: '5 Industrial Rd',
-          zipCode:'43256',
-          email: 'jplumbdog@gmail.com',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          vendorName: "Larry The Landscaper",
-          userId: 1,
-          phone: "555-555-1111",
-          vendorDescription:'Local Landscaper',
-          vendorType: 1,
-          vendorContactName: 'Sue',
-          city: 'Las Vegas',
-          state: 'Nevada',
-          address: '8 Industrial Rd',
-          zipCode:'43256',
-          email: 'trimthatgrass@gmail.com',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          vendorName: "Home Depot",
-          userId: 1,
-          phone: "555-555-9999",
-          vendorDescription:'Retail store for supplies',
-          vendorType: 2,
-          vendorContactName: 'N/A',
-          city: 'Las Vegas',
-          state: 'Nevada',
-          address: '10 Industrial Rd',
-          zipCode:'43256',
-          email: 'N/A',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+       ...vendors
       ],
       {}
     );

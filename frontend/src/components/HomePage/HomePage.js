@@ -10,7 +10,7 @@ function HomePage() {
   const sessionUser = useSelector((state) => state.session.user);
 
 
-  if (sessionUser) return <Redirect to="/profile" />;
+  if (sessionUser) return <Redirect to="/properties" />;
 
 
   return (
