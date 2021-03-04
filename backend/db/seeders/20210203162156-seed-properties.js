@@ -53,7 +53,7 @@ module.exports = {
     // console.log(allProps)
     const allUnits= []
     let countUnits = 0
-    for (let a=1; a<=allProps.length-1; a++) {
+    for (let a=0; a<allProps.length; a++) {
       // console.log(allProps[a].numUnits)
       let vacant
       for (let b=1; b<=allProps[a].numUnits; b++) {
@@ -61,7 +61,7 @@ module.exports = {
        countUnits>130 ? vacant= true :vacant= false 
        allUnits.push({
           userId: 1,
-          propertyId: a,
+          propertyId: a+1,
           sqft: faker.random.number({'min': 700,'max': 1500}),
           rentalPrice: faker.random.number({'min': 800,'max': 1200}),
           unitNumber:b,

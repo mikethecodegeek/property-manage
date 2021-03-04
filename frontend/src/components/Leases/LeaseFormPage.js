@@ -32,6 +32,7 @@ function LeaseForm({cancelLease}) {
   const [tenants, setTenants] = useState();
   const [tenant, setCurrentTenant] = useState();
   const [vacant, setVacant] = useState();
+  const [availableProps, setAvailableProps] = useState([])
   let [loading, setLoading] = useState(false);
   let [color, setColor] = useState("#0183BD");
 
@@ -93,6 +94,34 @@ function LeaseForm({cancelLease}) {
       setCurrentUnit([]);
     }
   };
+
+  const getAvailableProperties = () => {
+    console.log(sessionProperties)
+    if (sessionProperties.properties) {
+      const avail = sessionProperties.properties.map(prop => {
+        console.log(prop)
+        if (Array.from(prop.Units).filter((un) => un.isVacant == true).length == prop.numUnits) {
+          return prop
+        } else {
+          return
+        }
+      })
+      setAvailableProps(avail)
+    }
+  }
+
+  useEffect(()=>{
+    if (sessionProperties.properties) {
+      const avail = sessionProperties.properties.filter(prop => {
+        console.log(Array.from(prop.Units).filter((un) => un.isVacant == true).length==prop.numUnits)
+        if (Array.from(prop.Units).filter((un) => un.isVacant == false).length < prop.numUnits) {
+          return prop
+        }
+      })
+      console.log(avail.length)
+      setAvailableProps(avail)
+    }
+  },[sessionProperties])
   useEffect(() => {
     const getTenants = async (id) => {
       let tenants = await dispatch(getAllTenants(id));
@@ -115,6 +144,7 @@ function LeaseForm({cancelLease}) {
       let properties = await dispatch(getAllProperties(id));
       // let propresp = await properties.json()
       setPropData(properties.data);
+      // getAvailableProperties()
       
     };
     if (sessionUser) {
@@ -127,6 +157,8 @@ function LeaseForm({cancelLease}) {
  
     setUnitNumber(parseInt(unitNum));
   };
+
+
 
   const getAvailableTenants = (tenants) => {
     const avail = tenants.filter((ten) => ten.active != true);
@@ -152,10 +184,10 @@ function LeaseForm({cancelLease}) {
           <div>
         <label>
           {/* Property */}
-          {sessionProperties && sessionProperties.properties && (
+          {sessionProperties && sessionProperties.properties && availableProps.length>0 && (
             <select onChange={(e) => findCurrentProp(e.target.value)}>
               <option value="0">Select a property</option>
-              {sessionProperties.properties.map((prop) => (
+              {availableProps.map((prop) => (
                 <option value={prop.id}>{prop.propertyName}</option>
               ))}
             </select>
