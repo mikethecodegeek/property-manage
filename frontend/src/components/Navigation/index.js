@@ -46,7 +46,7 @@ function Navigation({ isLoaded, content }){
             <NavLink className='logo' exact to="/">PropertEye</NavLink>
         <ul>
           <li className='me'>
-           <span><a target="_blank" href='michaelsanford.me'>Michael Sanford </a></span>
+           <span><a target="_blank" href='http://michaelsanford.me'>Michael Sanford </a></span>
            <span><a target="_blank" href='https://github.com/mikethecodegeek'><i class="fab fa-github"></i></a></span>
            <span><a target="_blank" href='https://www.linkedin.com/in/michael-sanford-1180b3115/'><i class="fab fa-linkedin"></i></a></span>
           </li>
