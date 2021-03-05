@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import { NavLink, Redirect , useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -7,10 +7,12 @@ import './Navigation.css';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
+
 function Navigation({ isLoaded, content }){
   const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory()
+  
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
@@ -35,13 +37,16 @@ function Navigation({ isLoaded, content }){
  
   };
 
+ 
+
   return (
     <div className='nav-section'>
+      
       <div className='nav-bar'>
             <NavLink className='logo' exact to="/">PropertEye</NavLink>
         <ul>
           <li className='me'>
-           <span><a href='mailto: mikethecodegeek@gmail.com'>Michael Sanford </a></span>
+           <span><a target="_blank" href='michaelsanford.me'>Michael Sanford </a></span>
            <span><a target="_blank" href='https://github.com/mikethecodegeek'><i class="fab fa-github"></i></a></span>
            <span><a target="_blank" href='https://www.linkedin.com/in/michael-sanford-1180b3115/'><i class="fab fa-linkedin"></i></a></span>
           </li>
@@ -61,6 +66,7 @@ function Navigation({ isLoaded, content }){
                 <li className='side-link mono'><NavLink to="/leases">Leases</NavLink></li>
                 <li className='side-link mono'><NavLink to="/purchases">Purchases</NavLink></li>
                 <li className='link-no-decorate mono'><NavLink to="/vendors">Vendors</NavLink></li>
+              
               </ul>
             </div>
             <div>

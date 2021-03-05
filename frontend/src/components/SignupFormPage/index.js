@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect,NavLink } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import ModalInFunctionalComponent from '../ModalComponent/ModalComponent'
+
 import './SignupForm.css';
 
 function SignupFormPage() {
@@ -12,24 +14,34 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const [showModal, setShowModal] = useState(false)
 
-  if (sessionUser) return <Redirect to="/properties" />;
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(sessionActions.signup({ email, username, password }))
-        .catch(res => {
-          if (res.data && res.data.errors) setErrors(res.data.errors);
-        });
+      .catch(res => {
+        if (res.data && res.data.errors) setErrors(res.data.errors);
+      });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
-
+  
+  useEffect(()=>{
+    
+    if (localStorage.getItem('hasVisited') == null) {
+      setShowModal(true)
+      localStorage.setItem('hasVisited', 'true');
+    }
+    
+  },[])
+  if (sessionUser) return <Redirect to="/properties" />;
   return (
     <>
     <div className='flex-between'>
+    {showModal && <ModalInFunctionalComponent  />}
       <h1>Sign Up</h1>
       <div className='account'>
         <h3>Already have an account?</h3>       

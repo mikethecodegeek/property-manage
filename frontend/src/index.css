@@ -154,3 +154,16 @@ table {
     wide as its column (and the Name field) */
     justify-self: start;
   }
+
+  .modal-welcome {
+    width: 95%;
+    margin: auto;
+  }
+
+  .modal-welcome > * {
+    text-align: center;
+  }
+
+  .modal-welcome >ul  {
+    list-style: none;
+  }

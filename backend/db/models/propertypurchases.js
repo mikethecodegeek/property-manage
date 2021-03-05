@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const PropertyPurchases = sequelize.define('PropertyPurchases', {
     ownerId: DataTypes.INTEGER,
     propertyId: DataTypes.INTEGER,
-    description: DataTypes.STRING,
+    description: DataTypes.TEXT,
     datePurchased: DataTypes.INTEGER,
     vendorId: DataTypes.INTEGER,
     amount: DataTypes.INTEGER,
