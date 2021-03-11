@@ -30,8 +30,8 @@ const TableComponent = ({columns,data, onClickCallback, findPropCallback, height
         {...getTableProps()}
         style={{
           border: "none",
-          height: height || "350px",
-          maxHeight: 'calc(100vh - 150px)',
+          height: 'calc(100vh - 190px)',
+          
           overflowY: "scroll",
           display: "inline-block",
         }}

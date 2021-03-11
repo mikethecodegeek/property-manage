@@ -1,5 +1,7 @@
 /* TODO Add site wide styles */
-
+* {
+  box-sizing: border-box;
+}
 body {
     /* font-family: monospace; */
 }
