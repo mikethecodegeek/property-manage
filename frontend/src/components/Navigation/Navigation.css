@@ -46,7 +46,7 @@ body {
   flex-direction: column;
   background-color: #ECECEC;
   width: 200px;
-  height: calc(100vh - 85px);
+  height: calc(100vh - 50px);
   justify-content: space-between;
   align-content: center;
   text-align: center;
